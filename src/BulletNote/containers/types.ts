@@ -1,5 +1,5 @@
 import { MessageItemWrapperProps, BasicMessageItemProps, ToDoMessageItemProps, ToggleTodoFn } from "../components/types";
-import { TagNoteBlockItemProps } from "../types";
+import { TagNoteBlockItemProps, NoteBlockListProps } from "../types";
 
 export interface InputPartContainerProps {
   addMessageFn: (rawMessage: string) => any
@@ -47,4 +47,8 @@ export interface StarItemContainerProps {
 export interface PinItemContainerProps {
   isPin?: boolean
   onChange?: (isPin?: boolean) => any
+}
+
+export interface NoteBlockListContainerProps extends NoteBlockListProps {
+  
 }

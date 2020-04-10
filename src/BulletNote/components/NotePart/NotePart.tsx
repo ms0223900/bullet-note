@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { NotePartProps } from '../types';
-import NoteBlockList from '../NoteBlockList';
 import DownloadMessageListWithCtx from '../DownloadMessageList';
 import RestoreBackup from '../RestoreBackup';
 import PinMessageList from './PinMessageList';
+import NoteBlockListContainer from 'BulletNote/containers/NoteBlockListContainer';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   pinMessageListPart: {
     position: 'sticky',
     top: 0,
@@ -32,7 +32,7 @@ const NotePart = (props: NotePartProps) => {
         <DownloadMessageListWithCtx />
         <RestoreBackup />
       </Box>
-      <NoteBlockList
+      <NoteBlockListContainer
         {...props} />
     </>
   );

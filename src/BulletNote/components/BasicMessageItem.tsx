@@ -28,28 +28,39 @@ const BasicMessageItem = (props: BasicMessageItemProps) => {
   return (
     <Box 
       display={'flex'} 
+      width={'100%'}
+      justifyContent={'space-between'}
       alignItems={'center'} 
     >
-      <Typography 
-        variant={'subtitle1'} 
-        contentEditable={true}
-        onInput={props.onEditMessage}
+      <Box
+        display={'flex'} 
       >
-        {content}
-      </Typography>
-      <BulletTagList
-        tagList={tagList} />
-      <Typography variant={'body1'} color={'textSecondary'}>
-        {regDateToString(createdAt)}
-      </Typography>
-      <StarItemContainer
-        isStared={isStared}
-        onChange={props.onStarMessage} />
-      <PinItemContainer
-        isPin={isPin}
-        onChange={props.onPinMessage} />
-      <MessageItemButtons
-        onDelete={props.onDelete} />
+        <Typography 
+          variant={'subtitle1'} 
+          contentEditable={true}
+          onInput={props.onEditMessage}
+        >
+          {content}
+        </Typography>
+        <BulletTagList
+          tagList={tagList} />
+        <Typography variant={'body1'} color={'textSecondary'}>
+          {regDateToString(createdAt)}
+        </Typography>
+      </Box>
+      <Box
+        display={'flex'} 
+        alignItems={'center'} 
+      >
+        <StarItemContainer
+          isStared={isStared}
+          onChange={props.onStarMessage} />
+        <PinItemContainer
+          isPin={isPin}
+          onChange={props.onPinMessage} />
+        <MessageItemButtons
+          onDelete={props.onDelete} />
+      </Box>
     </Box>
   );
 };

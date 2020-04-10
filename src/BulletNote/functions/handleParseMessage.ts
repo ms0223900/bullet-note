@@ -2,7 +2,8 @@ import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, Si
 
 class HandleParseMessage {
   static todoReg = /(\[\]\s)?/
-  static reviewReg = /(\*(\s)?)?/g
+  static reviewReg = /(\*(\s)?)\w+/g
+  static removeReviewPresetReg = /(\*(\s))/g
   static tagReg = /#\w+(\s)?/g
   static defaultTag: TagItem = {
     id: 'notDefinedTag',
@@ -66,20 +67,26 @@ class HandleParseMessage {
   static getMessageType(rawMessage: string) {
     const isTodoType = rawMessage.match(this.todoReg);
     const isReviewType = rawMessage.match(this.reviewReg);
+    console.log(isTodoType, isReviewType);
+
+    if(isReviewType) {
+      return MESSAGE_TYPE.DEFAULT;
+    }
 
     if(isTodoType) {
       return MESSAGE_TYPE.TODO;
     }
-    else if(isReviewType) {
-      return MESSAGE_TYPE.REVIEW;
-    }
-    return MESSAGE_TYPE.DEFAULT; 
+    // else if(isReviewType) {
+    //   return MESSAGE_TYPE.REVIEW;
+    // }
+    // return MESSAGE_TYPE.DEFAULT; 
   }
 
   static getRemovedTypeAndTagsMessage(rawMessage: string): string {
     let res = rawMessage;
     res = res.replace(this.tagReg, '');
     res = res.replace(this.todoReg, '');
+    res = res.replace(this.removeReviewPresetReg, '');
     return res;
   }
 
