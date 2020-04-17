@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, Container } from '@material-ui/core';
 import ContextWrapper from './constants/context';
 import InputPartContainerWithCtx from './containers/InputPart/InputPartContainer';
 import NotePartContainerWithCtx from './containers/NotePart/NotePartContainer';
@@ -65,14 +65,16 @@ const BulletNote = () => {
     <ContextWrapper customInitState={{
       // messageList: messageList
     }}>
-      <Box padding={1} className={classes.root}>
-        <Box className={classes.notePart}>
-          <NotePartContainerWithCtx />
+      <Container>
+        <Box padding={1} className={classes.root}>
+          <Box className={classes.notePart}>
+            <NotePartContainerWithCtx />
+          </Box>
+          <Box className={classes.inputPart}>
+            <InputPartContainerWithCtx />
+          </Box>
         </Box>
-        <Box className={classes.inputPart}>
-          <InputPartContainerWithCtx />
-        </Box>
-      </Box>
+      </Container>
     </ContextWrapper>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import TodoMessageItem from '../components/TodoMessageItem';
 import { MessageItem, MESSAGE_TYPE, TagNoteBlockItemProps } from '../types';
 import TodoMessageItemContainerWithCtx from '../containers/NotePart/TodoMessageItemContainer';
+import DefaultMessageItem from 'BulletNote/components/DefaultMessageItem';
 
 const switchMessagesByType = ({
   index, 
@@ -18,6 +19,14 @@ const switchMessagesByType = ({
         key={index}
         {...messageItemProps}
       />
+    );
+  }
+
+  case MESSAGE_TYPE.DEFAULT: {
+    return (
+      <DefaultMessageItem
+        key={index}
+        {...messageItemProps} />
     );
   }
   
