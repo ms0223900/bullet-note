@@ -12,7 +12,7 @@ const NoteBlockListContainer = (props: NoteBlockListContainerProps) => {
 
   React.useEffect(() => {
     handleScrollToView();
-  }, [props.messageList, handleScrollToView]);
+  }, [props.messageList.length, handleScrollToView]);
 
   return (
     <RootRef rootRef={ref}>
