@@ -7,7 +7,7 @@ class HandleDataInLocalStorage {
     return messageList.map(m => {
       let isDone = undefined;
       if(m.type === MESSAGE_TYPE.TODO) {
-        isDone = m.status.isDone;
+        isDone = !!m.status.isDone;
       }
       return ({
         id: m.message.id,

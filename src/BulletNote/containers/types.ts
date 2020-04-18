@@ -1,5 +1,6 @@
 import { MessageItemWrapperProps, BasicMessageItemProps, ToDoMessageItemProps, ToggleTodoFn } from "../components/types";
 import { TagNoteBlockItemProps, NoteBlockListProps } from "../types";
+import { BulletNoteState } from "BulletNote/constants/context";
 
 export interface InputPartContainerProps {
   addMessageFn: (rawMessage: string) => any
@@ -51,4 +52,8 @@ export interface PinItemContainerProps {
 
 export interface NoteBlockListContainerProps extends NoteBlockListProps {
   
+}
+
+export interface SyncToFirebaseProps {
+  messageList: BulletNoteState['messageList']
 }

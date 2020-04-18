@@ -108,13 +108,14 @@ class HandleParseMessage {
       tagList,
       content,
     });
+    
+    const status = this.makeTodoStatus({
+      name: '',
+      isDone: !!isDone,
+    });
 
     switch (messageType) {
     case MESSAGE_TYPE.TODO: {
-      const status = this.makeTodoStatus({
-        name: '',
-        isDone,
-      });
       return ({
         type: MESSAGE_TYPE.TODO,
         status,
@@ -124,7 +125,7 @@ class HandleParseMessage {
     default:
       return ({
         type: MESSAGE_TYPE.DEFAULT,
-        status: {},
+        status,
         message,
       });
     }
