@@ -17,9 +17,9 @@ const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
   
   const { id } = message;
 
-  const handleEdit = useCallback((e: ChangeEvent<HTMLElement>) => {
-    const { innerText } = e.target;
-    editActionFn(id, innerText);
+  const handleEdit = useCallback((e: ChangeEvent<any>) => {
+    const { value } = e.target;
+    editActionFn(id, value);
   }, [editActionFn, id]);
 
   const handleToggleStarMessage = useCallback((isStar: boolean | undefined) => {

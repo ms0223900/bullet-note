@@ -78,8 +78,8 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
       id,
       isStar
     } = action.payload;
-    console.log(id,
-      isStar);
+    // console.log(id,
+    //   isStar);
 
     const index = newMessageList.findIndex((m) => m.message.id === id);
     if(index !== -1) {
@@ -129,6 +129,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
         ...newMessageList[index],
         message: {
           ...newMessageList[index].message,
+          content: newMessage,
           rawMessage: newMessage + ' ' + tagsStr,
         }
       };

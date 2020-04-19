@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { Box, Typography, makeStyles } from '@material-ui/core';
+import { Box, Typography, makeStyles, TextField } from '@material-ui/core';
 import { BasicMessage } from '../types';
 import BulletTagList from './BullteTagList';
 import { BasicMessageItemProps } from './types';
@@ -25,6 +25,8 @@ const BasicMessageItem = (props: BasicMessageItemProps) => {
     createdAt,
   } = props.message;
 
+  const [isEditing, setEdit] = React.useState(false);
+
   return (
     <Box 
       display={'flex'} 
@@ -34,14 +36,22 @@ const BasicMessageItem = (props: BasicMessageItemProps) => {
     >
       <Box
         display={'flex'} 
+        onDoubleClick={() => setEdit(true)}
+        onBlur={() => setEdit(false)}
       >
-        <Typography 
-          variant={'subtitle1'} 
-          contentEditable={true}
-          onInput={props.onEditMessage}
-        >
-          {content}
-        </Typography>
+        {isEditing ? (
+          <TextField 
+            onChange={props.onEditMessage}
+            autoFocus={true}
+            value={content} />
+        ) : (
+          <Typography 
+            variant={'subtitle1'} 
+            // contentEditable={true}
+          >
+            {content}
+          </Typography>
+        )}
         <BulletTagList
           tagList={tagList} />
         <Typography variant={'body1'} color={'textSecondary'}>

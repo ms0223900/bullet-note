@@ -11,7 +11,7 @@ const firebaseConfig = {
   measurementId: "G-SPRTKCHE2L"
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const firebaseApp = firebase.initializeApp(firebaseConfig);
 const database = firebaseApp.database();
 
 export const firebasePath = (userId: string) => (

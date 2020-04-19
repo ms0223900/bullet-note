@@ -6,13 +6,16 @@ import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContext
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { SyncToFirebaseProps } from './types';
 import { connectCtx } from 'react-function-helpers';
-
-const mockUserId = 'ms0223900';
+import { useParams } from 'react-router';
+import HandleDataInLocalStorage from 'BulletNote/functions/HandleDataInLocalStorage';
 
 const SyncToFirebase = (props: SyncToFirebaseProps) => {
   const {
     messageList,
   } = props;
+  const {
+    userId,
+  } = useParams<{ userId: string }>();
   const jsonizedData = JSON.stringify(messageList);
 
   const [loading, setLoading] = useState(false);
@@ -27,15 +30,16 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   const handleSyncData = useCallback(() => {
     if(!syncSuccess) {
       console.log(messageList);
+      const data = HandleDataInLocalStorage.getData();
       setLoading(true);
       writeWholeDataToDB({
-        userId: mockUserId,
-        data: messageList,
+        userId,
+        data,
         successCb: handleSyncSuccess,
         errorCb: (err: any) => setErr(err),
       });
     }
-  }, [handleSyncSuccess, messageList, syncSuccess]);
+  }, [handleSyncSuccess, messageList, syncSuccess, userId]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

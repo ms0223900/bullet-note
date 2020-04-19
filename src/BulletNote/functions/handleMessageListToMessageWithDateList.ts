@@ -10,7 +10,7 @@ class HandleMessageList {
     if(!date1 || !date2) {
       return false;
     }
-    console.log(date1, date2);
+    // console.log(date1, date2);
     const date1Str = this.regDateToString(date1);
     const date2Str = this.regDateToString(date2);
     return date1Str === date2Str;

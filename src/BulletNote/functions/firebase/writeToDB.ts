@@ -1,19 +1,12 @@
 import database, { firebasePath } from "./config";
-import { Callback } from "common-types";
-
-interface WriteWholeDataToDBParams {
-  userId: string | undefined
-  successCb?: Callback
-  errorCb?: Callback
-  data: any
-}
+import { ReadWriteDataToDBParams } from "./types";
 
 const writeWholeDataToDB = ({
   userId,
   data,
   successCb,
   errorCb,
-}: WriteWholeDataToDBParams) => {
+}: ReadWriteDataToDBParams) => {
   if(!userId) {
     // window.alert('Please Login.');
     errorCb && errorCb({
