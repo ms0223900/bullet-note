@@ -1,3 +1,5 @@
 export const tabSpace = 1.5;
 
-export const syncTimeout = 10000; //seconds
+export const offLineModeParam = 'off-line-mode';
+
+export const syncTimeout = 1000; //seconds

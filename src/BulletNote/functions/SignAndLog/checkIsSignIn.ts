@@ -14,7 +14,7 @@ const checkIsSignIn = (userId: string | undefined, cb?: Callback) => {
     } else {
       isSignedIn = false;
     }
-    cb && cb(isSignedIn);
+    cb && cb(isSignedIn, user);
   });
   // return isSignedIn;
 };

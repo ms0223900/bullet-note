@@ -4,16 +4,21 @@ import { DownloadMessageListProps } from './types';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNoteState, ContextStore } from '../constants/context';
 import { connectCtx } from 'react-function-helpers';
+import HandleDataInLocalStorage from 'BulletNote/functions/HandleDataInLocalStorage';
 
 export const getJSONFile = (data: any) => {
   return `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`;
 };
 
+export const getTimeStamp = () => new Date().toLocaleString();
+
 const DownloadMessageList = (props: DownloadMessageListProps) => {
-  const timeStamp = new Date().toLocaleString();
+  const dataFromLS = HandleDataInLocalStorage.getData();
+  const timeStamp = getTimeStamp();
+
   return (
     <Button
-      href={getJSONFile(props.messageList)}
+      href={getJSONFile(dataFromLS)}
       download={`bullet-note-backup-${timeStamp}.json`}
     >
       {'download backup'}

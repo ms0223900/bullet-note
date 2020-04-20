@@ -67,7 +67,7 @@ class HandleParseMessage {
   static getMessageType(rawMessage: string) {
     const isTodoType = rawMessage.match(this.todoReg);
     const isReviewType = rawMessage.match(this.reviewReg);
-    console.log(isTodoType, isReviewType);
+    // console.log(isTodoType, isReviewType);
 
     if(isReviewType) {
       return MESSAGE_TYPE.DEFAULT;
