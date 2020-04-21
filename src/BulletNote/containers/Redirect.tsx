@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import checkIsSignIn from 'BulletNote/functions/SignAndLog/checkIsSignIn';
+import { logInParam } from 'BulletNote/config';
 
 
 const Redirect = () => {
@@ -12,13 +13,13 @@ const Redirect = () => {
       let userId = '';
       if(user) {
         userId = user.uid;
+        history.push(`/bullet-note/${userId}`);
       } else {
-        userId = 'log-in';
+        history.push(`/${logInParam}`);
       }
-      history.push(`/bullet-note/${userId}`);
     };
 
-    checkIsSignIn('', redirectToUserPage);
+    checkIsSignIn(redirectToUserPage);
   }, [history]);
 
   return (

@@ -1,5 +1,6 @@
 import database, { firebasePath } from "./config";
 import { ReadWriteDataToDBParams } from "./types";
+import checkIsSignIn from "../SignAndLog/checkIsSignIn";
 
 const writeWholeDataToDB = ({
   userId,
@@ -13,15 +14,24 @@ const writeWholeDataToDB = ({
       message: 'Please Login.',
     });
   } else {
-    database
-      .ref(firebasePath(userId))
-      .set(data)
-      .finally(() => {
-        successCb && successCb();
-      })
-      .catch((err) => {
-        errorCb && errorCb(err);
-      });
+    const writeToFirebase = (isSignedIn: boolean, user: firebase.User | null) => {
+      if(user) {
+        database
+          .ref(firebasePath(user.uid))
+          .set(data)
+          .finally(() => {
+            successCb && successCb();
+          })
+          .catch((err) => {
+            errorCb && errorCb(err);
+          });
+      } else {
+        errorCb && errorCb({
+          message: 'Please Login.',
+        });
+      }
+    };
+    checkIsSignIn(writeToFirebase);
   }
 };
 

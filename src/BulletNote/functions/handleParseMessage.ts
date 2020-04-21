@@ -2,7 +2,7 @@ import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, Si
 
 class HandleParseMessage {
   static todoReg = /(\[\]\s)?/
-  static reviewReg = /(\*(\s)?)\w+/g
+  static reviewReg = /(\*(\s)?)+([\u4E00-\u9FFF]|\w)+/g
   static removeReviewPresetReg = /(\*(\s))/g
   static tagReg = /#\w+(\s)?/g
   static defaultTag: TagItem = {

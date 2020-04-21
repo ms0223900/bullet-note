@@ -36,6 +36,7 @@ const BasicMessageItem = (props: BasicMessageItemProps) => {
     >
       <Box
         display={'flex'} 
+        alignItems={'center'}
         onDoubleClick={() => setEdit(true)}
         onBlur={() => setEdit(false)}
       >

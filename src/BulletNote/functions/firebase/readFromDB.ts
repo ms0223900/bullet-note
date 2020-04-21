@@ -8,7 +8,7 @@ const readFromDB = ({
 }: ReadWriteDataToDBParams) => {
   if(!userId) {
     errorCb && errorCb({
-      message: 'Please Login or check network.'
+      message: 'Please check user id again.'
     });
   } else {
     const path = firebasePath(userId);
@@ -17,8 +17,14 @@ const readFromDB = ({
       .once('value')
       .then(snapshot => {
         const value = snapshot.val();
-        console.log('snapshot from firebase: ', value);
-        successCb && successCb(value);
+        if(value) {
+          console.log('snapshot from firebase: ', value);
+          successCb && successCb(value);
+        } else {
+          errorCb && errorCb({
+            message: 'User not found.'
+          });
+        }
       })
       .catch(err => {
         errorCb && errorCb(err);

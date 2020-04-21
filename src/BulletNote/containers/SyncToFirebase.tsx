@@ -36,7 +36,10 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
         userId,
         data,
         successCb: handleSyncSuccess,
-        errorCb: (err: any) => setErr(err),
+        errorCb: (err: any) => {
+          setErr(err);
+          setLoading(false);
+        },
       });
     }
   }, [handleSyncSuccess, messageList, syncSuccess, userId]);
@@ -62,7 +65,7 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   if(error) {
     return (
       <Typography>
-        {'Check your login and network.'}
+        {'Check your login and network.It is off-line mode copy now.'}
       </Typography>
     );
   }

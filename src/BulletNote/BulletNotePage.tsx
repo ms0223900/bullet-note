@@ -1,19 +1,15 @@
 import React, { useCallback } from 'react';
-import { Box, makeStyles, Container, CircularProgress, Typography } from '@material-ui/core';
-import ContextWrapper, { BulletNoteState } from './constants/context';
+import { Box, makeStyles, Container, CircularProgress } from '@material-ui/core';
+import ContextWrapper from './constants/context';
 import InputPartContainerWithCtx from './containers/InputPart/InputPartContainer';
 import NotePartContainerWithCtx from './containers/NotePart/NotePartContainer';
 import './styles/style.scss';
-import SyncToFirebaseWithCtx from './containers/SyncToFirebase';
-import { useParams, useHistory } from 'react-router';
-import checkIsSignIn from './functions/SignAndLog/checkIsSignIn';
-import LoginPart from './containers/LoginPart';
+import { useParams } from 'react-router';
 import HandleDataInLocalStorage from './functions/HandleDataInLocalStorage';
 import readFromDB from './functions/firebase/readFromDB';
-import HandleParseMessage from './functions/handleParseMessage';
 import { offLineModeParam } from './config';
-
-const navHeight = 32;
+import NavBar, { navHeight } from './components/CommonComponents/NavBar';
+import UserNotFoundPage from './components/CommonComponents/UserNotFoundPage';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,15 +31,15 @@ const useStyles = makeStyles(theme => ({
 
 const BulletNotePage = () => {
   const classes = useStyles();
-  const history = useHistory();
   const {
     userId
   } = useParams<{ userId: string }>();
 
   console.log(userId);
-
-  const [isSignIn, setSignIn] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState({
+    message: '',
+  });
   const [isOffline, setOffline] = React.useState(false);
   // const [initMessageList, setMessageList] = React.useState<BulletNoteState['messageList']>([]);
 
@@ -54,49 +50,35 @@ const BulletNotePage = () => {
         HandleDataInLocalStorage.setDataFromRawData(rawData);
         setLoading(false);
         // window.location.reload();
+      },
+      errorCb: (error) => {
+        setError(error);
+        setLoading(false);
       }
     });
   }, []);
 
-  const handleLogIn = useCallback((signInRes: boolean, user: firebase.User | null) => {
-    setSignIn(signInRes);
-    if(userId === offLineModeParam) {
-      return;
-    }
-    if(user) {
-      if(!signInRes) {
-        history.push(`/bullet-note/${user.uid}`);
-      }
-      handleSetFirebaseDataToLS(user.uid);
-    } else {
+  React.useEffect(() => {
+    const LSdata = HandleDataInLocalStorage.getData();
+    const isHaveLSdata = LSdata && LSdata.length > 0;
+    const isOfflineMode = userId === offLineModeParam;
+
+    if(isOfflineMode && isHaveLSdata) {
       setLoading(false);
+      setOffline(true);
+    } else {
+      handleSetFirebaseDataToLS(userId);
     }
-  }, [handleSetFirebaseDataToLS, history, userId]);
-
-  React.useEffect(() => {
-    checkIsSignIn(userId, handleLogIn);
-  }, [handleLogIn, userId]);
-
-  React.useEffect(() => {
-    //offline mode?
-    
-    if(!isSignIn) {
-      const LSdata = HandleDataInLocalStorage.getData();
-      if(LSdata && LSdata.length > 0) {
-        setSignIn(true);
-        setLoading(false);
-        setOffline(true);
-      } 
-    }
-  }, [handleSetFirebaseDataToLS, isSignIn]);
+  }, [handleSetFirebaseDataToLS, userId]);
 
   if(loading) {
     return <CircularProgress />;
   }
 
-  if(!isSignIn) {
+  if(error.message) {
     return (
-      <LoginPart />
+      <UserNotFoundPage
+        errorMessage={error.message} />
     );
   }
 
@@ -104,24 +86,8 @@ const BulletNotePage = () => {
     <ContextWrapper customInitState={{
       // messageList: initMessageList,
     }}>
-      <Box
-        display={'flex'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        height={navHeight}
-        style={{
-          backgroundColor: '#bca1ed'
-        }}
-      >
-        <SyncToFirebaseWithCtx />
-        {isOffline && (
-          <Typography
-            color={'textSecondary'}
-          >
-            {'Offline Mode'}
-          </Typography>
-        )}
-      </Box>
+      <NavBar
+        isOffline={isOffline} />
       <Container>
         <Box padding={1} className={classes.root}>
           <Box className={classes.notePart}>

@@ -3,6 +3,7 @@ import { Box, TextField, Button, Container, Typography } from '@material-ui/core
 import useForm from '../../lib/customHooks/useForm';
 import { useHistory } from 'react-router';
 import handleLogInToFirebase from 'BulletNote/functions/SignAndLog/handleLogInToFirebase';
+import AuthPageWrapper from './wrappers/AuthPageWrapper';
 
 const LoginPart = () => {
   const history = useHistory();
@@ -36,7 +37,6 @@ const LoginPart = () => {
 
   return (
     <Container>
-
       <Box
         padding={1}
         textAlign={'center'}
@@ -85,5 +85,11 @@ const LoginPart = () => {
     </Container>
   );
 };
+
+export const LoginPartWithAuth = () => (
+  <AuthPageWrapper>
+    <LoginPart />
+  </AuthPageWrapper>
+);
 
 export default LoginPart;
