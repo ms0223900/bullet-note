@@ -17,7 +17,8 @@ const NoteBlockListContainer = (props: NoteBlockListContainerProps) => {
   return (
     <RootRef rootRef={ref}>
       <NoteBlockList
-        {...props}  />
+        {...props}
+        moveToBottomFn={handleScrollToView} />
     </RootRef>
   );
 };

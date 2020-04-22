@@ -50,7 +50,7 @@ export interface PinItemContainerProps {
   onChange?: (isPin?: boolean) => any
 }
 
-export interface NoteBlockListContainerProps extends NoteBlockListProps {
+export interface NoteBlockListContainerProps extends Omit<NoteBlockListProps, 'moveToBottomFn'> {
   
 }
 

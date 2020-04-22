@@ -1,13 +1,15 @@
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, Fab } from '@material-ui/core';
 import { NoteBlockListProps } from '../types';
 import HandleMessageList from '../functions/handleMessageListToMessageWithDateList';
 import NoteBlockItem from './NoteBlockItem';
 import checkDateIsToday from '../functions/checkDateIsToday';
+import { ArrowDownward } from '@material-ui/icons';
 
 const NoteBlockList = (props: NoteBlockListProps) => {
   const {
-    messageList
+    messageList,
+    moveToBottomFn,
   } = props;
 
   if(messageList.length === 0) {
@@ -21,13 +23,31 @@ const NoteBlockList = (props: NoteBlockListProps) => {
   const messageListWithDate = HandleMessageList
     .convertToMessageWithDateList(messageList);
   return (
-    <Box>
-      {messageListWithDate.map((m, i) => (
-        <NoteBlockItem
-          key={i}
-          {...m}
-          selected={checkDateIsToday(m.date)} />
-      ))}
+    <Box
+      position={'relative'}
+    >
+      <Box>
+        {messageListWithDate.map((m, i) => (
+          <NoteBlockItem
+            key={i}
+            {...m}
+            selected={checkDateIsToday(m.date)} />
+        ))}
+      </Box>
+      <Box
+        style={{
+          position: 'fixed',
+          bottom: 80,
+          right: 20,
+        }}
+      >
+        <Fab
+          size={'small'}
+          onClick={moveToBottomFn}
+        >
+          <ArrowDownward />
+        </Fab>
+      </Box>
     </Box>
   );
 };

@@ -46,4 +46,6 @@ export interface DownloadMessageListProps {
 
 export interface PinMessageListProps {
   messageList: MessageList
+  isShowPinMessageList?: boolean
+  toggleShowPinMessageListFn: Callback
 }

@@ -3,8 +3,8 @@ import { Box, makeStyles } from '@material-ui/core';
 import { NotePartProps } from '../types';
 import DownloadMessageListWithCtx from '../DownloadMessageList';
 import RestoreBackup from '../RestoreBackup';
-import PinMessageList from './PinMessageList';
 import NoteBlockListContainer from 'BulletNote/containers/NoteBlockListContainer';
+import PinMessageListContainer from 'BulletNote/containers/NotePart/PinMessageListContainer';
 
 const useStyles = makeStyles(() => ({
   pinMessageListPart: {
@@ -25,7 +25,7 @@ const NotePart = (props: NotePartProps) => {
   return (
     <>
       <Box className={classes.pinMessageListPart}>
-        <PinMessageList
+        <PinMessageListContainer
           messageList={props.messageList} />
       </Box>
       <Box>

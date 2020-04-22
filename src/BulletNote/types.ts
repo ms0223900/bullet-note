@@ -1,4 +1,4 @@
-import { ID } from "common-types";
+import { ID, Callback } from "common-types";
 import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps, ToggleTodoFn } from "./components/types";
 
 type RawMessage = string
@@ -93,6 +93,7 @@ export interface TagNoteBlockListProps {
 
 export interface NoteBlockListProps {
     messageList: MessageList
+    moveToBottomFn: Callback
   }
 
 export interface DateTitleProps {

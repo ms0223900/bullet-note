@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Divider, Paper } from '@material-ui/core';
+import { Box, Typography, Divider, Paper, Button } from '@material-ui/core';
 import { PinMessageListProps } from '../types';
 import switchMessagesByType from '../../functions/switchMessagesByType';
 import { MessageList } from '../../types';
@@ -9,19 +9,47 @@ export const filterPinedMessageList = (messageList: MessageList) => {
 };
 
 const PinMessageList = (props: PinMessageListProps) => {
-  const filteredPinMessageList = filterPinedMessageList(props.messageList);
+  const {
+    isShowPinMessageList,
+    toggleShowPinMessageListFn,
+    messageList,
+  } = props;
+
+  const filteredPinMessageList = filterPinedMessageList(messageList);
 
   return (
     <Paper elevation={2}>
-      <Typography>
-        {'Pin Messages'}
-      </Typography>
-      {filteredPinMessageList.map((m, index) => (
-        switchMessagesByType({
-          index,
-          messageItemProps: m
-        })
-      ))}
+      <Box
+        display={'flex'}
+        alignItems={'center'}
+        style={{
+          position: 'sticky',
+          top: 0,
+          backgroundColor: '#fff',
+          zIndex: 100,
+        }}
+      >
+        <Typography>
+          {'Pin Messages'}
+        </Typography>
+        <Button
+          onClick={toggleShowPinMessageListFn}
+        >
+          {isShowPinMessageList ? 'Hide' : 'Show'}
+        </Button>
+      </Box>
+      <Box
+        style={{
+          display: isShowPinMessageList ? 'block' : 'none',
+        }}
+      >
+        {filteredPinMessageList.map((m, index) => (
+          switchMessagesByType({
+            index,
+            messageItemProps: m
+          })
+        ))}
+      </Box>
       <Divider />
     </Paper>
   );
