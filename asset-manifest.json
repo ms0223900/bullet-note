@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "https://ms0223900.github.io/bullet-note/static/css/main.0d172d4a.chunk.css",
-    "main.js": "https://ms0223900.github.io/bullet-note/static/js/main.7c63d28b.chunk.js",
-    "main.js.map": "https://ms0223900.github.io/bullet-note/static/js/main.7c63d28b.chunk.js.map",
-    "runtime-main.js": "https://ms0223900.github.io/bullet-note/static/js/runtime-main.7662e8a7.js",
-    "runtime-main.js.map": "https://ms0223900.github.io/bullet-note/static/js/runtime-main.7662e8a7.js.map",
-    "static/js/2.45fe1327.chunk.js": "https://ms0223900.github.io/bullet-note/static/js/2.45fe1327.chunk.js",
-    "static/js/2.45fe1327.chunk.js.map": "https://ms0223900.github.io/bullet-note/static/js/2.45fe1327.chunk.js.map",
-    "index.html": "https://ms0223900.github.io/bullet-note/index.html",
-    "precache-manifest.69016a78efc6dbb50289ef1f8e30cd91.js": "https://ms0223900.github.io/bullet-note/precache-manifest.69016a78efc6dbb50289ef1f8e30cd91.js",
-    "service-worker.js": "https://ms0223900.github.io/bullet-note/service-worker.js",
-    "static/css/main.0d172d4a.chunk.css.map": "https://ms0223900.github.io/bullet-note/static/css/main.0d172d4a.chunk.css.map",
-    "static/js/2.45fe1327.chunk.js.LICENSE.txt": "https://ms0223900.github.io/bullet-note/static/js/2.45fe1327.chunk.js.LICENSE.txt"
+    "main.css": "/bullet-note/static/css/main.0d172d4a.chunk.css",
+    "main.js": "/bullet-note/static/js/main.8ebdb25d.chunk.js",
+    "main.js.map": "/bullet-note/static/js/main.8ebdb25d.chunk.js.map",
+    "runtime-main.js": "/bullet-note/static/js/runtime-main.1773b4ad.js",
+    "runtime-main.js.map": "/bullet-note/static/js/runtime-main.1773b4ad.js.map",
+    "static/js/2.73d051c3.chunk.js": "/bullet-note/static/js/2.73d051c3.chunk.js",
+    "static/js/2.73d051c3.chunk.js.map": "/bullet-note/static/js/2.73d051c3.chunk.js.map",
+    "index.html": "/bullet-note/index.html",
+    "precache-manifest.22f879ab858a76bf860efb729a29dac2.js": "/bullet-note/precache-manifest.22f879ab858a76bf860efb729a29dac2.js",
+    "service-worker.js": "/bullet-note/service-worker.js",
+    "static/css/main.0d172d4a.chunk.css.map": "/bullet-note/static/css/main.0d172d4a.chunk.css.map",
+    "static/js/2.73d051c3.chunk.js.LICENSE.txt": "/bullet-note/static/js/2.73d051c3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.7662e8a7.js",
-    "static/js/2.45fe1327.chunk.js",
+    "static/js/runtime-main.1773b4ad.js",
+    "static/js/2.73d051c3.chunk.js",
     "static/css/main.0d172d4a.chunk.css",
-    "static/js/main.7c63d28b.chunk.js"
+    "static/js/main.8ebdb25d.chunk.js"
   ]
 }
