@@ -72,7 +72,12 @@ const BulletNotePage = () => {
   }, [handleSetFirebaseDataToLS, userId]);
 
   if(loading) {
-    return <CircularProgress />;
+    return (
+      <>
+        <CircularProgress />
+        {'Loading...'}
+      </>
+    );
   }
 
   if(error.message) {
@@ -89,7 +94,7 @@ const BulletNotePage = () => {
       <NavBar
         isOffline={isOffline} />
       <Container>
-        <Box padding={1} className={classes.root}>
+        <Box className={classes.root}>
           <Box className={classes.notePart}>
             <NotePartContainerWithCtx />
           </Box>

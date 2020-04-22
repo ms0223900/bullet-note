@@ -3,6 +3,11 @@ import { createContextValueFn, createContextStore } from "react-function-helpers
 import reducers from "../reducers";
 import ContextWrapperFn from "react-function-helpers/lib/functions/ContextWrapper";
 
+export interface BulletNoteConfig {
+  showTagList: boolean
+  showDate: boolean
+}
+
 export interface BulletNoteState {
   messageList: MessageList
 }
