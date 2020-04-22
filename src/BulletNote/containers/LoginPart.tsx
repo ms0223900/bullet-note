@@ -4,6 +4,7 @@ import useForm from '../../lib/customHooks/useForm';
 import { useHistory } from 'react-router';
 import handleLogInToFirebase from 'BulletNote/functions/SignAndLog/handleLogInToFirebase';
 import AuthPageWrapper from './wrappers/AuthPageWrapper';
+import { myBulletNoteParam } from 'BulletNote/config';
 
 const LoginPart = () => {
   const history = useHistory();
@@ -30,7 +31,7 @@ const LoginPart = () => {
     handleLogInToFirebase({
       email: form.email.value,
       password: form.password.value,
-      successCb: (userId: string) => history.push(`/bullet-note/${userId}`),
+      successCb: (userId: string) => history.push(`/${myBulletNoteParam}/${userId}`),
       errorCb: setError,
     });
   }, [form, history]);

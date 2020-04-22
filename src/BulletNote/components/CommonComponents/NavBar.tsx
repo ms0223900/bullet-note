@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Button } from '@material-ui/core';
 import SyncToFirebaseWithCtx from 'BulletNote/containers/SyncToFirebase';
 import { NavBarProps } from './types';
-import { offLineModeParam } from 'BulletNote/config';
+import { offLineModeParam, myBulletNoteParam } from 'BulletNote/config';
 
 export const navHeight = 32;
 
@@ -38,7 +38,7 @@ const NavBar = (props: NavBarProps) => {
         </Box>
       )}
       {!isOffline && (
-        <Button color={'primary'} href={`/bullet-note/${offLineModeParam}`}>
+        <Button color={'primary'} href={`/${myBulletNoteParam}/${offLineModeParam}`}>
           {'Offline-mode'}
         </Button>
       )}

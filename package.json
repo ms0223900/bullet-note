@@ -2,7 +2,7 @@
   "name": "bullet-note",
   "version": "1.0.0-beta",
   "private": true,
-  "homepage": "https://ms0223900.github.io/bullet-note/",
+  "homepage": "https://ms0223900.github.io/bullet-note",
   "dependencies": {
     "@material-ui/core": "^4.9.9",
     "@material-ui/icons": "^4.9.1",
