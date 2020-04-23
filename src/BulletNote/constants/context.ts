@@ -14,7 +14,7 @@ export interface BulletNoteState {
 }
 
 const initBulletNoteConfig: BulletNoteConfig = {
-  showingDaysRange: 7, //one week
+  showingDaysRange: 14, //two weeks
 };
 
 const initState: BulletNoteState = {
