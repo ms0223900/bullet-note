@@ -1,6 +1,9 @@
-import { MessageList, NoteBlockItemProps } from "../types";
+import { MessageList, NoteBlockItemProps, MessageListWithDate } from "../types";
 
 class HandleMessageList {
+  static getMillSecondsForDays(day: number) {
+    return day * 24 * 60 * 60 * 1000;
+  }
   static regDateToString(date: Date | string) {
     const dateObj = new Date(date);
     return dateObj.toLocaleDateString();
@@ -45,6 +48,21 @@ class HandleMessageList {
   
     return messageWithDateList;
   };
+
+  static filterMessageListByDaysRange(messgeWithDateList: MessageListWithDate[], daysRange: number) {
+    const todayTime = (new Date()).getTime();
+    const daysRangeTime = this.getMillSecondsForDays(daysRange);
+
+    const res = messgeWithDateList.filter(message => {
+      const createdAtTime = (new Date(message.date)).getTime();
+      if(todayTime - createdAtTime <= daysRangeTime) {
+        return true;
+      }
+      return false;
+    });
+
+    return res;
+  }
 }
 
 export default HandleMessageList;

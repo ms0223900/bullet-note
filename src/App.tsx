@@ -2,10 +2,14 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import BulletNote from 'BulletNote';
+import { ThemeProvider } from '@material-ui/core';
+import theme from 'BulletNote/theme/theme';
 
 function App() {
   return (
-    <BulletNote />
+    <ThemeProvider theme={theme}>
+      <BulletNote />
+    </ThemeProvider>
   );
 }
 

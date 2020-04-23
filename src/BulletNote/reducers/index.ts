@@ -4,6 +4,7 @@ import inputPartReducers from "./message-reducers";
 
 const reducers = combineReducers<BulletNoteState>({
   messageList: inputPartReducers,
+  bulletNoteConfig: s => s.bulletNoteConfig,
 });
 
 export default reducers;

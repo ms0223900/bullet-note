@@ -8,7 +8,11 @@ const DefaultMessageItem = (props: DefaultMessageItemProps) => {
   return (
     <MessageItemWrapperContainerWithCtx
       {...props}>
-      <KeyboardArrowRight />
+      <Box
+        padding={1}
+      >
+        <KeyboardArrowRight />
+      </Box>
     </MessageItemWrapperContainerWithCtx>
   );
 };

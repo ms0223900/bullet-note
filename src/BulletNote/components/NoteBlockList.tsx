@@ -1,15 +1,19 @@
 import React from 'react';
 import { Box, Typography, Fab } from '@material-ui/core';
-import { NoteBlockListProps } from '../types';
+import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
+import { NoteBlockListProps, NoteBlockListWithCtxProps } from '../types';
 import HandleMessageList from '../functions/handleMessageListToMessageWithDateList';
 import NoteBlockItem from './NoteBlockItem';
 import checkDateIsToday from '../functions/checkDateIsToday';
 import { ArrowDownward } from '@material-ui/icons';
+import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
+import { connectCtx } from 'react-function-helpers';
 
 const NoteBlockList = (props: NoteBlockListProps) => {
   const {
     messageList,
     moveToBottomFn,
+    bulletNoteConfig,
   } = props;
 
   if(messageList.length === 0) {
@@ -22,12 +26,16 @@ const NoteBlockList = (props: NoteBlockListProps) => {
 
   const messageListWithDate = HandleMessageList
     .convertToMessageWithDateList(messageList);
+
+  const messageListWithDateFilterByDaysRange = HandleMessageList
+    .filterMessageListByDaysRange(messageListWithDate, bulletNoteConfig.showingDaysRange);
+  
   return (
     <Box
       position={'relative'}
     >
       <Box>
-        {messageListWithDate.map((m, i) => (
+        {messageListWithDateFilterByDaysRange.map((m, i) => (
           <NoteBlockItem
             key={i}
             {...m}
@@ -52,4 +60,15 @@ const NoteBlockList = (props: NoteBlockListProps) => {
   );
 };
 
-export default NoteBlockList;
+const mapStateToProps: MapStateToProps<BulletNoteState, NoteBlockListWithCtxProps, {
+  bulletNoteConfig: BulletNoteState['bulletNoteConfig']
+}> = (state) => {
+  return ({
+    bulletNoteConfig: state.bulletNoteConfig
+  });
+};
+
+
+const NoteBlockListWithCtx = connectCtx(ContextStore)(mapStateToProps)(NoteBlockList);
+
+export default NoteBlockListWithCtx;

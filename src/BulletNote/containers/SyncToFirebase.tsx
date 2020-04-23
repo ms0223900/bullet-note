@@ -8,6 +8,7 @@ import { SyncToFirebaseProps } from './types';
 import { connectCtx } from 'react-function-helpers';
 import { useParams } from 'react-router';
 import HandleDataInLocalStorage from 'BulletNote/functions/HandleDataInLocalStorage';
+import { Check } from '@material-ui/icons';
 
 const SyncToFirebase = (props: SyncToFirebaseProps) => {
   const {
@@ -71,14 +72,28 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   }
   
   return (
-    <>
+    <Box
+      display={'flex'}
+    >
       <Button
         onClick={handleSyncData}
       >
         {'Sync'}
       </Button>
-      {syncSuccess && 'Sync success'}
-    </>
+      {syncSuccess && (
+        <Box
+          display={'flex'}
+          alignItems={'center'}
+        >
+          <Check />
+          <Typography
+            color={'textSecondary'}
+          >
+            {'Sync success'}
+          </Typography>
+        </Box>
+      )}
+    </Box>
   );
 };
 

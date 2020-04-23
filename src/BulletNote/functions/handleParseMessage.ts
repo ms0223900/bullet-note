@@ -4,7 +4,7 @@ class HandleParseMessage {
   static todoReg = /(\[\]\s)?/
   static reviewReg = /(\*(\s)?)+([\u4E00-\u9FFF]|\w)+/g
   static removeReviewPresetReg = /(\*(\s))/g
-  static tagReg = /#\w+(\s)?/g
+  static tagReg = /#(\S)+(\s)?/g
   static defaultTag: TagItem = {
     id: 'notDefinedTag',
     name: '#未分類'

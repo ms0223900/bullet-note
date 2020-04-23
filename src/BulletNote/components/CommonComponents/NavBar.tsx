@@ -1,25 +1,30 @@
 import React from 'react';
-import { Box, Typography, Button } from '@material-ui/core';
+import { Box, Typography, Button, makeStyles } from '@material-ui/core';
 import SyncToFirebaseWithCtx from 'BulletNote/containers/SyncToFirebase';
 import { NavBarProps } from './types';
 import { offLineModeParam, myBulletNoteParam } from 'BulletNote/config';
 
 export const navHeight = 32;
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.primary.light,
+    height: navHeight,
+  }
+}));
+
 const NavBar = (props: NavBarProps) => {
   const {
     isOffline
   } = props;
+  const classes = useStyles();
   
   return (
     <Box
       display={'flex'}
       alignItems={'center'}
       justifyContent={'space-between'}
-      height={navHeight}
-      style={{
-        backgroundColor: '#bca1ed'
-      }}
+      className={classes.root}
     >
       <SyncToFirebaseWithCtx />
       {isOffline && (

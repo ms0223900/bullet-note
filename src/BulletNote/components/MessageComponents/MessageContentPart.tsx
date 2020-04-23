@@ -40,8 +40,9 @@ const MessageContentPart = (props: BasicMessageItemProps) => {
           {content}
         </Typography>
       )}
-      <BulletTagList
-        tagList={tagList} />
+      {/* <BulletTagList
+        tagList={tagList} 
+        /> */}
       <Typography variant={'body1'} color={'textSecondary'}>
         {regDateToString(createdAt)}
       </Typography>

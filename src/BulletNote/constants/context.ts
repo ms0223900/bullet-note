@@ -4,16 +4,22 @@ import reducers from "../reducers";
 import ContextWrapperFn from "react-function-helpers/lib/functions/ContextWrapper";
 
 export interface BulletNoteConfig {
-  showTagList: boolean
-  showDate: boolean
+  // showTagList: boolean
+  showingDaysRange: number
 }
 
 export interface BulletNoteState {
   messageList: MessageList
+  bulletNoteConfig: BulletNoteConfig
 }
 
+const initBulletNoteConfig: BulletNoteConfig = {
+  showingDaysRange: 7, //one week
+};
+
 const initState: BulletNoteState = {
-  messageList: []
+  messageList: [],
+  bulletNoteConfig: initBulletNoteConfig,
 };
 
 const ContextValueFn  = createContextValueFn(initState, reducers);

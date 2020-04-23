@@ -1,5 +1,6 @@
 import { ID, Callback } from "common-types";
 import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps, ToggleTodoFn } from "./components/types";
+import { BulletNoteState } from "./constants/context";
 
 type RawMessage = string
 
@@ -79,7 +80,10 @@ export interface TagNoteBlockItem {
   tagTitle: string
   messageList: MessageList
 }
+
 export interface TagNoteBlockItemProps extends TagNoteBlockItem {
+  toggleShowMessagesFn: Callback
+  isShowMessages: boolean
 }
 export type TagNoteBlockList = TagNoteBlockItem[]
 export interface TagNoteBlockObj {
@@ -91,10 +95,14 @@ export interface TagNoteBlockListProps {
   tagNoteBlockList: TagNoteBlockList
 }
 
-export interface NoteBlockListProps {
-    messageList: MessageList
-    moveToBottomFn: Callback
-  }
+export interface NoteBlockListProps extends NoteBlockListWithCtxProps {
+  bulletNoteConfig: BulletNoteState['bulletNoteConfig']
+}
+
+export interface NoteBlockListWithCtxProps {
+  messageList: MessageList
+  moveToBottomFn: Callback
+}
 
 export interface DateTitleProps {
     date: Date | string

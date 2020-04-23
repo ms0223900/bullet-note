@@ -1,5 +1,5 @@
 import { MessageItemWrapperProps, BasicMessageItemProps, ToDoMessageItemProps, ToggleTodoFn } from "../components/types";
-import { TagNoteBlockItemProps, NoteBlockListProps } from "../types";
+import { TagNoteBlockItemProps, NoteBlockListProps, NoteBlockListWithCtxProps } from "../types";
 import { BulletNoteState } from "BulletNote/constants/context";
 
 export interface InputPartContainerProps {
@@ -15,7 +15,7 @@ MessageItemWrapperProps, 'onDelete'> {
   
 }
 
-export interface TagNoteBlockItemContainerProps extends Omit<TagNoteBlockItemProps, 'onToggleTodo'> {}
+export interface TagNoteBlockItemContainerProps extends Omit<TagNoteBlockItemProps, 'onToggleTodo' | 'toggleShowMessagesFn' | 'isShowMessages'> {}
 
 export interface TagNoteBlockItemContainerWithCtxProps extends Omit<TagNoteBlockItemContainerProps, 'toggleTodoAction'> {
 }
@@ -50,7 +50,7 @@ export interface PinItemContainerProps {
   onChange?: (isPin?: boolean) => any
 }
 
-export interface NoteBlockListContainerProps extends Omit<NoteBlockListProps, 'moveToBottomFn'> {
+export interface NoteBlockListContainerProps extends Omit<NoteBlockListWithCtxProps, 'moveToBottomFn'> {
   
 }
 
