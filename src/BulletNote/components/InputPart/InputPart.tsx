@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, TextField, Button } from '@material-ui/core';
 import { InputPartProps } from './types';
+import TagList from './TagList';
 
 const InputPart = (props: InputPartProps) => {
   const {
@@ -11,12 +12,27 @@ const InputPart = (props: InputPartProps) => {
 
   return (
     <Box display={'flex'} paddingTop={1}>
-      <TextField
-        autoFocus={true}
-        variant={'outlined'}
-        fullWidth={true}
-        value={value}
-        onChange={onChange} />
+      <Box
+        position={'relative'}
+        width={'100%'}
+      >
+        <TextField
+          autoFocus={true}
+          variant={'outlined'}
+          fullWidth={true}
+          value={value}
+          onChange={onChange} />
+        <Box
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+          }}
+        >
+          <TagList
+            {...props} />
+        </Box>
+      </Box>
       <Box paddingLeft={1}>
         <Button onClick={onSendMessage}>
           {'send'}

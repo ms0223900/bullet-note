@@ -1,20 +1,37 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, ChangeEvent } from 'react';
 import { Box } from '@material-ui/core';
 import useInput from 'lib/customHooks/useInput';
 import InputPart from 'BulletNote/components/InputPart/InputPart';
-import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
+import { MapDispatchToProps, MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { InputPartContainerProps } from '../types';
 import { addMessage } from 'BulletNote/actions/message-actions';
 import { connectCtx } from 'react-function-helpers';
-import { ContextStore } from '../../constants/context';
+import { ContextStore, BulletNoteState } from '../../constants/context';
 import { useFnsByKeyCode } from 'react-function-helpers/lib/lib/customHooks/useFnsByKeyCode';
+import useSelectorSelect from 'lib/customHooks/useSelectorSelect';
+import getTagsFromMessageList from 'BulletNote/functions/getTagsFromMessageList';
 
 const InputPartContainer = (props: InputPartContainerProps) => {
+  const {
+    tags,
+  } = props;
+
   const {
     value,
     setVal,
     handleChange,
   } = useInput();
+
+  const handleAddTagToValue = useCallback((values: { tagValue: string }) => {
+    setVal(v => `${v} ${values.tagValue}`);
+  }, [setVal]);
+
+  const {
+    values,
+    handleSelect,
+  } = useSelectorSelect({
+    tagValue: '',
+  }, handleAddTagToValue);
 
   const handleSendMessage = useCallback(() => {
     if(value.length > 0) {
@@ -31,15 +48,19 @@ const InputPartContainer = (props: InputPartContainerProps) => {
 
   return (
     <InputPart
+      tags={tags}
       value={value}
+      tagValue={values.tagValue}
       onChange={handleChange}
-      onSendMessage={handleSendMessage} />
+      onChangeSelect={handleSelect('tagValue')}
+      onSendMessage={handleSendMessage}
+    />
   );
 };
 
 interface OwnProps {}
 
-const mapDispatchToProps: MapDispatchToProps<OwnProps, InputPartContainerProps> = (dispatch) => {
+const mapDispatchToProps: MapDispatchToProps<OwnProps, Omit<InputPartContainerProps, 'tags'>> = (dispatch) => {
   return ({
     addMessageFn: (rawMessage: string) => {
       const action = addMessage(rawMessage);
@@ -48,6 +69,14 @@ const mapDispatchToProps: MapDispatchToProps<OwnProps, InputPartContainerProps> 
   });
 };
 
-const InputPartContainerWithCtx = connectCtx(ContextStore)(undefined, mapDispatchToProps)(InputPartContainer);
+const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, {
+  tags: string[]
+}> = (state) => {
+  return ({
+    tags: getTagsFromMessageList(state.messageList),
+  });
+};
+
+const InputPartContainerWithCtx = connectCtx(ContextStore)(mapStateToProps, mapDispatchToProps)(InputPartContainer);
 
 export default InputPartContainerWithCtx;

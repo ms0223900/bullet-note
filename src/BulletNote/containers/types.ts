@@ -4,6 +4,7 @@ import { BulletNoteState } from "BulletNote/constants/context";
 import { MessageButtonsPartProps } from "BulletNote/components/MessageComponents/types";
 
 export interface InputPartContainerProps {
+  tags: string[]
   addMessageFn: (rawMessage: string) => any
 }
 

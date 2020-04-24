@@ -3,10 +3,14 @@ import { Box, Typography, TextField, Grid } from '@material-ui/core';
 import BulletTagList from '../BullteTagList';
 import { BasicMessageItemProps } from '../types';
 
+const addZeroToSmallerThanTenNumber = (num: number) => (
+  num < 10 ? `0${num}` : String(num)
+);
+
 const regDateToString = (date: Date | string) => {
   if(typeof date === 'string') return date;
-  const hour = date.getHours();
-  const min = date.getMinutes();
+  const hour = addZeroToSmallerThanTenNumber(date.getHours());
+  const min = addZeroToSmallerThanTenNumber(date.getMinutes());
   // return '';
   return `${hour}:${min}`;
 };
@@ -43,9 +47,16 @@ const MessageContentPart = (props: BasicMessageItemProps) => {
       {/* <BulletTagList
         tagList={tagList} 
         /> */}
-      <Typography variant={'body1'} color={'textSecondary'}>
-        {regDateToString(createdAt)}
-      </Typography>
+      <Box 
+        paddingLeft={1}
+        style={{
+          opacity: 0.6
+        }}
+      >
+        <Typography variant={'body1'} color={'textSecondary'}>
+          {regDateToString(createdAt)}
+        </Typography>
+      </Box>
     </Box>
   );
 };

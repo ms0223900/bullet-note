@@ -5,7 +5,6 @@ import HandleParseMessage from "../functions/handleParseMessage";
 import HandleDataInLocalStorage from "../functions/HandleDataInLocalStorage";
 import { MESSAGE_TYPE, MessageItem } from "../types";
 import { ToDoMessageItemProps } from "../components/types";
-import { SingleMessage } from "anka-types";
 
 const inputPartReducers = (state: BulletNoteState, action: InputPartActions): BulletNoteState['messageList'] => {
   let newMessageList = [...state.messageList];
