@@ -1,6 +1,7 @@
 import { ID, Callback } from "common-types";
 import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps, ToggleTodoFn } from "./components/types";
 import { BulletNoteState } from "./constants/context";
+import { RouterProps, RouteChildrenProps } from "react-router";
 
 type RawMessage = string
 
@@ -107,4 +108,8 @@ export interface NoteBlockListWithCtxProps {
 export interface DateTitleProps {
     date: Date | string
   }
+
+export interface BulletNoteRouteProps extends RouteChildrenProps {
+
+}
 

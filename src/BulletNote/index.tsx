@@ -5,11 +5,12 @@ import Redirect from './containers/Redirect';
 import { logInParam, myBulletNoteParam } from './config';
 import LoginPart, { LoginPartWithAuth } from './containers/LoginPart';
 import NotFoundPage from './components/CommonComponents/NotFoundPage';
+import BulletNoteRoute from './BulletNoteRoute';
 
 const BulletNote = () => {
   return (
     <Router
-      basename={process.env.REACT_APP_PUBLIC_URL}
+      // basename={process.env.REACT_APP_PUBLIC_URL}
     >
       <Switch>
         <Route 
@@ -21,9 +22,8 @@ const BulletNote = () => {
           path={`/${logInParam}`}
           component={LoginPart} />
         <Route
-          exact
-          path={`/${myBulletNoteParam}/:userId`}
-          component={BulletNotePage} />
+          path={`/${myBulletNoteParam}`}
+          component={BulletNoteRoute} />
         <Route 
           component={NotFoundPage}
         />
