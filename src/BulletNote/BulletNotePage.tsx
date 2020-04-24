@@ -10,6 +10,7 @@ import readFromDB from './functions/firebase/readFromDB';
 import { offLineModeParam } from './config';
 import NavBar, { navHeight } from './components/CommonComponents/NavBar';
 import UserNotFoundPage from './components/CommonComponents/UserNotFoundPage';
+import NavBarContainer from './containers/CommonComponents/NavBarContainer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -91,7 +92,7 @@ const BulletNotePage = () => {
     <ContextWrapper customInitState={{
       // messageList: initMessageList,
     }}>
-      <NavBar
+      <NavBarContainer
         isOffline={isOffline} />
       <Container>
         <Box className={classes.root}>

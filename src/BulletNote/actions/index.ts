@@ -13,6 +13,8 @@ export enum BulletNoteActionTypes {
 
   EDIT_MESSAGE = 'EDIT_MESSAGE',
   EDIT_IT = 'EDIT_IT',
+
+  SET_DAYS_RANGE = 'SET_DAYS_RANGE',
 }
 
 type BulletNoteActions = InputPartActions
