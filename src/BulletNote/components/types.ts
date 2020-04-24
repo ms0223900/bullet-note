@@ -9,6 +9,7 @@ export interface NotePartProps {
 
 export interface MessageItemButtonsProps {
   onDelete: Callback
+  onMoverMessageToLatest: Callback
 }
 
 export interface BasicMessageItemProps extends MessageItemButtonsProps {
@@ -18,7 +19,7 @@ export interface BasicMessageItemProps extends MessageItemButtonsProps {
   onEditMessage?: (e: ChangeEvent<HTMLElement>) => any
 }
 
-export interface DefaultMessageItemProps extends Omit<BasicMessageItemProps, 'onDelete'>{
+export interface DefaultMessageItemProps extends Omit<BasicMessageItemProps, 'onDelete' | 'onMoverMessageToLatest'>{
   type: MESSAGE_TYPE.DEFAULT
   status: {}
 }

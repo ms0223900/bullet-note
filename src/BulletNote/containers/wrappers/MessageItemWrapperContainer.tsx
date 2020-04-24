@@ -3,14 +3,15 @@ import { Box } from '@material-ui/core';
 import { MessageItemWrapperContainerProps, MessageItemWrapperContainerWithCtxProps } from '../types';
 import MessageItemWrapper from 'BulletNote/components/wrappers/MessageItemWrapper';
 import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
-import { deleteMessage } from 'BulletNote/actions/message-actions';
+import { deleteMessage, moveMessageToLatest } from 'BulletNote/actions/message-actions';
 import { connectCtx } from 'react-function-helpers';
 import { ContextStore } from 'BulletNote/constants/context';
 
 const MessageItemWrapperContainer = (props: MessageItemWrapperContainerProps) => {
   const {
     message,
-    onDelete
+    onDelete,
+    onMoverMessageToLatest,
   } = props;
 
   const {
@@ -23,10 +24,17 @@ const MessageItemWrapperContainer = (props: MessageItemWrapperContainerProps) =>
     }
   }, [id, onDelete]);
 
+  const handleMoveToLatest = useCallback(() => {
+    if(window.confirm('Are you sure move message to latest?')) {
+      onMoverMessageToLatest(id);
+    }
+  }, [id, onMoverMessageToLatest]);
+
   return (
     <MessageItemWrapper
       {...props}
-      onDelete={handleDelete} />
+      onDelete={handleDelete}
+      onMoverMessageToLatest={handleMoveToLatest} />
   );
 };
 
@@ -34,12 +42,17 @@ interface OwnProps extends MessageItemWrapperContainerWithCtxProps {}
 
 const mapDispatchToProps: MapDispatchToProps<OwnProps, {
   onDelete: MessageItemWrapperContainerProps['onDelete']
+  onMoverMessageToLatest: MessageItemWrapperContainerProps['onMoverMessageToLatest']
 }> = (dispatch) => {
   return ({
     onDelete: (id: string) => {
       const action = deleteMessage(id);
       dispatch(action);
-    }
+    },
+    onMoverMessageToLatest: (id: string) => {
+      const action = moveMessageToLatest(id);
+      dispatch(action);
+    },
   });
 };
 

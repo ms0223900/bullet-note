@@ -5,6 +5,7 @@ import HandleParseMessage from "../functions/handleParseMessage";
 import HandleDataInLocalStorage from "../functions/HandleDataInLocalStorage";
 import { MESSAGE_TYPE, MessageItem } from "../types";
 import { ToDoMessageItemProps } from "../components/types";
+import { SingleMessage } from "anka-types";
 
 const inputPartReducers = (state: BulletNoteState, action: InputPartActions): BulletNoteState['messageList'] => {
   let newMessageList = [...state.messageList];
@@ -49,6 +50,35 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
     newMessageList = state.messageList.filter(m => {
       return id !== m.message.id;
     });
+    break;
+  }
+
+  case BulletNoteActionTypes.MOVE_MESSAGE_TO_LATEST: {
+    const {
+      id
+    } = action.payload;
+    const index = newMessageList.findIndex((m) => m.message.id === id);
+    if(index !== -1) {
+      const lastMessageId = newMessageList.length === 0 ? (
+        -1
+      ): Number(newMessageList.slice(-1)[0].message.id);
+      const newId = String(lastMessageId + 1);
+
+      const movedNewMessage = {
+        ...newMessageList[index],
+        message: {
+          ...newMessageList[index].message,
+          id: newId,
+          createdAt: new Date(),
+        }
+      };
+
+      newMessageList = [
+        ...newMessageList.slice(0, index),
+        ...newMessageList.slice(index + 1),
+        movedNewMessage,
+      ];
+    }
     break;
   }
 

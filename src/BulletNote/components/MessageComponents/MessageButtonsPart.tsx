@@ -57,7 +57,8 @@ const MessageButtonsPart = (props: MessageButtonsPartProps) => {
             alignItems={'center'}
           >
             <MessageItemButtons
-              onDelete={props.onDelete} />
+              onDelete={props.onDelete}
+              onMoverMessageToLatest={props.onMoverMessageToLatest} />
             <StarItemContainer
               isStared={isStared}
               onChange={props.onStarMessage} />

@@ -10,6 +10,9 @@ interface SetMessageFromDB {
 interface DeleteMessageActionPayload {
   id: string
 }
+interface MoverMessageToLatestActionPayload {
+  id: string
+}
 interface ToggleMessageIsDonePayload {
   id: string
   isDone: boolean
@@ -38,10 +41,16 @@ interface AddMessageAction {
   type: BulletNoteActionTypes.ADD_MESSAGE,
   payload: AddMessageActionPayload
 }
+interface MoverMessageToLatestAction {
+  type: BulletNoteActionTypes.MOVE_MESSAGE_TO_LATEST,
+  payload: MoverMessageToLatestActionPayload
+}
+
 interface SetMessageFromDBAction {
   type: BulletNoteActionTypes.SET_MESSAGE_FROM_DB,
   payload: SetMessageFromDB
 }
+
 interface ToggleMessageIsDone {
   type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISDONE,
   payload: ToggleMessageIsDonePayload
@@ -80,6 +89,11 @@ export const deleteMessage = (id: string): DeleteMessageAction => ({
   payload: { id }
 });
 
+export const moveMessageToLatest = (id: string): MoverMessageToLatestAction => ({
+  type: BulletNoteActionTypes.MOVE_MESSAGE_TO_LATEST,
+  payload: { id }
+});
+
 export const toggleMessageIsDone = (id: string, isDone: boolean): ToggleMessageIsDone => ({
   type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISDONE,
   payload: {
@@ -114,8 +128,9 @@ export const editMessage = (id: string, newMessage: string): EditMessageAction =
 
 type InputPartActions = 
   AddMessageAction | 
-  SetMessageFromDBAction | 
   DeleteMessageAction | 
+  MoverMessageToLatestAction |
+  SetMessageFromDBAction | 
   ToggleMessageIsDone | 
   EditMessageAction | 
   ToggleMessageIsStar |

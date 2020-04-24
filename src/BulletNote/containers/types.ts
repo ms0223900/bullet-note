@@ -1,6 +1,7 @@
-import { MessageItemWrapperProps, BasicMessageItemProps, ToDoMessageItemProps, ToggleTodoFn } from "../components/types";
+import { MessageItemWrapperProps, BasicMessageItemProps, ToDoMessageItemProps, ToggleTodoFn, MessageItemButtonsProps } from "../components/types";
 import { TagNoteBlockItemProps, NoteBlockListProps, NoteBlockListWithCtxProps } from "../types";
 import { BulletNoteState } from "BulletNote/constants/context";
+import { MessageButtonsPartProps } from "BulletNote/components/MessageComponents/types";
 
 export interface InputPartContainerProps {
   addMessageFn: (rawMessage: string) => any
@@ -11,7 +12,7 @@ export interface MessageItemWrapperContainerProps extends MessageItemWrapperProp
 }
 
 export interface MessageItemWrapperContainerWithCtxProps extends Omit<
-MessageItemWrapperProps, 'onDelete'> {
+MessageItemWrapperProps, keyof MessageItemButtonsProps> {
   
 }
 

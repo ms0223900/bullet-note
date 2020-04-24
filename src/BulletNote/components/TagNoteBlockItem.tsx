@@ -18,7 +18,6 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
         display={'flex'}
         alignItems={'center'}
         paddingBottom={0.5}
-        onClick={toggleShowMessagesFn}
       >
         <Typography 
           className={classes.root}
@@ -28,6 +27,7 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
           }}
           variant={'h6'} 
           color={'textPrimary'}
+          onClick={toggleShowMessagesFn}
         >
           {props.tagTitle}
         </Typography>

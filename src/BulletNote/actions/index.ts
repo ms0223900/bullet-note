@@ -3,6 +3,8 @@ import InputPartActions from "./message-actions";
 export enum BulletNoteActionTypes {
   ADD_MESSAGE = 'ADD_MESSAGE',
   DELETE_MESSAGE = 'DELETE_MESSAGE',
+  MOVE_MESSAGE_TO_LATEST = 'MOVE_MESSAGE_TO_LATEST',
+  
   SET_MESSAGE_FROM_DB = 'SET_MESSAGE_FROM_DB',
 
   TOGGLE_MESSAGE_ISDONE = 'TOGGLE_MESSAGE_ISDONE',
