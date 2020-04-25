@@ -29,6 +29,7 @@ const InputPartContainer = (props: InputPartContainerProps) => {
   const {
     values,
     handleSelect,
+    handleResetSelect,
   } = useSelectorSelect({
     tagValue: '',
   }, handleAddTagToValue);
@@ -37,8 +38,9 @@ const InputPartContainer = (props: InputPartContainerProps) => {
     if(value.length > 0) {
       props.addMessageFn(value);
       setVal('');
+      handleResetSelect('tagValue');
     }
-  }, [props, setVal, value]);
+  }, [handleResetSelect, props, setVal, value]);
 
   useFnsByKeyCode({
     lastIndex: 0,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, TextField, Grid } from '@material-ui/core';
+import { Box, Typography, TextField, Grid, makeStyles } from '@material-ui/core';
 import BulletTagList from '../BullteTagList';
 import { BasicMessageItemProps } from '../types';
 
@@ -15,7 +15,17 @@ const regDateToString = (date: Date | string) => {
   return `${hour}:${min}`;
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {
+     
+  },
+  contentPart: {
+    overflowWrap: 'anywhere',
+  }
+}));
+
 const MessageContentPart = (props: BasicMessageItemProps) => {
+  const classes = useStyles();
   const {
     value,
     onEditMessage,
@@ -50,6 +60,7 @@ const MessageContentPart = (props: BasicMessageItemProps) => {
           value={value} />
       ) : (
         <Typography 
+          className={classes.contentPart}
           variant={'subtitle1'} 
         >
           {content}
