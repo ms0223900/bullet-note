@@ -82,7 +82,7 @@ class HandleParseMessage {
     // return MESSAGE_TYPE.DEFAULT; 
   }
 
-  static getRemovedTypeAndTagsMessage(rawMessage: string): string {
+  static getContent(rawMessage: string): string {
     let res = rawMessage;
     res = res.replace(this.tagReg, '');
     res = res.replace(this.todoReg, '');
@@ -101,7 +101,7 @@ class HandleParseMessage {
 
     const messageType = this.getMessageType(rawMessage);
     const tagList = this.getTagListFromRawMessage(rawMessage);
-    const content = this.getRemovedTypeAndTagsMessage(rawMessage);
+    const content = this.getContent(rawMessage);
     const message = this.makeBasicMessage({
       ...singleRawMessageFromDB,
       isPin,

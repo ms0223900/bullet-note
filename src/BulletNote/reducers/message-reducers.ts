@@ -145,24 +145,25 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
   case BulletNoteActionTypes.EDIT_MESSAGE: {
     const {
       id,
-      newMessage
+      newMessage: newRawMessage
     } = action.payload;
 
     const index = newMessageList.findIndex((m) => m.message.id === id);
     if(index !== -1) {
-      const tagsStr = newMessageList[index].message.tagList.map(t => {
-        if(t.id === HandleParseMessage.defaultTag.id) return '';
-        return t.name;
-      }).join(' ');
-      newMessageList[index] = {
-        ...newMessageList[index],
-        message: {
-          ...newMessageList[index].message,
-          content: newMessage,
-          rawMessage: newMessage + ' ' + tagsStr,
-        }
-      };
-        
+      // const tagsStr = newMessageList[index].message.tagList.map(t => {
+      //   if(t.id === HandleParseMessage.defaultTag.id) return '';
+      //   return t.name;
+      // }).join(' ');
+      const originMessage = newMessageList[index];
+      const isDone = originMessage.type === MESSAGE_TYPE.TODO ? originMessage.status.isDone : false;
+
+      const newMessage = HandleParseMessage.convertRawMessageToMessageItem({
+        ...originMessage.message,
+        isDone,
+        rawMessage: newRawMessage,
+      });
+      
+      newMessageList[index] = newMessage;
       console.log(newMessageList[index].message.tagList);
     }
     break;

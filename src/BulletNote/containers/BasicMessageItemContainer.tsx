@@ -6,6 +6,8 @@ import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapCont
 import { editMessage, toggleMessageIsStar, toggleMessageIsPin } from '../actions/message-actions';
 import { connectCtx } from 'react-function-helpers';
 import { ContextStore } from '../constants/context';
+import useInput from 'lib/customHooks/useInput';
+import useChangeInput from 'lib/customHooks/useChangeInput';
 
 const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
   const {
@@ -15,12 +17,22 @@ const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
     message
   } = props;
   
-  const { id } = message;
+  const {
+    id,
+    rawMessage
+  } = message;
 
-  const handleEdit = useCallback((e: ChangeEvent<any>) => {
-    const { value } = e.target;
+  const {
+    value,
+    handleChange,
+  } = useInput(rawMessage);
+
+  const handleEdit = useCallback(() => {
+    if(value === rawMessage) {
+      return;
+    }
     editActionFn(id, value);
-  }, [editActionFn, id]);
+  }, [editActionFn, id, rawMessage, value]);
 
   const handleToggleStarMessage = useCallback((isStar: boolean | undefined) => {
     starActionFn(id, isStar);
@@ -33,6 +45,8 @@ const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
   return (
     <BasicMessageItem
       {...props}
+      value={value}
+      onChangeInput={handleChange}
       onPinMessage={handleTogglePinMessage}
       onStarMessage={handleToggleStarMessage}
       onEditMessage={handleEdit} />

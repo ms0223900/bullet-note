@@ -13,10 +13,12 @@ export interface MessageItemButtonsProps {
 }
 
 export interface BasicMessageItemProps extends MessageItemButtonsProps {
+  value?: string
   message: BasicMessage
   onStarMessage?: (isStar?: boolean) => any
   onPinMessage?: (isPin?: boolean) => any
-  onEditMessage?: (e: ChangeEvent<HTMLElement>) => any
+  onChangeInput?: (e: ChangeEvent<any>) => any
+  onEditMessage?: () => any
 }
 
 export interface DefaultMessageItemProps extends Omit<BasicMessageItemProps, 'onDelete' | 'onMoverMessageToLatest'>{

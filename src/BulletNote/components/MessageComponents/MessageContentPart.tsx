@@ -17,10 +17,18 @@ const regDateToString = (date: Date | string) => {
 
 const MessageContentPart = (props: BasicMessageItemProps) => {
   const {
+    value,
+    onEditMessage,
+    onChangeInput,
+    message,
+  } = props;
+
+  const {
     content,
     tagList,
+    rawMessage,
     createdAt,
-  } = props.message;
+  } = message;
 
   const [isEditing, setEdit] = React.useState(false);
   
@@ -29,14 +37,17 @@ const MessageContentPart = (props: BasicMessageItemProps) => {
       display={'flex'} 
       alignItems={'center'}
       onDoubleClick={() => setEdit(true)}
-      onBlur={() => setEdit(false)}
+      onBlur={() => {
+        setEdit(false);
+        onEditMessage && onEditMessage();
+      }}
     >
       {isEditing ? (
         <TextField 
           fullWidth={true}
-          onChange={props.onEditMessage}
+          onChange={onChangeInput}
           autoFocus={true}
-          value={content} />
+          value={value} />
       ) : (
         <Typography 
           variant={'subtitle1'} 
