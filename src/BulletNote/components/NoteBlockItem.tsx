@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Box, makeStyles, Theme } from '@material-ui/core';
 import { NoteBlockItemProps } from '../types';
 import switchMessagesByType from '../functions/switchMessagesByType';
@@ -21,10 +21,14 @@ const NoteBlockItem = (props: NoteBlockItemProps) => {
     date,
     messageList,
   } = props;
+  const renderCount = useRef(0);
   const classes = useStyles(props);
 
   const tagNoteBlockObj = HandleTagSortMessage.getTagNoteBlockObj(messageList);
   const tags = Object.keys(tagNoteBlockObj);
+
+  renderCount.current += 1;
+  console.log(renderCount.current);
   
   return (
     <>

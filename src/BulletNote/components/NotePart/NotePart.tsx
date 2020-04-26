@@ -28,10 +28,6 @@ const NotePart = (props: NotePartProps) => {
         <PinMessageListContainer
           messageList={props.messageList} />
       </Box>
-      <Box>
-        <DownloadMessageListWithCtx />
-        <RestoreBackup />
-      </Box>
       <NoteBlockListContainer
         {...props} />
     </>

@@ -35,7 +35,9 @@ const InputPartContainer = (props: InputPartContainerProps) => {
   }, handleAddTagToValue);
 
   const handleSendMessage = useCallback(() => {
-    if(value.length > 0) {
+    const valueExcludeSpace = value.replace(/\s/g, '');
+    
+    if(valueExcludeSpace.length > 0) {
       props.addMessageFn(value);
       setVal('');
       handleResetSelect('tagValue');

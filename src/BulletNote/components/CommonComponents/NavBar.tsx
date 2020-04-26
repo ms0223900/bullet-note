@@ -1,10 +1,12 @@
 import React from 'react';
-import { Box, Typography, Button, makeStyles, Drawer } from '@material-ui/core';
+import { Box, Typography, Button, makeStyles, Drawer, Divider } from '@material-ui/core';
 import SyncToFirebaseWithCtx from 'BulletNote/containers/SyncToFirebase';
 import { NavBarProps } from './types';
 import { offLineModeParam, myBulletNoteParam } from 'BulletNote/config';
 import { MenuRounded } from '@material-ui/icons';
 import ConfigPart from '../ConfigPart/ConfigPart';
+import DownloadMessageListWithCtx from '../DownloadMessageList';
+import RestoreBackup from '../RestoreBackup';
 
 export const navHeight = 32;
 

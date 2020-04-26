@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { Box, Typography, Fab } from '@material-ui/core';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { NoteBlockListProps, NoteBlockListWithCtxProps } from '../types';
@@ -15,6 +15,15 @@ const NoteBlockList = (props: NoteBlockListProps) => {
     moveToBottomFn,
     bulletNoteConfig,
   } = props;
+  const {
+    showingDaysRange,
+  } = bulletNoteConfig;
+
+  const messageListWithDate = HandleMessageList
+    .convertToMessageWithDateList(messageList);
+
+  const messageListWithDateFilterByDaysRange = HandleMessageList
+    .filterMessageListByDaysRange(messageListWithDate, showingDaysRange);
 
   if(messageList.length === 0) {
     return (
@@ -23,12 +32,6 @@ const NoteBlockList = (props: NoteBlockListProps) => {
       </Typography>
     );
   }
-
-  const messageListWithDate = HandleMessageList
-    .convertToMessageWithDateList(messageList);
-
-  const messageListWithDateFilterByDaysRange = HandleMessageList
-    .filterMessageListByDaysRange(messageListWithDate, bulletNoteConfig.showingDaysRange);
   
   return (
     <Box
@@ -37,8 +40,8 @@ const NoteBlockList = (props: NoteBlockListProps) => {
       <Box>
         {messageListWithDateFilterByDaysRange.map((m, i) => (
           <NoteBlockItem
-            key={i}
             {...m}
+            key={m.date.toString()}
             selected={checkDateIsToday(m.date)} />
         ))}
       </Box>
