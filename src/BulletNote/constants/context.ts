@@ -5,6 +5,7 @@ import ContextWrapperFn from "react-function-helpers/lib/functions/ContextWrappe
 
 export interface BulletNoteConfig {
   // showTagList: boolean
+  selectedFilterTags: string[]
   showingDaysRange: number
 }
 
@@ -14,6 +15,7 @@ export interface BulletNoteState {
 }
 
 const initBulletNoteConfig: BulletNoteConfig = {
+  selectedFilterTags: [],
   showingDaysRange: 14, //two weeks
 };
 

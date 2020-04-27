@@ -7,6 +7,7 @@ const TagList = (props: TagListProps) => {
     <Select
       id={'select-tags'}
       value={props.tagValue}
+      label={props.label}
       onChange={props.onChangeSelect}
     >
       {props.tags.map((tag, i) => (

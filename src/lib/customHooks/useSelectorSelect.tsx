@@ -5,25 +5,30 @@ export function useSelectorSelect<Values extends {[x: string]: string}>(initValu
 
   const stringifiedInitValues = JSON.stringify(initValues);
   const [values, setValues] = useState(initValues);
+  const stringifiedValues = JSON.stringify(values);
   
   const handleSelect = useCallback((name: Name) => (e: ChangeEvent<{ value: unknown }>) => {
     const { value } = e.target;
-    setValues(val => ({
-      ...val,
-      [name]: value,
-    }));
-  }, []);
+    setValues(val => {
+      const newValues = ({
+        ...val,
+        [name]: value,
+      });
+      cb && cb(newValues);
+      return newValues;
+    });
+  }, [cb]);
 
   const handleResetSelect = useCallback((name: Name) => {
-    setValues(val => ({
-      ...val,
-      [name]: '',
-    }));
-  }, []);
-
-  useEffect(() => {
-    cb && cb(values);
-  }, [cb, values]);
+    setValues(val => {
+      const newValues = ({
+        ...val,
+        [name]: '',
+      });
+      cb && cb(newValues);
+      return newValues;
+    });
+  }, [cb]);
 
   useEffect(() => {
     setValues(initValues);

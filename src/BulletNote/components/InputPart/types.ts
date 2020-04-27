@@ -8,6 +8,7 @@ export interface InputPartProps extends TagListProps {
 }
 
 export interface TagListProps {
+  label?: string
   tagValue: string | undefined
   tags: string[]
   onChangeSelect: (e: ChangeEvent<any>) => any

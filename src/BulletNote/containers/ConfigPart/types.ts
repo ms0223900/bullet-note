@@ -6,3 +6,7 @@ export interface DaysRangeInputProps {
 export interface DaysRangeInputWithCtxProps {
   
 }
+
+export interface TagsFilterProps {
+  tags: string[]
+}
