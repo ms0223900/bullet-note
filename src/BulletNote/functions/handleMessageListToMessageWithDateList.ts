@@ -1,4 +1,4 @@
-import { MessageList, NoteBlockItemProps, MessageListWithDate } from "../types";
+import { MessageList, NoteBlockItemProps, MessageListWithDate, NoteBlockItem } from "../types";
 
 class HandleMessageList {
   static getMillSecondsForDays(day: number) {
@@ -19,10 +19,10 @@ class HandleMessageList {
     return date1Str === date2Str;
   }
 
-  static convertToMessageWithDateList(_messageList: MessageList) : NoteBlockItemProps[] {
+  static convertToMessageWithDateList(_messageList: MessageList) : NoteBlockItem[] {
     let date: string | Date = '';
     let noteBlockIndex = -1;
-    let messageWithDateList: NoteBlockItemProps[] = [{
+    let messageWithDateList: NoteBlockItem[] = [{
       date,
       messageList: [],
     }];
@@ -61,6 +61,19 @@ class HandleMessageList {
       return false;
     });
 
+    return res;
+  }
+
+  static filterMessageListByTags(messgeWithDateList: MessageListWithDate[], tags: string[]) {
+    const res = messgeWithDateList.map(mes => {
+      return mes.messageList.filter(m => {
+        const isMessageInTags = tags.find(tag => {
+          return m.message.tagList[0].name === tag;
+        });
+        return isMessageInTags;
+      });
+    });
+    
     return res;
   }
 }

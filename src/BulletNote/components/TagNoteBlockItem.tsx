@@ -38,7 +38,8 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
         </Typography>
       </Box>
       <Box 
-        paddingLeft={tabSpace}
+        // paddingLeft={tabSpace}
+        paddingBottom={0.5}
         style={{
           display: isShowMessages ? 'block': 'none',
         }}

@@ -6,6 +6,9 @@ import DateTitle from './DateTitle';
 import HandleTagSortMessage from '../functions/handleTagSortMessage';
 import TagNoteBlockItem from './TagNoteBlockItem';
 import TagNoteBlockItemContainerWithCtx from '../containers/NotePart/TagNoteBlockItemContainer';
+import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
+import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
+import { connectCtx } from 'react-function-helpers';
 
 const useStyles = makeStyles<Theme, NoteBlockItemProps>(theme => ({
   root: {
@@ -20,32 +23,59 @@ const NoteBlockItem = (props: NoteBlockItemProps) => {
   const {
     date,
     messageList,
+    selectedFilterTags,
   } = props;
-  const renderCount = useRef(0);
   const classes = useStyles(props);
 
   const tagNoteBlockObj = HandleTagSortMessage.getTagNoteBlockObj(messageList);
   const tags = Object.keys(tagNoteBlockObj);
 
-  renderCount.current += 1;
-  console.log(renderCount.current);
-  
+  const filteredTags = HandleTagSortMessage.filterTagsBySelectedFilterTags(tags, selectedFilterTags);
+  const isEmptyAfterFiltered = filteredTags.length === 0;
+  console.log(filteredTags, tags, selectedFilterTags);
+
   return (
     <>
-      <Box padding={0.5} paddingBottom={2} className={classes.root}>
-        <Box paddingBottom={1}>
-          <DateTitle
-            date={date} />
-        </Box>
-        {tags.map((t, i) => (
-          <TagNoteBlockItemContainerWithCtx
-            key={i}
-            {...tagNoteBlockObj[t]} />
-        ))}
+      <Box className={classes.root}>
+        {!isEmptyAfterFiltered && (
+          <Box paddingBottom={1}>
+            <DateTitle
+              date={date} />
+          </Box>
+        )}
+        {tags.map((t, i) => {
+          const isShow = HandleTagSortMessage.checkNewStrIsInStrList(filteredTags, t);
+          return (
+            <Box
+              style={{
+                display: isShow ? 'block' : 'none',
+              }}
+            >
+              <TagNoteBlockItemContainerWithCtx
+                key={i}
+                {...tagNoteBlockObj[t]} />
+            </Box>
+          );
+        })}
       </Box>
       {/* <hr /> */}
     </>
   );
 };
 
-export default NoteBlockItem;
+interface OwnProps extends Omit<NoteBlockItemProps, 'selectedFilterTags'> {
+
+}
+
+const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, {
+  selectedFilterTags: NoteBlockItemProps['selectedFilterTags']
+}> = (state) => {
+  return ({
+    selectedFilterTags: state.bulletNoteConfig.selectedFilterTags,
+  });
+};
+
+
+const NoteBlockItemWithCtx = connectCtx(ContextStore)(mapStateToProps)(NoteBlockItem);
+
+export default NoteBlockItemWithCtx;

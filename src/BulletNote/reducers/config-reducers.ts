@@ -9,6 +9,11 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
       ...state.bulletNoteConfig,
       showingDaysRange: action.payload.daysRange,
     });
+  case BulletNoteActionTypes.SET_FILTER_TAGS:
+    return ({
+      ...state.bulletNoteConfig,
+      selectedFilterTags: action.payload.tags,
+    });
   default:
     return state.bulletNoteConfig;
   }

@@ -73,8 +73,12 @@ export interface MessageListWithDate {
     messageList: MessageList
   }
 
-export interface NoteBlockItemProps extends MessageListWithDate {
+export interface NoteBlockItem extends MessageListWithDate {
+
+}
+export interface NoteBlockItemProps extends NoteBlockItem {
   selected?: boolean
+  selectedFilterTags: BulletNoteState['bulletNoteConfig']['selectedFilterTags']
 }
 
 export interface TagNoteBlockItem {

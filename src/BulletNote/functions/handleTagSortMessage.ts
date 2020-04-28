@@ -79,7 +79,15 @@ class HandleTagSortMessage {
     return tagNoteBlockObj;
   }
 
-
+  static filterTagsBySelectedFilterTags(tags: string[], selectedFilterTags: string[]) {
+    if(selectedFilterTags.length === 0) {
+      return tags;
+    }
+    const res = tags.filter(tag => {
+      return this.checkNewStrIsInStrList(selectedFilterTags, tag);
+    });
+    return res;
+  }
 }
 
 export default HandleTagSortMessage;
