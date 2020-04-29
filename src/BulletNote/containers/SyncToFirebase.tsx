@@ -41,9 +41,12 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   const {
     messageList,
   } = props;
+  const syncTimes = React.useRef(0);
+
   const {
     userId,
   } = useParams<{ userId: string }>();
+
   const jsonizedData = JSON.stringify(messageList);
 
   const [loading, setLoading] = useState(false);
@@ -55,6 +58,7 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   const handleSyncSuccess = useCallback(() => {
     setLoading(false);
     setSuccess(true);
+    syncTimes.current += 1;
   }, []);
   
   const handleSyncData = useCallback(() => {
@@ -83,7 +87,7 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
               checkLocalStorageDataWithOnlineData({
                 onlineData: val,
                 errorCb: setErr,
-                successCb: () => setSuccess(true)
+                successCb: handleSyncSuccess
               });
             },
           });
@@ -93,9 +97,11 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   }, [handleSyncSuccess, messageList, syncSuccess, userId]);
 
   useEffect(() => {
+    const syncTimeoutTime = syncTimes.current === 0 ? 0 : syncTimeout * 1000;
+    console.log(syncTimes.current);
     const timeout = setTimeout(() => {
       handleSyncData();
-    }, syncTimeout * 1000);
+    }, syncTimeoutTime);
     
     return () => {
       clearTimeout(timeout);

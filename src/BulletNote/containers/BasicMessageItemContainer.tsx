@@ -8,6 +8,7 @@ import { connectCtx } from 'react-function-helpers';
 import { ContextStore } from '../constants/context';
 import useInput from 'lib/customHooks/useInput';
 import useChangeInput from 'lib/customHooks/useChangeInput';
+import { useFnsByKeyCode } from 'react-function-helpers/lib/lib/customHooks/useFnsByKeyCode';
 
 const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
   const {
@@ -41,6 +42,12 @@ const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
   const handleTogglePinMessage = useCallback((isPin: boolean | undefined) => {
     pinActionFn(id, isPin);
   }, [id, pinActionFn]);
+
+  useFnsByKeyCode({
+    lastIndex: 0,
+    confirmFn: handleEdit,
+    escapeFn: handleEdit,
+  });
 
   return (
     <BasicMessageItem

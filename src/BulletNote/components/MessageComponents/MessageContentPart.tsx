@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, TextField, Grid, makeStyles } from '@material-ui/core';
 import BulletTagList from '../BullteTagList';
 import { BasicMessageItemProps } from '../types';
+import { MessageContentPartProps } from './types';
 
 const addZeroToSmallerThanTenNumber = (num: number) => (
   num < 10 ? `0${num}` : String(num)
@@ -24,11 +25,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MessageContentPart = (props: BasicMessageItemProps) => {
+const MessageContentPart = (props: MessageContentPartProps) => {
   const classes = useStyles();
   const {
     value,
-    onEditMessage,
+    isEditing,
+    setEditFn,
+    onConfirmEdit,
     onChangeInput,
     message,
   } = props;
@@ -39,18 +42,13 @@ const MessageContentPart = (props: BasicMessageItemProps) => {
     rawMessage,
     createdAt,
   } = message;
-
-  const [isEditing, setEdit] = React.useState(false);
   
   return (
     <Box
       display={'flex'} 
       alignItems={'center'}
-      onDoubleClick={() => setEdit(true)}
-      onBlur={() => {
-        setEdit(false);
-        onEditMessage && onEditMessage();
-      }}
+      onDoubleClick={() => setEditFn(true)}
+      onBlur={onConfirmEdit}
     >
       {isEditing ? (
         <TextField 
