@@ -9,7 +9,7 @@ const Redirect = () => {
   const history = useHistory();
 
   React.useEffect(() => {
-    const redirectToUserPage = (signInRes: any, user: firebase.User) => {
+    const redirectToUserPage = (signInRes: any, user: firebase.User | null) => {
       let userId = '';
       if(user) {
         userId = user.uid;

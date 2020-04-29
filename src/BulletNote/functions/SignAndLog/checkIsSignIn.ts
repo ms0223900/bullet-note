@@ -1,7 +1,9 @@
 import { firebaseApp } from '../firebase/config';
 import { Callback } from 'common-types';
 
-const checkIsSignIn = (cb?: Callback) => {
+export type CheckIsSignInCb = (isSignedIn: boolean, user: firebase.User | null) => any
+
+const checkIsSignIn = (cb?: CheckIsSignInCb) => {
   firebaseApp.auth().onAuthStateChanged(user => {
     let isSignedIn = false;
     console.log(user);

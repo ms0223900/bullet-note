@@ -10,9 +10,10 @@ const readFromDB = ({
     errorCb && errorCb({
       message: 'Please check user id again.'
     });
+    return Promise.resolve(undefined);
   } else {
     const path = firebasePath(userId);
-    database
+    return database
       .ref(path)
       .once('value')
       .then(snapshot => {
@@ -20,6 +21,7 @@ const readFromDB = ({
         if(value) {
           console.log('snapshot from firebase: ', value);
           successCb && successCb(value);
+          return value;
         } else {
           errorCb && errorCb({
             message: 'User not found.'

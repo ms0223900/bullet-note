@@ -1,6 +1,7 @@
 import { MessageList, SingleRawMessageFromDB, MESSAGE_TYPE } from "../types";
 
 const messageListLS = 'messageListLS';
+const checkLocalDataIsSameWithOnline = 'checkLocalWithOnline';
 
 class HandleDataInLocalStorage {
   static convertMessageListToRawMessageList(messageList: MessageList): SingleRawMessageFromDB[] {
@@ -40,6 +41,20 @@ class HandleDataInLocalStorage {
     }
     return [];
   };
+
+  static initCheckLocalWithOnlineLS() {
+    localStorage.setItem(checkLocalDataIsSameWithOnline, JSON.stringify(false));
+  }
+  static getCheckLocalWithOnlineLS() {
+    const res = localStorage.getItem(checkLocalDataIsSameWithOnline);
+    if(res) {
+      return JSON.parse(res);
+    }
+    return false;
+  }
+  static setCheckLocalWithOnlineLS(isSame: boolean) {
+    localStorage.setItem(checkLocalDataIsSameWithOnline, JSON.stringify(isSame));
+  }
 }
 
 export default HandleDataInLocalStorage;

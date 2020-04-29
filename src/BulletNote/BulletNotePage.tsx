@@ -60,6 +60,8 @@ const BulletNotePage = () => {
   }, []);
 
   React.useEffect(() => {
+    //init check local and online  
+    HandleDataInLocalStorage.initCheckLocalWithOnlineLS();
     const LSdata = HandleDataInLocalStorage.getData();
     const isHaveLSdata = LSdata && LSdata.length > 0;
     const isOfflineMode = userId === offLineModeParam;

@@ -9,6 +9,33 @@ import { connectCtx } from 'react-function-helpers';
 import { useParams } from 'react-router';
 import HandleDataInLocalStorage from 'BulletNote/functions/HandleDataInLocalStorage';
 import { Check } from '@material-ui/icons';
+import checkIsSignIn from 'BulletNote/functions/SignAndLog/checkIsSignIn';
+import readFromDB from 'BulletNote/functions/firebase/readFromDB';
+import { Callback } from 'common-types';
+import { stringifyMessageList } from 'BulletNote/functions/stringifySingleMessage';
+
+export const checkLocalStorageDataWithOnlineData = ({
+  onlineData,
+  errorCb,
+  successCb
+}: {
+  onlineData: any, 
+  errorCb: Callback
+  successCb: Callback
+}) => {
+  const LSdata = stringifyMessageList(HandleDataInLocalStorage.getData());
+  const stringifiedOnlineData = stringifyMessageList(onlineData);
+  const res = LSdata === stringifiedOnlineData;
+  if(!res) {
+    errorCb({
+      message: 'Please switch to online mode or refresh page.',
+    });
+  } else {
+    HandleDataInLocalStorage.setCheckLocalWithOnlineLS(true);
+    successCb();
+  }
+  return res;
+};
 
 const SyncToFirebase = (props: SyncToFirebaseProps) => {
   const {
@@ -20,7 +47,9 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   const jsonizedData = JSON.stringify(messageList);
 
   const [loading, setLoading] = useState(false);
-  const [error, setErr] = useState();
+  const [error, setErr] = useState({
+    message: ''
+  });
   const [syncSuccess, setSuccess] = useState(false);
 
   const handleSyncSuccess = useCallback(() => {
@@ -29,7 +58,10 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   }, []);
   
   const handleSyncData = useCallback(() => {
-    if(!syncSuccess) {
+    const isSameWithOnline = HandleDataInLocalStorage.getCheckLocalWithOnlineLS();
+    const shouldSync = !syncSuccess && isSameWithOnline;
+
+    if(shouldSync) {
       console.log(messageList);
       const data = HandleDataInLocalStorage.getData();
       setLoading(true);
@@ -41,6 +73,21 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
           setErr(err);
           setLoading(false);
         },
+      });
+    } else {
+      checkIsSignIn((isSignIn, user) => {
+        if(user) {
+          readFromDB({
+            userId: user.uid,
+            successCb: (val) => {
+              checkLocalStorageDataWithOnlineData({
+                onlineData: val,
+                errorCb: setErr,
+                successCb: () => setSuccess(true)
+              });
+            },
+          });
+        }
       });
     }
   }, [handleSyncSuccess, messageList, syncSuccess, userId]);
@@ -62,14 +109,6 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   if(loading) {
     return <CircularProgress />;
   }
-
-  if(error) {
-    return (
-      <Typography>
-        {'Check your login and network.It is off-line mode copy now.'}
-      </Typography>
-    );
-  }
   
   return (
     <Box
@@ -80,6 +119,11 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
       >
         {'Sync'}
       </Button>
+      {error.message && (
+        <Typography>
+          {error.message}
+        </Typography>
+      )}
       {syncSuccess && (
         <Box
           display={'flex'}
