@@ -43,12 +43,6 @@ const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
     pinActionFn(id, isPin);
   }, [id, pinActionFn]);
 
-  useFnsByKeyCode({
-    lastIndex: 0,
-    confirmFn: handleEdit,
-    escapeFn: handleEdit,
-  });
-
   return (
     <BasicMessageItem
       {...props}

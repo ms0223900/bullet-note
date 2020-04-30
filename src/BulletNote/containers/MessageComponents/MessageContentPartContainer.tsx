@@ -12,9 +12,11 @@ const MessageContentPartContainer = (props: MessageContentPartContainerProps) =>
   const [isEditing, setEdit] = React.useState(false);
 
   const handleConfirmEdit = React.useCallback(() => {
-    setEdit(false);
-    onEditMessage && onEditMessage();
-  }, [onEditMessage]);
+    if(isEditing) {
+      setEdit(false);
+      onEditMessage && onEditMessage();
+    }
+  }, [isEditing, onEditMessage]);
 
   useFnsByKeyCode({
     lastIndex: 0,

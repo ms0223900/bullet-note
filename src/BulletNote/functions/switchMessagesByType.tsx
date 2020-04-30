@@ -16,7 +16,7 @@ const switchMessagesByType = ({
   case MESSAGE_TYPE.TODO: {
     return (
       <TodoMessageItemContainerWithCtx
-        key={index}
+        key={messageItemProps.message.id}
         {...messageItemProps}
       />
     );
@@ -25,7 +25,7 @@ const switchMessagesByType = ({
   case MESSAGE_TYPE.DEFAULT: {
     return (
       <DefaultMessageItem
-        key={index}
+        key={messageItemProps.message.id}
         {...messageItemProps} />
     );
   }
