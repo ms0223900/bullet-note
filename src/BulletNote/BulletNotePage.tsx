@@ -13,6 +13,9 @@ import UserNotFoundPage from './components/CommonComponents/UserNotFoundPage';
 import NavBarContainer from './containers/CommonComponents/NavBarContainer';
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    padding: theme.spacing(0.5),
+  },
   root: {
     '&::-webkit-scrollbar': {
       width: 8,
@@ -96,7 +99,7 @@ const BulletNotePage = () => {
     }}>
       <NavBarContainer
         isOffline={isOffline} />
-      <Container>
+      <Container className={classes.container}>
         <Box className={classes.root}>
           <Box className={classes.notePart}>
             <NotePartContainerWithCtx />

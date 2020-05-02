@@ -8,6 +8,12 @@ import BasicMessageItemContainerWithCtx from 'BulletNote/containers/BasicMessage
 const useStyles = makeStyles(theme => ({
   root: {
     // cursor: 'pointer',
+    paddingBottom: 0,
+    alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: theme.spacing(1.5),
+      alignItems: 'start',
+    },
     '&:hover': {
       backgroundColor: '#eee',
     }
