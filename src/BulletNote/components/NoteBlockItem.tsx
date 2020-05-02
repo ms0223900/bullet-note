@@ -32,7 +32,6 @@ const NoteBlockItem = (props: NoteBlockItemProps) => {
 
   const filteredTags = HandleTagSortMessage.filterTagsBySelectedFilterTags(tags, selectedFilterTags);
   const isEmptyAfterFiltered = filteredTags.length === 0;
-  console.log(filteredTags, tags, selectedFilterTags);
 
   return (
     <>

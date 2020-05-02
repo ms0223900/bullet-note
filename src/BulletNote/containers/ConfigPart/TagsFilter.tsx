@@ -26,11 +26,15 @@ const TagsFilter = (props: TagsFilterProps) => {
     if(isHaveTag || !tag) {
       return; 
     }
-    setSelectedTags(s => [
-      ...s,
-      tag,
-    ]);
-  }, [selectedTags]);
+    setSelectedTags(s => {
+      const newTags = [
+        ...s,
+        tag,
+      ];
+      setTagsToCtx(newTags);
+      return newTags;
+    });
+  }, [selectedTags, setTagsToCtx]);
 
   const {
     values,
@@ -42,13 +46,15 @@ const TagsFilter = (props: TagsFilterProps) => {
 
   const handleRamoveSelectedTag = useCallback((tag: string) => {
     return () => {
-      setSelectedTags(s => s.filter(s => s !== tag));
+      const newTags = selectedTags.filter(s => s !== tag);
+      setSelectedTags(newTags);
+      setTagsToCtx(newTags);
       handleResetSelect('tagList');
     };
-  }, [handleResetSelect]);
+  }, [handleResetSelect, selectedTags, setTagsToCtx]);
 
   useEffect(() => {
-    setTagsToCtx(selectedTags);
+    // setTagsToCtx(selectedTags);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTags.length]);
 

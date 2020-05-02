@@ -42,6 +42,7 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
     messageList,
   } = props;
   const syncTimes = React.useRef(0);
+  const isFirstTimeCheckSync = syncTimes.current === 0;
 
   const {
     userId,
@@ -78,7 +79,8 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
           setLoading(false);
         },
       });
-    } else {
+    }
+    else if(isFirstTimeCheckSync) {
       checkIsSignIn((isSignIn, user) => {
         if(user) {
           readFromDB({
@@ -94,10 +96,11 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
         }
       });
     }
-  }, [handleSyncSuccess, messageList, syncSuccess, userId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handleSyncSuccess, jsonizedData, syncSuccess, userId, isFirstTimeCheckSync]);
 
   useEffect(() => {
-    const syncTimeoutTime = syncTimes.current === 0 ? 0 : syncTimeout * 1000;
+    const syncTimeoutTime = isFirstTimeCheckSync ? 0 : syncTimeout * 1000;
     console.log(syncTimes.current);
     const timeout = setTimeout(() => {
       handleSyncData();
@@ -106,7 +109,7 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [handleSyncData]);
+  }, [handleSyncData, isFirstTimeCheckSync]);
 
   useEffect(() => {
     setSuccess(false);

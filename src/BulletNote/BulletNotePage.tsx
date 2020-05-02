@@ -33,18 +33,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BulletNotePage = () => {
-  const classes = useStyles();
+const useBulletNotePage = () => {
   const {
     userId
   } = useParams<{ userId: string }>();
 
   console.log(userId);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState({
-    message: '',
+  const [state, setState] = React.useState({
+    loading: true,
+    error: { message: '', },
+    isOffline: false,
   });
-  const [isOffline, setOffline] = React.useState(false);
   // const [initMessageList, setMessageList] = React.useState<BulletNoteState['messageList']>([]);
 
   const handleSetFirebaseDataToLS = useCallback((_userId: string) => {
@@ -52,12 +51,18 @@ const BulletNotePage = () => {
       userId: _userId,
       successCb: (rawData) => {
         HandleDataInLocalStorage.setDataFromRawData(rawData);
-        setLoading(false);
+        setState(s => ({
+          ...s,
+          loading: false,
+        }));
         // window.location.reload();
       },
       errorCb: (error) => {
-        setError(error);
-        setLoading(false);
+        setState(s => ({
+          ...s,
+          error,
+          loading: false,
+        }));
       }
     });
   }, []);
@@ -70,12 +75,26 @@ const BulletNotePage = () => {
     const isOfflineMode = userId === offLineModeParam;
 
     if(isOfflineMode && isHaveLSdata) {
-      setLoading(false);
-      setOffline(true);
+      setState(s => ({
+        ...s,
+        isOffline: true,
+        loading: false,
+      }));
     } else {
       handleSetFirebaseDataToLS(userId);
     }
   }, [handleSetFirebaseDataToLS, userId]);
+
+  return state;
+};
+
+const BulletNotePage = () => {
+  const classes = useStyles();
+  const {
+    loading,
+    error,
+    isOffline,
+  } = useBulletNotePage();
 
   if(loading) {
     return (
