@@ -3,6 +3,7 @@ import { Box, Typography, TextField, Grid, makeStyles } from '@material-ui/core'
 import BulletTagList from '../BullteTagList';
 import { BasicMessageItemProps } from '../types';
 import { MessageContentPartProps } from './types';
+import MessageContentHandler from 'BulletNote/functions/MessageContentHandler';
 
 const addZeroToSmallerThanTenNumber = (num: number) => (
   num < 10 ? `0${num}` : String(num)
@@ -61,7 +62,7 @@ const MessageContentPart = (props: MessageContentPartProps) => {
           className={classes.contentPart}
           variant={'subtitle1'} 
         >
-          {content}
+          {MessageContentHandler.renderParsedContent(content)}
         </Typography>
       )}
       {/* <BulletTagList
