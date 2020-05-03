@@ -7,6 +7,8 @@ export interface BulletNoteConfig {
   // showTagList: boolean
   selectedFilterTags: string[]
   showingDaysRange: number
+  isFilteringDone: boolean
+  isFilteringStared: boolean
 }
 
 export interface BulletNoteState {
@@ -17,6 +19,8 @@ export interface BulletNoteState {
 const initBulletNoteConfig: BulletNoteConfig = {
   selectedFilterTags: [],
   showingDaysRange: 14, //two weeks
+  isFilteringDone: false,
+  isFilteringStared: false,
 };
 
 const initState: BulletNoteState = {

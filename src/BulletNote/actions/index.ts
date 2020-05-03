@@ -16,6 +16,7 @@ export enum BulletNoteActionTypes {
 
   SET_DAYS_RANGE = 'SET_DAYS_RANGE',
   SET_FILTER_TAGS = 'SET_FILTER_TAGS',
+  TOGGLE_IS_FILTERING_DONE = 'TOGGLE_IS_FILTERING_DONE'
 }
 
 type BulletNoteActions = InputPartActions

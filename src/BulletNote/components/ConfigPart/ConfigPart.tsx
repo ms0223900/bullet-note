@@ -4,6 +4,7 @@ import DaysRangeInputWithCtx from 'BulletNote/containers/ConfigPart/DaysRangeInp
 import DownloadMessageListWithCtx from '../DownloadMessageList';
 import RestoreBackup from '../RestoreBackup';
 import TagsFilterWithCtx from 'BulletNote/containers/ConfigPart/TagsFilter';
+import FilterDoneCheckBoxWithCtx from 'BulletNote/containers/ConfigPart/FilterDoneCheckBox';
 
 const ConfigPart = () => {
   return (
@@ -27,6 +28,9 @@ const ConfigPart = () => {
           <DaysRangeInputWithCtx />
           <Box paddingY={1} />
           <TagsFilterWithCtx />
+          <Box paddingBottom={1}>
+            <FilterDoneCheckBoxWithCtx />
+          </Box>
         </Box>
         <Box
           // display={'flex'}

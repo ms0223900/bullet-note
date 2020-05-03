@@ -14,6 +14,12 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
       ...state.bulletNoteConfig,
       selectedFilterTags: action.payload.tags,
     });
+  
+  case BulletNoteActionTypes.TOGGLE_IS_FILTERING_DONE:
+    return ({
+      ...state.bulletNoteConfig,
+      isFilteringDone: action.payload.isFilteringDone,
+    });
   default:
     return state.bulletNoteConfig;
   }

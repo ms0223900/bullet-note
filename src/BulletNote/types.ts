@@ -2,6 +2,7 @@ import { ID, Callback } from "common-types";
 import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps, ToggleTodoFn } from "./components/types";
 import { BulletNoteState } from "./constants/context";
 import { RouterProps, RouteChildrenProps } from "react-router";
+import { TagNoteBlockItemContainerWithCtxProps } from "./containers/types";
 
 type RawMessage = string
 
@@ -79,6 +80,7 @@ export interface NoteBlockItem extends MessageListWithDate {
 export interface NoteBlockItemProps extends NoteBlockItem {
   selected?: boolean
   selectedFilterTags: BulletNoteState['bulletNoteConfig']['selectedFilterTags']
+  isFilteringDone: BulletNoteState['bulletNoteConfig']['isFilteringDone']
 }
 
 export interface TagNoteBlockItem {
@@ -89,6 +91,7 @@ export interface TagNoteBlockItem {
 export interface TagNoteBlockItemProps extends TagNoteBlockItem {
   toggleShowMessagesFn: Callback
   isShowMessages: boolean
+  isFilteringDone: BulletNoteState['bulletNoteConfig']['isFilteringDone']
 }
 export type TagNoteBlockList = TagNoteBlockItem[]
 export interface TagNoteBlockObj {
