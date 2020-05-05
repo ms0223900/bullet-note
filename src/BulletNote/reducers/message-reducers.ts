@@ -105,10 +105,10 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
   case BulletNoteActionTypes.TOGGLE_MESSAGE_ISSTAR: {
     const {
       id,
-      isStar
+      starLevelNum
     } = action.payload;
     // console.log(id,
-    //   isStar);
+    //   starLevelNum);
 
     const index = newMessageList.findIndex((m) => m.message.id === id);
     if(index !== -1) {
@@ -116,7 +116,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
         ...newMessageList[index],
         message: {
           ...newMessageList[index].message,
-          isStared: isStar
+          starLevelNum: starLevelNum
         }
       };
     }

@@ -1,5 +1,5 @@
 import { MessageItemWrapperProps, BasicMessageItemProps, ToDoMessageItemProps, ToggleTodoFn, MessageItemButtonsProps } from "../components/types";
-import { TagNoteBlockItemProps, NoteBlockListProps, NoteBlockListWithCtxProps } from "../types";
+import { TagNoteBlockItemProps, NoteBlockListProps, NoteBlockListWithCtxProps, StarLevelNum } from "../types";
 import { BulletNoteState } from "BulletNote/constants/context";
 import { MessageButtonsPartProps } from "BulletNote/components/MessageComponents/types";
 
@@ -24,7 +24,7 @@ export interface TagNoteBlockItemContainerWithCtxProps extends Omit<TagNoteBlock
 
 export interface BasicMessageItemContainerProps extends Omit<BasicMessageItemProps, 'onEditMessage'> {
   editActionFn: (id: string, newMessage: string) => any
-  starActionFn: (id: string, isStar?: boolean) => any
+  starActionFn: (id: string, starLevelNum?: StarLevelNum) => any
   pinActionFn: (id: string, isPin?: boolean) => any
 }
 export interface BasicMessageItemContainerWithCtxProps extends Omit<BasicMessageItemContainerProps, 
@@ -43,8 +43,8 @@ export interface TodoMessageItemContainerWithCtxProps extends Omit<
 TodoMessageItemContainerProps, 'toggleTodoActionFn'> {}
 
 export interface StarItemContainerProps {
-  isStared?: boolean
-  onChange?: (isStar?: boolean) => any
+  starLevelNum?: boolean
+  onChange?: (starLevelNum?: boolean) => any
 }
 
 export interface PinItemContainerProps {

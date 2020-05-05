@@ -6,16 +6,15 @@ const checkLocalDataIsSameWithOnline = 'checkLocalWithOnline';
 class HandleDataInLocalStorage {
   static convertMessageListToRawMessageList(messageList: MessageList): SingleRawMessageFromDB[] {
     return messageList.map(m => {
-      let isDone = undefined;
-      if(m.type === MESSAGE_TYPE.TODO) {
-        isDone = !!m.status.isDone;
-      }
+      const isDone = m.type === MESSAGE_TYPE.TODO ? !!m.status.isDone : undefined;
+      const starLevelNum = typeof m.message.starLevelNum === 'number' ? m.message.starLevelNum : 0;
+      
       return ({
         id: m.message.id,
         isDone,
         rawMessage: m.message.rawMessage,
         createdAt: new Date(m.message.createdAt),
-        isStared: m.message.isStared,
+        starLevelNum,
         isPin: m.message.isPin,
       });
     });

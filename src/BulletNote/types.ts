@@ -5,6 +5,7 @@ import { RouterProps, RouteChildrenProps } from "react-router";
 import { TagNoteBlockItemContainerWithCtxProps } from "./containers/types";
 
 type RawMessage = string
+export type StarLevelNum = number
 
 export enum MESSAGE_TYPE  {
   'DEFAULT' = 'DEFAULT',
@@ -46,14 +47,14 @@ export interface SingleRawMessageFromDB {
   id: string
   isDone?: boolean
   isPin?: boolean
-  isStared?: boolean
+  starLevelNum?: StarLevelNum
   rawMessage: RawMessage
   createdAt?: string | Date
 }
 
 export interface BasicMessage {
   id: string
-  isStared?: boolean
+  starLevelNum?: StarLevelNum
   isPin?: boolean
   rawMessage: RawMessage
   content: string

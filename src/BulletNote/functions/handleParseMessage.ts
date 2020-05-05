@@ -1,4 +1,4 @@
-import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB } from "../types";
+import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB, StarLevelNum } from "../types";
 
 class HandleParseMessage {
   static todoReg = /(\[\]\s)?/
@@ -20,7 +20,7 @@ class HandleParseMessage {
     tagList: TagItem[], 
     rawMessage: string
     createdAt?: Date | string,
-    isStared?: boolean,
+    starLevelNum?: StarLevelNum,
     isPin?: boolean,
   }): BasicMessage {
     const {

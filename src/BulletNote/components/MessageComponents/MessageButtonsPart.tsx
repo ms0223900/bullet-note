@@ -5,6 +5,9 @@ import PinItemContainer from 'BulletNote/containers/NotePart/PinItemContainer';
 import MessageItemButtons from '../MessageItemButtons';
 import { MessageButtonsPartProps } from './types';
 import { MoreHoriz } from '@material-ui/icons';
+import StarLevelContainer from 'BulletNote/containers/CommonComponents/StarLevelContainer';
+
+const buttonPartWidth = 154;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,9 +22,9 @@ const useStyles = makeStyles(theme => ({
 
     '& > div': {
       position: 'absolute',
-      top: -30,
+      top: -70,
       right: 0,
-      width: 110,
+      width: buttonPartWidth,
       display: 'none',
     },
     '&:hover > div': {
@@ -37,7 +40,7 @@ const MessageButtonsPart = (props: MessageButtonsPartProps) => {
   } = props;
 
   const {
-    isStared,
+    starLevelNum,
     isPin,
   } = message;
 
@@ -59,9 +62,10 @@ const MessageButtonsPart = (props: MessageButtonsPartProps) => {
             <MessageItemButtons
               onDelete={props.onDelete}
               onMoverMessageToLatest={props.onMoverMessageToLatest} />
-            <StarItemContainer
-              isStared={isStared}
-              onChange={props.onStarMessage} />
+            <StarLevelContainer 
+              initStarLevelNum={starLevelNum}
+              setStarLevelNumToCtx={props.onStarMessage}
+            />
             <PinItemContainer
               isPin={isPin}
               onChange={props.onPinMessage} />

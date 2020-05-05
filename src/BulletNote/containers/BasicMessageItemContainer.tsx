@@ -3,12 +3,11 @@ import { Box } from '@material-ui/core';
 import BasicMessageItem from '../components/BasicMessageItem';
 import { BasicMessageItemContainerProps, BasicMessageItemContainerWithCtxProps } from './types';
 import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
-import { editMessage, toggleMessageIsStar, toggleMessageIsPin } from '../actions/message-actions';
+import { editMessage, setMessageStarLevel, toggleMessageIsPin } from '../actions/message-actions';
 import { connectCtx } from 'react-function-helpers';
 import { ContextStore } from '../constants/context';
 import useInput from 'lib/customHooks/useInput';
-import useChangeInput from 'lib/customHooks/useChangeInput';
-import { useFnsByKeyCode } from 'react-function-helpers/lib/lib/customHooks/useFnsByKeyCode';
+import { StarLevelNum } from 'BulletNote/types';
 
 const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
   const {
@@ -35,8 +34,8 @@ const BasicMessageItemContainer = (props: BasicMessageItemContainerProps) => {
     editActionFn(id, value);
   }, [editActionFn, id, rawMessage, value]);
 
-  const handleToggleStarMessage = useCallback((isStar: boolean | undefined) => {
-    starActionFn(id, isStar);
+  const handleToggleStarMessage = useCallback((starLevelNum: StarLevelNum | undefined) => {
+    starActionFn(id, starLevelNum);
   }, [id, starActionFn]);
 
   const handleTogglePinMessage = useCallback((isPin: boolean | undefined) => {
@@ -66,8 +65,8 @@ const mapDispatchToProps: MapDispatchToProps<OwnProps, {
       const action = editMessage(id, newMessage);
       dispatch(action);
     },
-    starActionFn: (id, isStar) => {
-      const action = toggleMessageIsStar(id, isStar);
+    starActionFn: (id, starLevelNum) => {
+      const action = setMessageStarLevel(id, starLevelNum);
       dispatch(action); 
     },
     pinActionFn: (id, isPin) => {

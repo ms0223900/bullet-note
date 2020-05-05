@@ -1,5 +1,5 @@
 import { BulletNoteActionTypes } from ".";
-import { SingleRawMessageFromDB } from "../types";
+import { SingleRawMessageFromDB, StarLevelNum } from "../types";
 
 interface AddMessageActionPayload {
   rawMessage: string
@@ -20,7 +20,7 @@ interface ToggleMessageIsDonePayload {
 
 interface ToggleMessageIsStarPayload {
   id: string
-  isStar: boolean | undefined
+  starLevelNum: StarLevelNum | undefined
 }
 
 interface ToggleMessageIsPinPayload {
@@ -102,11 +102,11 @@ export const toggleMessageIsDone = (id: string, isDone: boolean): ToggleMessageI
   }
 });
 
-export const toggleMessageIsStar = (id: string, isStar?: boolean): ToggleMessageIsStar => ({
+export const setMessageStarLevel = (id: string, starLevelNum?: StarLevelNum): ToggleMessageIsStar => ({
   type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISSTAR,
   payload: {
     id,
-    isStar,
+    starLevelNum,
   }
 });
 

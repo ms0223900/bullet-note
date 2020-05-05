@@ -1,4 +1,4 @@
-import { MessageList, BasicMessage, MESSAGE_TYPE, TodoMessageStatus, UrgentMessageStatus } from "../types";
+import { MessageList, BasicMessage, MESSAGE_TYPE, TodoMessageStatus, UrgentMessageStatus, StarLevelNum } from "../types";
 import { Callback } from "common-types";
 import { ReactNode, ChangeEvent } from "react";
 
@@ -15,7 +15,7 @@ export interface MessageItemButtonsProps {
 export interface BasicMessageItemProps extends MessageItemButtonsProps {
   value?: string
   message: BasicMessage
-  onStarMessage?: (isStar?: boolean) => any
+  onStarMessage?: (starLevelNum?: StarLevelNum) => any
   onPinMessage?: (isPin?: boolean) => any
   onChangeInput?: (e: ChangeEvent<any>) => any
   onEditMessage?: () => any

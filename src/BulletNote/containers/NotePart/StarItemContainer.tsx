@@ -6,12 +6,12 @@ import useToggle from 'BulletNote/functions/useToggle';
 
 const StarItemContainer = ({
   onChange,
-  isStared,
+  starLevelNum,
 }: StarItemContainerProps) => {
   const {
     toggle: isStar,
     handleToggle,
-  } = useToggle(isStared, onChange);
+  } = useToggle(starLevelNum, onChange);
 
   return (
     <Box
