@@ -10,4 +10,8 @@ const theme = createMuiTheme({
   }
 });
 
+export const otherColors = {
+  starPart: '#edda8c',
+};
+
 export default theme;

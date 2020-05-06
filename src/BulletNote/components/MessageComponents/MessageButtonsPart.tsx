@@ -4,8 +4,9 @@ import StarItemContainer from 'BulletNote/containers/NotePart/StarItemContainer'
 import PinItemContainer from 'BulletNote/containers/NotePart/PinItemContainer';
 import MessageItemButtons from '../MessageItemButtons';
 import { MessageButtonsPartProps } from './types';
-import { MoreHoriz } from '@material-ui/icons';
+import { MoreHoriz, Star } from '@material-ui/icons';
 import StarLevelContainer from 'BulletNote/containers/CommonComponents/StarLevelContainer';
+import { otherColors } from 'BulletNote/theme/theme';
 
 const buttonPartWidth = 154;
 
@@ -15,6 +16,15 @@ const useStyles = makeStyles(theme => ({
        
     }
   },
+
+  starItem: {
+    display: 'flex',
+    alignContent: 'center',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    }
+  },
+
   morePart: {
     position: 'relative',
     cursor: 'pointer',
@@ -32,6 +42,24 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
+
+const starDisplayItem = (starLevelNum?: number) => {
+  if(starLevelNum) {
+    return (
+      <>
+        <Star 
+          style={{
+            fill: otherColors.starPart,
+          }}
+        />
+        <Box component={'span'}>
+          {starLevelNum}
+        </Box>
+      </>
+    );
+  }
+  return null;
+};
 
 const MessageButtonsPart = (props: MessageButtonsPartProps) => {
   const classes = useStyles();
@@ -71,6 +99,11 @@ const MessageButtonsPart = (props: MessageButtonsPartProps) => {
               onChange={props.onPinMessage} />
           </Box>
         </Paper>
+      </Box>
+      <Box 
+        className={classes.starItem}
+      >
+        {starDisplayItem(props.message.starLevelNum)}
       </Box>
     </Box>
   );
