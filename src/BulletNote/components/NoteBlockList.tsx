@@ -8,6 +8,7 @@ import checkDateIsToday from '../functions/checkDateIsToday';
 import { ArrowDownward } from '@material-ui/icons';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { connectCtx } from 'react-function-helpers';
+import splitMessageListWithDataByWeek from 'BulletNote/functions/splitMessageListWithDateByWeek';
 
 const NoteBlockList = (props: NoteBlockListProps) => {
   const {
@@ -24,6 +25,8 @@ const NoteBlockList = (props: NoteBlockListProps) => {
 
   const messageListWithDateFilterByDaysRange = HandleMessageList
     .filterMessageListByDaysRange(messageListWithDate, showingDaysRange);
+  const messageListWithDateSplitByWeek = splitMessageListWithDataByWeek(messageListWithDateFilterByDaysRange);
+  console.log(messageListWithDateSplitByWeek);
 
   if(messageList.length === 0) {
     return (

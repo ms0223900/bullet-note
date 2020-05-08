@@ -71,13 +71,23 @@ export type MessageItem =
 export type MessageList = MessageItem[]
 
 export interface MessageListWithDate {
-    date: Date | string
-    messageList: MessageList
-  }
+  date: Date | string
+  messageList: MessageList
+}
 
 export interface NoteBlockItem extends MessageListWithDate {
 
 }
+
+export interface WeekFromTo {
+  weekFrom: Date
+  weekTo: Date
+}
+
+export interface SingleMessageListWithDateSplitByWeek extends WeekFromTo {
+  messageListWithDateList: MessageListWithDate[]
+}
+
 export interface NoteBlockItemProps extends NoteBlockItem {
   selected?: boolean
   selectedFilterTags: BulletNoteState['bulletNoteConfig']['selectedFilterTags']
