@@ -7,6 +7,13 @@ import useTagStyles from 'BulletNote/styles/stylesObj/useTagStyles';
 import { sepMessageListByStarLevelNum } from 'BulletNote/functions/sortMessageListByStarLevelNum';
 import { otherColors } from 'BulletNote/theme/theme';
 
+export const checkMessageItemIsDone = (messageItem: MessageItem) => {
+  if(messageItem.type === MESSAGE_TYPE.TODO && messageItem.status.isDone) {
+    return true;
+  }
+  return false;
+};
+
 export const checkMessageItemShouldDisplayByIsFilteringDone = (messageItem: MessageItem, isFilteringDone: boolean) => {
   if(!isFilteringDone) {
     return true;
@@ -16,6 +23,57 @@ export const checkMessageItemShouldDisplayByIsFilteringDone = (messageItem: Mess
     }
     return true;
   }
+};
+
+export type MessageItemWithShouldDisplay = MessageItem & {
+  shouldDisplay: boolean
+}
+
+export interface FilteredMessageListByIsDone {
+  isAllDone: boolean
+  filteredMessageListByDone: MessageItemWithShouldDisplay[]
+}
+
+export const filterMessageListByIsDone = (messageList: MessageItem[]) => (isFilteringDone: boolean): FilteredMessageListByIsDone => {
+  let res: FilteredMessageListByIsDone = {
+    isAllDone: true,
+    filteredMessageListByDone: []
+  };
+
+  for (let i = 0; i < messageList.length; i++) {
+    const messageItem = messageList[i];
+    const messageItemIsDone = checkMessageItemIsDone(messageItem);
+    const shouldDisplay = isFilteringDone ? !messageItemIsDone : true;
+    
+    if(shouldDisplay) {
+      res.isAllDone = false;
+    }
+    
+    res.filteredMessageListByDone = [
+      ...res.filteredMessageListByDone,
+      {
+        ...messageItem,
+        shouldDisplay,
+      },
+    ];
+  }
+
+  return res;
+};
+
+const renderSingleMessageItemFn = (shouldDisplay: boolean) => (messageItemProps: MessageItem, index: number) => {
+  return (
+    <Box
+      style={{
+        display: shouldDisplay ? 'block': 'none',
+      }}
+    >
+      {switchMessagesByType({
+        index,
+        messageItemProps,
+      })}
+    </Box>
+  );
 };
 
 export const TagTitle = (props: TagNoteBlockItemProps) => {
@@ -56,30 +114,19 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
     isFilteringDone,
   } = props;
 
-  const seperatedMessageListByStar = sepMessageListByStarLevelNum(messageList);
+  const handledMessageListByIsDone = filterMessageListByIsDone(messageList)(isFilteringDone);
 
-  const renderSingleMessageItemFn = (messageItemProps: MessageItem, index: number) => {
-    const isShowByFilteringDone = checkMessageItemShouldDisplayByIsFilteringDone(messageItemProps, isFilteringDone);
-
-    return (
-      <Box
-        style={{
-          display: isShowByFilteringDone ? 'block': 'none',
-        }}
-      >
-        {switchMessagesByType({
-          index,
-          messageItemProps,
-        })}
-      </Box>
-    );
-  };
+  const seperatedMessageListByStar = sepMessageListByStarLevelNum(handledMessageListByIsDone.filteredMessageListByDone);
 
   return (
     <Box paddingLeft={tabSpace}>
-      <TagTitle 
-        {...props}
-      />
+      <Box 
+        display={handledMessageListByIsDone.isAllDone ? 'none' : 'block'}
+      >
+        <TagTitle 
+          {...props}
+        />
+      </Box>
       <Box 
         // paddingLeft={tabSpace}
         paddingBottom={0.5}
@@ -95,11 +142,11 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
               borderLeft: `3px solid ${otherColors.starPart}`,
             }}
           >
-            {seperatedMessageListByStar.starMessageList.map(renderSingleMessageItemFn)}
+            {seperatedMessageListByStar.starMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}
           </Box>
         )}
         <Box>
-          {seperatedMessageListByStar.notStarMessageList.map(renderSingleMessageItemFn)}
+          {seperatedMessageListByStar.notStarMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}
         </Box>
       </Box>
     </Box>
