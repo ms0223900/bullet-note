@@ -11,8 +11,12 @@ class WeekDatesHandler {
     return false;
   }
   static checkNextDatesIsBigger(prev: Date, next: Date) {
-    const prevTime = new Date(prev).getTime();
-    const nextTime = new Date(next).getTime();
+    const prevDateStr = this.convertDateToString(prev);
+    const nextDateStr = this.convertDateToString(next);
+
+    const prevTime = new Date(prevDateStr).getTime();
+    const nextTime = new Date(nextDateStr).getTime();
+    
     if(nextTime > prevTime) {
       return true;
     }
@@ -62,6 +66,13 @@ class WeekDatesHandler {
 
   static convertDateToString(date: Date) {
     const res = `${date.getMonth() + 1}/${date.getDate()}`;
+    return res;
+  }
+  static convertWeekFromToToString(weekFromTo: WeekFromTo, joinStr='~') {
+    const fromStr = this.convertDateToString(weekFromTo.weekFrom);
+    const toStr = this.convertDateToString(weekFromTo.weekTo);
+    const res = `${fromStr}${joinStr}${toStr}`;
+
     return res;
   }
 }

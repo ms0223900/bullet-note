@@ -82,6 +82,7 @@ export interface NoteBlockItem extends MessageListWithDate {
 export interface WeekFromTo {
   weekFrom: Date
   weekTo: Date
+  weekFromToStr?: string
 }
 
 export interface SingleMessageListWithDateSplitByWeek extends WeekFromTo {
@@ -119,8 +120,11 @@ export interface NoteBlockListProps extends NoteBlockListWithCtxProps {
 }
 
 export interface NoteBlockListWithCtxProps {
+  singleMessageListWithDateSplitByWeek: SingleMessageListWithDateSplitByWeek
+}
+
+export interface NoteWeekBlockProps {
   messageList: MessageList
-  moveToBottomFn: Callback
 }
 
 export interface DateTitleProps {

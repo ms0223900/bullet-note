@@ -17,3 +17,7 @@ export interface StarLevelProps {
   starLevelNum: StarLevelNum
   onAddOrMinus: (addOrMinus: AddOrMinus) => () => any
 }
+
+export interface MoveToBottomButtonProps {
+  moveToBottomFn: Callback
+}

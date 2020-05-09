@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { Box, Typography, Fab } from '@material-ui/core';
+import { Box, Typography, Fab, Divider } from '@material-ui/core';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { NoteBlockListProps, NoteBlockListWithCtxProps } from '../types';
 import HandleMessageList from '../functions/handleMessageListToMessageWithDateList';
@@ -8,39 +8,56 @@ import checkDateIsToday from '../functions/checkDateIsToday';
 import { ArrowDownward } from '@material-ui/icons';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { connectCtx } from 'react-function-helpers';
-import splitMessageListWithDataByWeek from 'BulletNote/functions/splitMessageListWithDateByWeek';
+import WeekDatesHandler from 'BulletNote/functions/WeekDatesHandler';
+import useToggle from 'BulletNote/functions/useToggle';
 
 const NoteBlockList = (props: NoteBlockListProps) => {
   const {
-    messageList,
-    moveToBottomFn,
+    singleMessageListWithDateSplitByWeek,
     bulletNoteConfig,
   } = props;
+
+  const {
+    messageListWithDateList,
+  } = singleMessageListWithDateSplitByWeek;
+  
   const {
     showingDaysRange,
   } = bulletNoteConfig;
 
-  const messageListWithDate = HandleMessageList
-    .convertToMessageWithDateList(messageList);
+  const {
+    toggle,
+    handleToggle,
+  } = useToggle(true);
+
+  const weekTitle = (
+    <Typography
+      color={'primary'}
+      variant={'h5'}
+      style={{
+        cursor: 'pointer',
+      }}
+      onClick={handleToggle}
+    >
+      {singleMessageListWithDateSplitByWeek.weekFromToStr}
+    </Typography>
+  );
 
   const messageListWithDateFilterByDaysRange = HandleMessageList
-    .filterMessageListByDaysRange(messageListWithDate, showingDaysRange);
-  const messageListWithDateSplitByWeek = splitMessageListWithDataByWeek(messageListWithDateFilterByDaysRange);
-  console.log(messageListWithDateSplitByWeek);
-
-  if(messageList.length === 0) {
-    return (
-      <Typography variant={'h5'} color={'textSecondary'}>
-        {'No notes yet :>'}
-      </Typography>
-    );
-  }
+    .filterMessageListByDaysRange(messageListWithDateList, showingDaysRange);
   
   return (
     <Box
       position={'relative'}
     >
-      <Box>
+      {messageListWithDateFilterByDaysRange.length > 0 && (
+        <>{weekTitle}</>
+      )}
+      <Box
+        style={{
+          display: toggle ? 'block' : 'none',
+        }}
+      >
         {messageListWithDateFilterByDaysRange.map((m, i) => (
           <NoteBlockItem
             {...m}
@@ -48,20 +65,7 @@ const NoteBlockList = (props: NoteBlockListProps) => {
             selected={checkDateIsToday(m.date)} />
         ))}
       </Box>
-      <Box
-        style={{
-          position: 'fixed',
-          bottom: 80,
-          right: 20,
-        }}
-      >
-        <Fab
-          size={'small'}
-          onClick={moveToBottomFn}
-        >
-          <ArrowDownward />
-        </Fab>
-      </Box>
+      <Divider />
     </Box>
   );
 };

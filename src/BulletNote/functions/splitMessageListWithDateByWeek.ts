@@ -31,15 +31,18 @@ const splitMessageListWithDataByWeek = (messageListWithDateList: MessageListWith
       //init arr
       res[weekIndex] = initMessageListWithDateSplitByWeek(weekFromToNow);
     }
+    const weekFromToStr = WeekDatesHandler.convertWeekFromToToString(weekFromToNow);
+
     res[weekIndex] = {
       ...weekFromToNow,
+      weekFromToStr,
       messageListWithDateList: [
         ...res[weekIndex].messageListWithDateList,
         messageListWithDate,
       ]
     };
   }
-
+  
   return res;
 };
 

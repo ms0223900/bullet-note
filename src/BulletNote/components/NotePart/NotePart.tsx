@@ -5,6 +5,7 @@ import DownloadMessageListWithCtx from '../DownloadMessageList';
 import RestoreBackup from '../RestoreBackup';
 import NoteBlockListContainer from 'BulletNote/containers/NoteBlockListContainer';
 import PinMessageListContainer from 'BulletNote/containers/NotePart/PinMessageListContainer';
+import NoteWeekBlock from './NoteWeekBlock';
 
 const useStyles = makeStyles(() => ({
   pinMessageListPart: {
@@ -28,8 +29,11 @@ const NotePart = (props: NotePartProps) => {
         <PinMessageListContainer
           messageList={props.messageList} />
       </Box>
-      <NoteBlockListContainer
-        {...props} />
+      <NoteWeekBlock 
+        messageList={props.messageList}
+      />
+      {/* <NoteBlockListContainer
+        {...props} /> */}
     </>
   );
 };
