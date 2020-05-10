@@ -1,5 +1,4 @@
-import React, { useCallback, ChangeEvent } from 'react';
-import { Box } from '@material-ui/core';
+import React, { useCallback } from 'react';
 import useInput from 'lib/customHooks/useInput';
 import InputPart from 'BulletNote/components/InputPart/InputPart';
 import { MapDispatchToProps, MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
@@ -10,6 +9,8 @@ import { ContextStore, BulletNoteState } from '../../constants/context';
 import { useFnsByKeyCode } from 'react-function-helpers/lib/lib/customHooks/useFnsByKeyCode';
 import useSelectorSelect from 'lib/customHooks/useSelectorSelect';
 import getTagsFromMessageList from 'BulletNote/functions/getTagsFromMessageList';
+import { KEY_CODES } from 'BulletNote/config';
+import useFastInput from 'lib/customHooks/useFastInput';
 
 const InputPartContainer = (props: InputPartContainerProps) => {
   const {
@@ -43,6 +44,12 @@ const InputPartContainer = (props: InputPartContainerProps) => {
       handleResetSelect('tagValue');
     }
   }, [handleResetSelect, props, setVal, value]);
+
+  useFastInput({
+    setValueFn: setVal,
+    fastInputValues: tags,
+    triggerKeyCode: KEY_CODES.SPACE,
+  });
 
   useFnsByKeyCode({
     lastIndex: 0,
