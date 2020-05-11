@@ -15,7 +15,7 @@ const NoteWeekBlock = (props: NoteWeekBlockProps) => {
   const {
     ref,
     handleScrollToView,
-  } = useScrollToView();
+  } = useScrollToView([props.messageList.length]);
 
   const messageListWithDate = HandleMessageList
     .convertToMessageWithDateList(messageList);
