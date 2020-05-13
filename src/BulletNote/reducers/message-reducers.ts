@@ -5,11 +5,32 @@ import HandleParseMessage from "../functions/handleParseMessage";
 import HandleDataInLocalStorage from "../functions/HandleDataInLocalStorage";
 import { MESSAGE_TYPE, MessageItem } from "../types";
 import { ToDoMessageItemProps } from "../components/types";
+import { weekTargetTag } from "BulletNote/functions/getTagsFromMessageList";
+
+export const handleMessageItemRemoveTag = (tag: string) => (messageItem: MessageItem) => {
+  let filteredTagList = messageItem.message.tagList.filter(t => {
+    return t.id !== tag;
+  });
+  filteredTagList = filteredTagList.length === 0 ? [HandleParseMessage.defaultTag] : filteredTagList;
+  const rawMessageWithoutTag = messageItem.message.rawMessage.replace(tag, '');
+
+  const res: MessageItem = {
+    ...messageItem,
+    message: {
+      ...messageItem.message,
+      tagList: filteredTagList,
+      rawMessage: rawMessageWithoutTag,
+    }
+  };
+
+  return res;
+};
 
 const inputPartReducers = (state: BulletNoteState, action: InputPartActions): BulletNoteState['messageList'] => {
   let newMessageList = [...state.messageList];
 
   switch (action.type) {
+
   case BulletNoteActionTypes.ADD_MESSAGE: {
     const {
       messageList
@@ -28,6 +49,10 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
       ...state.messageList,
       handledMessage,
     ];
+
+    const sorted = [...newMessageList].sort(HandleParseMessage.sortMessageListByDateFn('acc'));
+    newMessageList = sorted;
+
     break;
   }
 
@@ -63,7 +88,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
       ): Number(newMessageList.slice(-1)[0].message.id);
       const newId = String(lastMessageId + 1);
 
-      const movedNewMessage = {
+      let movedNewMessage: MessageItem = {
         ...newMessageList[index],
         message: {
           ...newMessageList[index].message,
@@ -71,6 +96,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
           createdAt: new Date(),
         }
       };
+      movedNewMessage = handleMessageItemRemoveTag(weekTargetTag)(movedNewMessage);
 
       newMessageList = [
         ...newMessageList.slice(0, index),
@@ -172,7 +198,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
   default:
     break;
   }
-  
+
   HandleDataInLocalStorage.setData(newMessageList);
   return newMessageList;
 };

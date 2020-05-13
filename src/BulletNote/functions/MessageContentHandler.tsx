@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Box } from '@material-ui/core';
+import { Link, Box, makeStyles } from '@material-ui/core';
 
 const urlRegExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
 
@@ -9,6 +9,35 @@ interface FormattedContent {
   type: MessageContentType
   content: string
 }
+
+const useStyles = makeStyles(theme => ({
+  root: {
+     
+  },
+  link: {
+    color: theme.palette.primary.dark,
+  }
+}));
+
+export const ParsedLink = ({
+  index,
+  content
+}: {
+  index: number
+  content: string
+}) => {
+  const classes = useStyles();
+  return (
+    <Link 
+      key={index} 
+      className={classes.link}
+      href={content} 
+      target={'_blank'}
+    >
+      {content}
+    </Link>
+  );
+};
 
 class MessageContentHandler {
   static parseContent(content: string): FormattedContent[] {
@@ -64,7 +93,10 @@ class MessageContentHandler {
       switch (c.type) {
       case 'url':
         return (
-          <Link key={i} href={c.content} target={'_blank'}>{c.content}</Link>
+          <ParsedLink 
+            index={i}
+            content={c.content}
+          />
         );
       default:
         return (

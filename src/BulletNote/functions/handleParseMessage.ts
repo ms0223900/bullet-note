@@ -1,4 +1,7 @@
 import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB, StarLevelNum } from "../types";
+import { weekTargetTag } from 'BulletNote/functions/getTagsFromMessageList';
+
+type AccOrDec = 'acc' | 'dec'
 
 class HandleParseMessage {
   static todoReg = /(\[\]\s)?/
@@ -8,6 +11,32 @@ class HandleParseMessage {
   static defaultTag: TagItem = {
     id: 'notDefinedTag',
     name: '#未分類'
+  }
+
+  static sortByDateFn(accOrDec: AccOrDec) {
+    return (prevDate?: Date | string, nextDate?: Date | string) => {
+      if(!prevDate || !nextDate) {
+        return 0;
+      }
+      const prev = (new Date(prevDate)).getTime();
+      const next = (new Date(nextDate)).getTime();
+      if(next - prev > 0) {
+        return accOrDec === 'acc' ? -1 : 1;
+      } 
+      return accOrDec === 'acc' ? 1 : -1;
+    };
+  }
+  static sortMessageListByDateFn(accOrDec: AccOrDec) {
+    return (prev: MessageItem, next: MessageItem) => {
+      const res = this.sortByDateFn(accOrDec)(prev.message.createdAt, next.message.createdAt);
+      return res;
+    };
+  }
+
+  static checkIsWeekTargetMessage(tagList: TagItem[]) {
+    const tagStrList = tagList.map(t => t.id);
+    const isIncludesWeekTargetTag = tagStrList.includes(weekTargetTag);
+    return isIncludesWeekTargetTag;
   }
 
   static removeSpaceInStr(str: string) {
@@ -98,15 +127,23 @@ class HandleParseMessage {
       isPin,
       rawMessage,
     } = singleRawMessageFromDB;
+    let createdAt = singleRawMessageFromDB.createdAt;
 
     const messageType = this.getMessageType(rawMessage);
     const tagList = this.getTagListFromRawMessage(rawMessage);
     const content = this.getContent(rawMessage);
+
+    const isWeekTargetMessage = this.checkIsWeekTargetMessage(tagList);
+    if(isWeekTargetMessage) {
+      createdAt = new Date('2020/05/10');
+    }
+
     const message = this.makeBasicMessage({
       ...singleRawMessageFromDB,
       isPin,
       tagList,
       content,
+      createdAt,
     });
     
     const status = this.makeTodoStatus({
