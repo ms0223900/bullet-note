@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, makeStyles } from '@material-ui/core';
+import { Box, Typography, makeStyles, Paper } from '@material-ui/core';
 import { TagNoteBlockItemProps, MESSAGE_TYPE, MessageItem } from '../types';
 import switchMessagesByType from '../functions/switchMessagesByType';
 import { tabSpace } from '../config';
@@ -119,7 +119,10 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
   const seperatedMessageListByStar = sepMessageListByStarLevelNum(handledMessageListByIsDone.filteredMessageListByDone);
 
   return (
-    <Box paddingLeft={tabSpace}>
+    <Box 
+      paddingLeft={tabSpace}
+      paddingBottom={1}
+    >
       <Box 
         display={handledMessageListByIsDone.isAllDone ? 'none' : 'block'}
       >
@@ -127,28 +130,33 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
           {...props}
         />
       </Box>
-      <Box 
-        // paddingLeft={tabSpace}
-        paddingBottom={0.5}
-        style={{
-          display: isShowMessages ? 'block': 'none',
-        }}
+        
+      <Paper
+        elevation={1}
       >
-        {seperatedMessageListByStar.starMessageList.length > 0 && (
-          <Box 
-            style={{
-              borderRadius: 4,
-              boxShadow: '0px 3px 10px #eee',
-              borderLeft: `3px solid ${otherColors.starPart}`,
-            }}
-          >
-            {seperatedMessageListByStar.starMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}
+        <Box 
+        // paddingLeft={tabSpace}
+          paddingBottom={0.5}
+          style={{
+            display: isShowMessages ? 'block': 'none',
+          }}
+        >
+          {seperatedMessageListByStar.starMessageList.length > 0 && (
+            <Box 
+              style={{
+              // borderRadius: 4,
+              // boxShadow: '0px 3px 10px #eee',
+                borderLeft: `4.5px solid ${otherColors.starPart}`,
+              }}
+            >
+              {seperatedMessageListByStar.starMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}
+            </Box>
+          )}
+          <Box>
+            {seperatedMessageListByStar.notStarMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}
           </Box>
-        )}
-        <Box>
-          {seperatedMessageListByStar.notStarMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}
         </Box>
-      </Box>
+      </Paper>
     </Box>
   );
 };

@@ -3,12 +3,16 @@ import { makeStyles } from "@material-ui/core";
 const useTagStyles = makeStyles(theme => ({
   root: {
     cursor: 'pointer',
-    backgroundColor: theme.palette.primary.light,
+    fontSize: '1rem',
+    // backgroundColor: theme.palette.primary.light,
+    // color: '#222',
+    color: theme.palette.primary.dark,
     borderRadius: theme.spacing(0.5),
     paddingLeft: theme.spacing(0.5),
     paddingRight: theme.spacing(0.5),
     '&:hover': {
-      opacity: 0.8,
+      opacity: 0.7
+      // color: theme.palette.primary.main,
     }
   }
 }));

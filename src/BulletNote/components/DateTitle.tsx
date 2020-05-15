@@ -26,7 +26,7 @@ const DateTitle = (props: DateTitleProps) => {
       display={'flex'}
       alignItems={'center'}
     >
-      <Typography variant={'h5'}>
+      <Typography variant={'h6'}>
         {dateStrObj.dateWithoutYear}
       </Typography>
       <Box paddingLeft={0.5}>

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Box, makeStyles, Theme } from '@material-ui/core';
+import { Box, makeStyles, Theme, Divider } from '@material-ui/core';
 import { NoteBlockItemProps, MessageList } from '../types';
 import switchMessagesByType from '../functions/switchMessagesByType';
 import DateTitle from './DateTitle';
@@ -76,7 +76,7 @@ const NoteBlockItem = (props: NoteBlockItemProps) => {
           );
         })}
       </Box>
-      {/* <hr /> */}
+      <Divider />
     </>
   );
 };
