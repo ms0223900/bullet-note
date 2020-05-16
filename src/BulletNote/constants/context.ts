@@ -3,7 +3,7 @@ import { createContextValueFn, createContextStore } from "react-function-helpers
 import reducers from "../reducers";
 import ContextWrapperFn from "react-function-helpers/lib/functions/ContextWrapper";
 
-type NoteMode = 'normal' | 'tag-whole-page'
+export type NoteMode = 'normal' | 'tag-whole-page'
 export const initNoteMode: NoteMode = 'normal';
 
 export interface BulletNoteConfig {

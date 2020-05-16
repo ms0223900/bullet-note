@@ -7,6 +7,7 @@ import ToggleDisplayWrapper from '../wrappers/ToggleDisplayWrapper';
 
 const WholeNoteBlogItem = (props: WholeNoteBlogItemProps) => {
   const {
+    isFilteringDone,
     messageList,
     isShowMessages,
   } = props;
@@ -17,7 +18,9 @@ const WholeNoteBlogItem = (props: WholeNoteBlogItemProps) => {
         {...props}
       />
       <ToggleDisplayWrapper isDisplay={isShowMessages}> 
-        {messageList.map(renderSingleMessageItemFn(true))}
+        {messageList.map(
+          renderSingleMessageItemFn(true, isFilteringDone)
+        )}
       </ToggleDisplayWrapper>
     </Box>
   );

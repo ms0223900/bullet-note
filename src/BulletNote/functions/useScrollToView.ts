@@ -1,6 +1,6 @@
 import { Ref, RefObject, useRef, useCallback, useEffect } from "react";
 
-const useScrollToView = (deps?: any[]) => {
+const useScrollToView = (deps=[] as any[]) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleScrollToView = useCallback(() => {

@@ -4,11 +4,13 @@ import { BulletNoteActionTypes } from "BulletNote/actions";
 
 const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState['bulletNoteConfig'] => {
   switch (action.type) {
+
   case BulletNoteActionTypes.SET_DAYS_RANGE:
     return ({
       ...state.bulletNoteConfig,
       showingDaysRange: action.payload.daysRange,
     });
+
   case BulletNoteActionTypes.SET_FILTER_TAGS:
     return ({
       ...state.bulletNoteConfig,
@@ -20,6 +22,14 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
       ...state.bulletNoteConfig,
       isFilteringDone: action.payload.isFilteringDone,
     });
+  
+  case BulletNoteActionTypes.SET_NOTE_MODE: {
+    return ({
+      ...state.bulletNoteConfig,
+      noteMode: action.payload.noteMode,
+    });
+  }
+
   default:
     return state.bulletNoteConfig;
   }

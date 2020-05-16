@@ -7,13 +7,7 @@ import { otherColors } from 'BulletNote/theme/theme';
 import TagTitle from './NotePart/TagTitle';
 import renderSingleMessageItemFn from './_functions/renderSingleMessageItemFn';
 import ToggleDisplayWrapper from './wrappers/ToggleDisplayWrapper';
-
-export const checkMessageItemIsDone = (messageItem: MessageItem) => {
-  if(messageItem.type === MESSAGE_TYPE.TODO && messageItem.status.isDone) {
-    return true;
-  }
-  return false;
-};
+import checkMessageItemIsDone from 'BulletNote/functions/checkMessageItemIsDone';
 
 export const checkMessageItemShouldDisplayByIsFilteringDone = (messageItem: MessageItem, isFilteringDone: boolean) => {
   if(!isFilteringDone) {

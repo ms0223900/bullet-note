@@ -5,6 +5,7 @@ import DownloadMessageListWithCtx from '../DownloadMessageList';
 import RestoreBackup from '../RestoreBackup';
 import TagsFilterWithCtx from 'BulletNote/containers/ConfigPart/TagsFilter';
 import FilterDoneCheckBoxWithCtx from 'BulletNote/containers/ConfigPart/FilterDoneCheckBox';
+import NoteModeSelectorWithCtx from 'BulletNote/containers/ConfigPart/NoteModeSelector';
 
 const ConfigPart = () => {
   return (
@@ -31,6 +32,7 @@ const ConfigPart = () => {
           <Box paddingBottom={1}>
             <FilterDoneCheckBoxWithCtx />
           </Box>
+          <NoteModeSelectorWithCtx />
         </Box>
         <Box
           // display={'flex'}

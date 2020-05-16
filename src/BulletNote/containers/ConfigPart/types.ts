@@ -1,4 +1,4 @@
-import { BulletNoteState } from "BulletNote/constants/context";
+import { BulletNoteState, NoteMode } from "BulletNote/constants/context";
 
 export interface DaysRangeInputProps {
   initDaysRange: number
@@ -18,4 +18,11 @@ export interface TagsFilterProps {
 export interface FilterDoneCheckBoxProps {
   initIsFilteringDone: BulletNoteState['bulletNoteConfig']['isFilteringDone']
   setIsFilteringDoneToCtx: (isFilteringDone: boolean) => any
+}
+
+export interface NoteModeSelectorProps {
+  selectNoteModeToCtx: (noteMode: NoteMode) => any
+  initNoteMode: NoteMode
+}
+export interface NoteModeSelectorWithCtxProps {
 }
