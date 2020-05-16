@@ -100,9 +100,11 @@ export interface TagNoteBlockItem {
   messageList: MessageList
 }
 
-export interface TagNoteBlockItemProps extends TagNoteBlockItem {
+export interface TagNoteBlockItemStates {
   toggleShowMessagesFn: Callback
   isShowMessages: boolean
+}
+export interface TagNoteBlockItemProps extends TagNoteBlockItem, TagNoteBlockItemStates {
   isFilteringDone: BulletNoteState['bulletNoteConfig']['isFilteringDone']
 }
 export type TagNoteBlockList = TagNoteBlockItem[]

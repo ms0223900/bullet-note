@@ -3,8 +3,12 @@ import { createContextValueFn, createContextStore } from "react-function-helpers
 import reducers from "../reducers";
 import ContextWrapperFn from "react-function-helpers/lib/functions/ContextWrapper";
 
+type NoteMode = 'normal' | 'tag-whole-page'
+export const initNoteMode: NoteMode = 'normal';
+
 export interface BulletNoteConfig {
   // showTagList: boolean
+  noteMode: NoteMode
   selectedFilterTags: string[]
   showingDaysRange: number
   isFilteringDone: boolean
@@ -17,6 +21,7 @@ export interface BulletNoteState {
 }
 
 const initBulletNoteConfig: BulletNoteConfig = {
+  noteMode: initNoteMode,
   selectedFilterTags: [],
   showingDaysRange: 14, //two weeks
   isFilteringDone: false,

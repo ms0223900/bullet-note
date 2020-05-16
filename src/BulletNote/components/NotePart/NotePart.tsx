@@ -1,11 +1,10 @@
 import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { NotePartProps } from '../types';
-import DownloadMessageListWithCtx from '../DownloadMessageList';
-import RestoreBackup from '../RestoreBackup';
-import NoteBlockListContainer from 'BulletNote/containers/NoteBlockListContainer';
 import PinMessageListContainer from 'BulletNote/containers/NotePart/PinMessageListContainer';
 import NoteWeekBlock from './NoteWeekBlock';
+import WholeNoteBlockList from './WholeNoteBlockList';
+import WholeNoteBlockListContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlockListContainer';
 
 const useStyles = makeStyles(() => ({
   pinMessageListPart: {
@@ -22,18 +21,30 @@ const useStyles = makeStyles(() => ({
 }));
 
 const NotePart = (props: NotePartProps) => {
+  const {
+    messageList,
+    noteMode,
+  } = props;
+
   const classes = useStyles();
   return (
     <>
       <Box className={classes.pinMessageListPart}>
         <PinMessageListContainer
-          messageList={props.messageList} />
+          messageList={messageList} />
       </Box>
-      <NoteWeekBlock 
-        messageList={props.messageList}
-      />
-      {/* <NoteBlockListContainer
-        {...props} /> */}
+      {noteMode === 'normal' && (
+        <NoteWeekBlock 
+          key={noteMode}
+          messageList={messageList}
+        />
+      )}
+      {noteMode === 'tag-whole-page' && (
+        <WholeNoteBlockListContainerWithCtx 
+          key={noteMode}
+          messageList={messageList}
+        />
+      )}
     </>
   );
 };

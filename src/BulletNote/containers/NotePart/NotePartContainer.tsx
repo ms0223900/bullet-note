@@ -28,11 +28,12 @@ interface OwnProps {}
 
 const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, Omit<NotePartProps, 'setMessageFromDB'>> = (state) => {
   return ({
+    noteMode: state.bulletNoteConfig.noteMode,
     messageList: state.messageList,
   });
 };
 
-const mapDispatchToProps: MapDispatchToProps<OwnProps, Omit<NotePartProps, 'messageList'>> = (dispatch) => {
+const mapDispatchToProps: MapDispatchToProps<OwnProps, Omit<NotePartProps, 'messageList' | 'noteMode'>> = (dispatch) => {
   return ({
     setMessageFromDB: () => {
       const messageList = HandleDataInLocalStorage.getData();

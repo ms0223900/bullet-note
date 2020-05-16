@@ -1,9 +1,11 @@
 import { MessageList, BasicMessage, MESSAGE_TYPE, TodoMessageStatus, UrgentMessageStatus, StarLevelNum } from "../types";
 import { Callback } from "common-types";
 import { ReactNode, ChangeEvent } from "react";
+import { BulletNoteState } from "BulletNote/constants/context";
 
 export interface NotePartProps {
   messageList: MessageList
+  noteMode: BulletNoteState['bulletNoteConfig']['noteMode']
   setMessageFromDB: () => any
 }
 

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Typography, makeStyles, Paper } from '@material-ui/core';
+import { Box, Paper } from '@material-ui/core';
 import { TagNoteBlockItemProps, MESSAGE_TYPE, MessageItem } from '../types';
-import switchMessagesByType from '../functions/switchMessagesByType';
 import { tabSpace } from '../config';
-import useTagStyles from 'BulletNote/styles/stylesObj/useTagStyles';
 import { sepMessageListByStarLevelNum } from 'BulletNote/functions/sortMessageListByStarLevelNum';
 import { otherColors } from 'BulletNote/theme/theme';
+import TagTitle from './NotePart/TagTitle';
+import renderSingleMessageItemFn from './_functions/renderSingleMessageItemFn';
+import ToggleDisplayWrapper from './wrappers/ToggleDisplayWrapper';
 
 export const checkMessageItemIsDone = (messageItem: MessageItem) => {
   if(messageItem.type === MESSAGE_TYPE.TODO && messageItem.status.isDone) {
@@ -61,54 +62,8 @@ export const filterMessageListByIsDone = (messageList: MessageItem[]) => (isFilt
   return res;
 };
 
-const renderSingleMessageItemFn = (shouldDisplay: boolean) => (messageItemProps: MessageItem, index: number) => {
-  return (
-    <Box
-      style={{
-        display: shouldDisplay ? 'block': 'none',
-      }}
-    >
-      {switchMessagesByType({
-        index,
-        messageItemProps,
-      })}
-    </Box>
-  );
-};
-
-export const TagTitle = (props: TagNoteBlockItemProps) => {
-  const classes = useTagStyles();
-
-  return (
-    <Box
-      display={'flex'}
-      alignItems={'center'}
-      paddingBottom={0.5}
-    >
-      <Typography 
-        className={classes.root}
-        style={{
-          display: 'inline-block',
-          // backgroundColor: '#eee',
-        }}
-        variant={'h6'} 
-        color={'textPrimary'}
-        onClick={props.toggleShowMessagesFn}
-      >
-        {props.tagTitle}
-      </Typography>
-      <Typography
-        color={'textSecondary'}
-      >
-        {props.messageList.length}
-      </Typography>
-    </Box>
-  );
-};
-
 const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
   const {
-    toggleShowMessagesFn,
     messageList,
     isShowMessages,
     isFilteringDone,
@@ -123,23 +78,20 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
       paddingLeft={tabSpace}
       paddingBottom={1}
     >
-      <Box 
-        display={handledMessageListByIsDone.isAllDone ? 'none' : 'block'}
+      <ToggleDisplayWrapper
+        isDisplay={!handledMessageListByIsDone.isAllDone}
       >
         <TagTitle 
           {...props}
         />
-      </Box>
+      </ToggleDisplayWrapper>
         
       <Paper
         elevation={1}
       >
-        <Box 
-        // paddingLeft={tabSpace}
-          paddingBottom={0.5}
-          style={{
-            display: isShowMessages ? 'block': 'none',
-          }}
+        <ToggleDisplayWrapper
+          paddingBottom={1}
+          isDisplay={isShowMessages}
         >
           {seperatedMessageListByStar.starMessageList.length > 0 && (
             <Box 
@@ -155,7 +107,7 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
           <Box>
             {seperatedMessageListByStar.notStarMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}
           </Box>
-        </Box>
+        </ToggleDisplayWrapper>
       </Paper>
     </Box>
   );
