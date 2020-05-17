@@ -40,11 +40,13 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
     ): Number(messageList.slice(-1)[0].message.id);
     const newId = String(lastMessageId + 1);
     
-    const handledMessage = HandleParseMessage
+    let handledMessage = HandleParseMessage
       .convertRawMessageToMessageItem({
         id: newId,
         rawMessage: action.payload.rawMessage
       });
+    handledMessage = HandleParseMessage.handleMessageItemWithWeekTarget(handledMessage);
+
     newMessageList = [
       ...state.messageList,
       handledMessage,

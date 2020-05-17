@@ -134,11 +134,6 @@ class HandleParseMessage {
     const tagList = this.getTagListFromRawMessage(rawMessage);
     const content = this.getContent(rawMessage);
 
-    const isWeekTargetMessage = this.checkIsWeekTargetMessage(tagList);
-    if(isWeekTargetMessage) {
-      createdAt = WeekDatesHandler.getTodayThisWeekSunday();
-    }
-
     const message = this.makeBasicMessage({
       ...singleRawMessageFromDB,
       isPin,
@@ -167,6 +162,24 @@ class HandleParseMessage {
         message,
       });
     }
+  }
+
+  static handleMessageItemWithWeekTarget(_messageItem: MessageItem) {
+    let messageItem = _messageItem;
+    let createdAt = _messageItem.message.createdAt;
+
+    const isWeekTargetMessage = this.checkIsWeekTargetMessage(_messageItem.message.tagList);
+    if(isWeekTargetMessage) {
+      createdAt = WeekDatesHandler.getTodayThisWeekSunday();
+    }
+    const res: MessageItem = {
+      ...messageItem,
+      message: {
+        ...messageItem.message,
+        createdAt,
+      }
+    };
+    return res;
   }
 }
 

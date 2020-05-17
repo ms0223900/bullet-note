@@ -14,6 +14,8 @@ import readFromDB from 'BulletNote/functions/firebase/readFromDB';
 import { Callback } from 'common-types';
 import { stringifyMessageList } from 'BulletNote/functions/stringifySingleMessage';
 
+const refreshErrorMessage = 'Please switch to online mode or refresh page.';
+
 export const checkLocalStorageDataWithOnlineData = ({
   onlineData,
   errorCb,
@@ -28,7 +30,7 @@ export const checkLocalStorageDataWithOnlineData = ({
   const res = LSdata === stringifiedOnlineData;
   if(!res) {
     errorCb({
-      message: 'Please switch to online mode or refresh page.',
+      message: refreshErrorMessage,
     });
   } else {
     HandleDataInLocalStorage.setCheckLocalWithOnlineLS(true);
