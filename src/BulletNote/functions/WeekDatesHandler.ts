@@ -74,6 +74,19 @@ class WeekDatesHandler {
     const res = `${date.getMonth() + 1}/${date.getDate()}`;
     return res;
   }
+  
+  static convertDateToHourMin(date: Date) {
+    let res = '';
+    const hours = date.getHours();
+    const mins = date.getMinutes();
+
+    if(hours === 0 && mins === 0) {
+      return res;
+    }
+    res = `${date.getHours()}:${date.getMinutes()}`;
+    return res;
+  }
+
   static convertWeekFromToToString(weekFromTo: WeekFromTo, joinStr='~') {
     const fromStr = this.convertDateToString(weekFromTo.weekFrom);
     const toStr = this.convertDateToString(weekFromTo.weekTo);

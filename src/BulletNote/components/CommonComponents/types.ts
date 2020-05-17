@@ -1,5 +1,5 @@
 import { Callback } from "common-types";
-import { StarLevelNum } from "BulletNote/types";
+import { StarLevelNum, DueType } from "BulletNote/types";
 
 export type AddOrMinus = 'add' | 'minus'
 
@@ -20,4 +20,9 @@ export interface StarLevelProps {
 
 export interface MoveToBottomButtonProps {
   moveToBottomFn: Callback
+}
+
+export interface DueDateItemProps {
+  date: Date
+  dueType: DueType
 }

@@ -4,6 +4,8 @@ import BulletTagList from '../BullteTagList';
 import { BasicMessageItemProps } from '../types';
 import { MessageContentPartProps } from './types';
 import MessageContentHandler from 'BulletNote/functions/MessageContentHandler';
+import DueDateItem from '../CommonComponents/DueDateItem';
+import DueDateHandler from 'BulletNote/functions/DueDateHandler';
 
 const addZeroToSmallerThanTenNumber = (num: number) => (
   num < 10 ? `0${num}` : String(num)
@@ -43,6 +45,9 @@ const MessageContentPart = (props: MessageContentPartProps) => {
     rawMessage,
     createdAt,
   } = message;
+
+  const tagStrList = tagList.map(t => t.name);
+  const dueDate = DueDateHandler.convertTagsToDate(tagStrList);
   
   return (
     <Box
@@ -71,12 +76,18 @@ const MessageContentPart = (props: MessageContentPartProps) => {
       <Box 
         paddingLeft={1}
         style={{
-          opacity: 0.6
+          // opacity: 0.6
         }}
       >
-        <Typography variant={'body1'} color={'textSecondary'}>
+        {/* <Typography variant={'body1'} color={'textSecondary'}>
           {regDateToString(createdAt)}
-        </Typography>
+        </Typography> */}
+        {dueDate && (
+          <DueDateItem 
+            date={dueDate}
+            dueType={'due-normal'}
+          />
+        )}
       </Box>
     </Box>
   );

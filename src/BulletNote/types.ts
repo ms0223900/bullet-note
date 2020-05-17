@@ -6,6 +6,7 @@ import { TagNoteBlockItemContainerWithCtxProps } from "./containers/types";
 
 type RawMessage = string
 export type StarLevelNum = number
+export type DueType = 'due-soon' | 'due-normal'
 
 export enum MESSAGE_TYPE  {
   'DEFAULT' = 'DEFAULT',
