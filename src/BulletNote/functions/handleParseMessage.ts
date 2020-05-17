@@ -1,5 +1,6 @@
 import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB, StarLevelNum } from "../types";
 import { weekTargetTag } from 'BulletNote/functions/getTagsFromMessageList';
+import WeekDatesHandler from "./WeekDatesHandler";
 
 type AccOrDec = 'acc' | 'dec'
 
@@ -135,7 +136,7 @@ class HandleParseMessage {
 
     const isWeekTargetMessage = this.checkIsWeekTargetMessage(tagList);
     if(isWeekTargetMessage) {
-      createdAt = new Date('2020/05/10');
+      createdAt = WeekDatesHandler.getTodayThisWeekSunday();
     }
 
     const message = this.makeBasicMessage({

@@ -29,6 +29,12 @@ class WeekDatesHandler {
     return thisWeekSunday;
   }
 
+  static getTodayThisWeekSunday() {
+    const today = new Date();
+    const res = this.getThisWeekSunday(today);
+    return res;
+  }
+
   static getThisWeekOtherDayFromSunday(thisWeekSunday: Date, next: number) {
     const _thisWeekSunday = new Date(thisWeekSunday);
     const otherDay = new Date(
