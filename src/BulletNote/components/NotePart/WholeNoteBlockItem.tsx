@@ -4,6 +4,8 @@ import TagTitle from './TagTitle';
 import { WholeNoteBlogItemProps } from './types';
 import renderSingleMessageItemFn from '../_functions/renderSingleMessageItemFn';
 import ToggleDisplayWrapper from '../wrappers/ToggleDisplayWrapper';
+import getDateOrMessageItemFromDateMessageList from '../_functions/getDateOrMessageItemFromDateMessageList';
+import WholeNoteBlockDateItem from './WholeNoteBlockDateItem';
 
 const WholeNoteBlogItem = (props: WholeNoteBlogItemProps) => {
   const {
@@ -12,15 +14,26 @@ const WholeNoteBlogItem = (props: WholeNoteBlogItemProps) => {
     isShowMessages,
   } = props;
 
+  const dateOrMessageItemList = getDateOrMessageItemFromDateMessageList(messageList);
+
   return (
     <Box>
       <TagTitle 
         {...props}
       />
       <ToggleDisplayWrapper isDisplay={isShowMessages}> 
-        {messageList.map(
-          renderSingleMessageItemFn(true, isFilteringDone)
-        )}
+        {dateOrMessageItemList.map((s, i) => {
+          if(s.type === 'message-item') {
+            return (
+              renderSingleMessageItemFn(true, isFilteringDone)(s.component, i)
+            );
+          } else if(s.type === 'date') {
+            return (
+              <WholeNoteBlockDateItem date={s.component}/>
+            );
+          }
+          return null;
+        })}
       </ToggleDisplayWrapper>
     </Box>
   );

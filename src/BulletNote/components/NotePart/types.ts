@@ -8,3 +8,7 @@ export interface WholeNoteBlockListProps {
   messageList: MessageList
   tagList: string[]
 }
+
+export interface WholeNoteBlockDateItemProps {
+  date: Date | string
+}
