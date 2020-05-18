@@ -30,7 +30,7 @@ const ConfigPart = () => {
           <Box paddingY={1} />
           <TagsFilterWithCtx />
           <Box paddingBottom={1}>
-            <FilterDoneCheckBoxWithCtx />
+            
           </Box>
           <NoteModeSelectorWithCtx />
         </Box>

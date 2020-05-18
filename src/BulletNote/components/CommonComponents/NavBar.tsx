@@ -7,6 +7,7 @@ import { MenuRounded } from '@material-ui/icons';
 import ConfigPart from '../ConfigPart/ConfigPart';
 import DownloadMessageListWithCtx from '../DownloadMessageList';
 import RestoreBackup from '../RestoreBackup';
+import FilterDoneCheckBoxWithCtx from 'BulletNote/containers/ConfigPart/FilterDoneCheckBox';
 
 export const navHeight = 32;
 
@@ -53,11 +54,15 @@ const NavBar = (props: NavBarProps) => {
           {'Offline-mode'}
         </Button>
       )}
-      <Button
-        onClick={onToggleDrawer}
-      >
-        <MenuRounded />
-      </Button>
+      <Box>
+        <FilterDoneCheckBoxWithCtx />
+        <Button
+          onClick={onToggleDrawer}
+        >
+          <MenuRounded />
+        </Button>
+      </Box>
+      
       <Drawer anchor={'right'} open={isDrawerOpen} onClose={onToggleDrawer}>
         <ConfigPart />
       </Drawer>

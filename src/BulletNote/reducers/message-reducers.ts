@@ -201,7 +201,10 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
     break;
   }
 
-  HandleDataInLocalStorage.setData(newMessageList);
+  if(newMessageList.length > 0) {
+    HandleDataInLocalStorage.setData(newMessageList);
+  }
+  
   return newMessageList;
 };
 
