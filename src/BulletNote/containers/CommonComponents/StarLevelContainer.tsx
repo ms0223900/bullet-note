@@ -19,9 +19,6 @@ const StarLevelContainer = (props: StarLevelContainerProps) => {
   const handleMinus = useCallback(() => {
     setStarLevel(s => {
       const newStarLevel = s - 1;
-      if(newStarLevel < 0) {
-        return 0;
-      }
       return newStarLevel;
     });
   }, []);

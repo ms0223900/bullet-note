@@ -9,6 +9,7 @@ const TagList = (props: TagListProps) => {
       value={props.tagValue}
       label={props.label}
       onChange={props.onChangeSelect}
+      fullWidth={true}
     >
       {props.tags.map((tag, i) => (
         <MenuItem key={i} value={tag}>{tag}</MenuItem>

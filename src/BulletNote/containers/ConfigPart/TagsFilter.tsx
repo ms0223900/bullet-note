@@ -9,8 +9,33 @@ import getTagsFromMessageList from 'BulletNote/functions/getTagsFromMessageList'
 import { connectCtx } from 'react-function-helpers';
 import RemoveTagItem from 'BulletNote/components/ConfigPart/RemoveTagItem';
 import { setFilterTags } from 'BulletNote/actions/config-actions';
+import { dueDateRegExp } from 'BulletNote/functions/DueDateHandler';
 
 const defaultSelect = 'Select Tag';
+
+export const divideTagList = (tags: string[]): string[][] => {
+  let res: string[][] = [];
+  res = [[], []];
+
+  for (let i = 0; i < tags.length; i++) {
+    const tag = tags[i];
+    const isDueDataTag = tag.match(dueDateRegExp);
+    if(isDueDataTag) {
+      res[1] = [
+        ...res[1],
+        tag
+      ];
+    } 
+    else {
+      res[0] = [
+        ...res[0],
+        tag
+      ];
+    }
+  }
+
+  return res;
+};
 
 const TagsFilter = (props: TagsFilterProps) => {
   const {
@@ -18,6 +43,7 @@ const TagsFilter = (props: TagsFilterProps) => {
     tags,
     setTagsToCtx,
   } = props;
+  const dividedTags = divideTagList(tags);
 
   const [selectedTags, setSelectedTags] = useState<string[]>(initSelectedFilterTags);
 
@@ -72,12 +98,16 @@ const TagsFilter = (props: TagsFilterProps) => {
           />
         ))}
       </Box>
-      <TagList 
-        label={defaultSelect}
-        tags={tags}
-        tagValue={values['tagList']}
-        onChangeSelect={handleSelect('tagList')}
-      />
+      {dividedTags.map((t, i) => {
+        return (
+          <TagList 
+            label={defaultSelect}
+            tags={t}
+            tagValue={values['tagList']}
+            onChangeSelect={handleSelect('tagList')}
+          />
+        );
+      })}
     </Box>
   );
 };

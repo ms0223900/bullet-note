@@ -1,13 +1,15 @@
 import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, Theme } from '@material-ui/core';
 import { MessageItemWrapperProps } from '../types';
 import BasicMessageItem from '../BasicMessageItem';
 import BasicMessageItemContainerWithCtx from 'BulletNote/containers/BasicMessageItemContainer';
+import checkMessageShouldStandBy from 'BulletNote/functions/message-functions/checkMessageShouldStandBy';
 
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles<Theme, MessageItemWrapperProps>(theme => ({
   root: {
     // cursor: 'pointer',
+    opacity: props => checkMessageShouldStandBy(props.message.starLevelNum) ? 0.25 : 1,
     paddingBottom: 0,
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
@@ -22,7 +24,8 @@ const useStyles = makeStyles(theme => ({
 
 
 const MessageItemWrapper = (props: MessageItemWrapperProps) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
+
   return (
     <Box
       display={'flex'} 
