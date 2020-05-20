@@ -138,3 +138,7 @@ export interface BulletNoteRouteProps extends RouteChildrenProps {
 
 }
 
+export interface BulletNotePageProps {
+  addShowingDaysRange: Callback
+}
+

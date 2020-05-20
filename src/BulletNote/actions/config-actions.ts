@@ -18,6 +18,10 @@ export interface SetDaysRangeAction {
   type: BulletNoteActionTypes.SET_DAYS_RANGE,
   payload: SetDaysRangePayload
 }
+export interface AddDaysRangeAction {
+  type: BulletNoteActionTypes.ADD_DAYS_RANGE,
+  payload: SetDaysRangePayload
+}
 export interface SetFilterTagsAction {
   type: BulletNoteActionTypes.SET_FILTER_TAGS,
   payload: SetFilterTagsPayload
@@ -33,6 +37,10 @@ export interface SetNoteModeAction {
 
 export const setDaysRange = (daysRange: number): SetDaysRangeAction => ({
   type: BulletNoteActionTypes.SET_DAYS_RANGE,
+  payload: { daysRange }
+});
+export const addDaysRange = (daysRange: number): AddDaysRangeAction => ({
+  type: BulletNoteActionTypes.ADD_DAYS_RANGE,
   payload: { daysRange }
 });
 
@@ -53,6 +61,7 @@ export const setNoteMode = (noteMode: SetNoteModePayload['noteMode']): SetNoteMo
 
 type ConfigActions = 
   SetDaysRangeAction |
+  AddDaysRangeAction |
   SetFilterTagsAction |
   ToggleIsFilteringDoneAction |
   SetNoteModeAction

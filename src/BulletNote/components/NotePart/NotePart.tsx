@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, RootRef } from '@material-ui/core';
 import { NotePartProps } from '../types';
 import PinMessageListContainer from 'BulletNote/containers/NotePart/PinMessageListContainer';
 import NoteWeekBlock from './NoteWeekBlock';
@@ -22,30 +22,38 @@ const useStyles = makeStyles(() => ({
 
 const NotePart = (props: NotePartProps) => {
   const {
+    notePartRef,
     messageList,
     noteMode,
   } = props;
-
   const classes = useStyles();
+
   return (
-    <>
-      <Box className={classes.pinMessageListPart}>
-        <PinMessageListContainer
-          messageList={messageList} />
+    <RootRef
+      rootRef={notePartRef}
+    >
+      <Box>
+        <Box className={classes.pinMessageListPart}>
+          <PinMessageListContainer
+            messageList={messageList} />
+        </Box>
+        <Box>
+          {noteMode === 'normal' && (
+            <NoteWeekBlock 
+              key={noteMode}
+              messageList={messageList}
+            />
+          )}
+        </Box>
+        {noteMode === 'tag-whole-page' && (
+          <WholeNoteBlockListContainerWithCtx 
+            key={noteMode}
+            messageList={messageList}
+          />
+        )}
       </Box>
-      {noteMode === 'normal' && (
-        <NoteWeekBlock 
-          key={noteMode}
-          messageList={messageList}
-        />
-      )}
-      {noteMode === 'tag-whole-page' && (
-        <WholeNoteBlockListContainerWithCtx 
-          key={noteMode}
-          messageList={messageList}
-        />
-      )}
-    </>
+    </RootRef>
+    
   );
 };
 

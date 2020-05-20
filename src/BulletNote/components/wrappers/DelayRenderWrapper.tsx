@@ -31,7 +31,7 @@ const DelayRenderWrapper = (props: DelayRenderWrapperProps) => {
   const {
     shouldRender,
   } = useDelayRender(delayTimeout, initShouldRender);
-  console.log(shouldRender);
+  // console.log(shouldRender);
 
   return (
     <>

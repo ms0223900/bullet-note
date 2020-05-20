@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, RefObject } from 'react';
 import { Box, makeStyles, Container, CircularProgress } from '@material-ui/core';
-import ContextWrapper from './constants/context';
+import ContextWrapper, { ContextStore } from './constants/context';
 import InputPartContainerWithCtx from './containers/InputPart/InputPartContainer';
 import NotePartContainerWithCtx from './containers/NotePart/NotePartContainer';
 import './styles/style.scss';
@@ -11,6 +11,24 @@ import { offLineModeParam } from './config';
 import NavBar, { navHeight } from './components/CommonComponents/NavBar';
 import UserNotFoundPage from './components/CommonComponents/UserNotFoundPage';
 import NavBarContainer from './containers/CommonComponents/NavBarContainer';
+import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
+import { BulletNotePageProps } from './types';
+import { setDaysRange, addDaysRange } from './actions/config-actions';
+import { connectCtx } from 'react-function-helpers';
+
+const getTopOfNoteBlock = (ref: RefObject<HTMLDivElement>) => {
+  let top = -Infinity;
+
+  if(ref.current) {
+    const {
+      top: blockTop,
+    } = ref.current.getBoundingClientRect();
+    top = blockTop;
+    // console.log(top);
+  }
+  
+  return top;
+};
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -33,7 +51,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const useBulletNotePage = () => {
+const useBulletNotePage = (params: {
+  addShowingDaysRange: BulletNotePageProps['addShowingDaysRange']
+}) => {
+  const {
+    addShowingDaysRange,
+  } = params;
+  const noteBlockPartRef = React.useRef<HTMLDivElement>(null);
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
+  
   const {
     userId
   } = useParams<{ userId: string }>();
@@ -85,16 +111,38 @@ const useBulletNotePage = () => {
     }
   }, [handleSetFirebaseDataToLS, userId]);
 
-  return state;
+  const handleScroll = useCallback(() => {
+    const top = getTopOfNoteBlock(noteBlockPartRef);
+    const shouldTriggerUpdate = top > 0 && !timeoutRef.current;
+    
+    if(shouldTriggerUpdate) {
+      timeoutRef.current = setTimeout(() => {
+        addShowingDaysRange();
+      }, 500);
+    } else if(top < 0 && timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = undefined;
+    }
+    // timeout && clearTimeout(timeout);
+  }, [addShowingDaysRange]);
+
+  return ({
+    ...state,
+    noteBlockPartRef,
+    handleScroll,
+  });
 };
 
-const BulletNotePage = () => {
+const BulletNotePage = (props: BulletNotePageProps) => {
   const classes = useStyles();
   const {
     loading,
     error,
     isOffline,
-  } = useBulletNotePage();
+
+    noteBlockPartRef,
+    handleScroll,
+  } = useBulletNotePage(props);
 
   if(loading) {
     return (
@@ -113,25 +161,44 @@ const BulletNotePage = () => {
   }
 
   return (
-    <ContextWrapper customInitState={{
-      // messageList: initMessageList,
-    }}>
+    <>
       <NavBarContainer
         isOffline={isOffline} />
       <Container className={classes.container}>
         <Box className={classes.root}>
-          <Box className={classes.notePart}>
-            <NotePartContainerWithCtx />
+          <Box 
+            className={classes.notePart}
+            onScroll={handleScroll}
+          >
+            <NotePartContainerWithCtx
+              notePartRef={noteBlockPartRef}
+            />
           </Box>
           <Box className={classes.inputPart}>
             <InputPartContainerWithCtx />
           </Box>
         </Box>
       </Container>
-    </ContextWrapper>
+    </>
   );
 };
 
+interface OwnProps extends Omit<BulletNotePageProps, 'addShowingDaysRange'> {
+
+}
+
+const mapDispatchToProps: MapDispatchToProps<OwnProps, {
+  addShowingDaysRange: BulletNotePageProps['addShowingDaysRange']
+}> = (dispatch) => {
+  return ({
+    addShowingDaysRange: (daysRange=1) => {
+      const action = addDaysRange(daysRange);
+      dispatch(action);
+    }
+  });
+};
 
 
-export default BulletNotePage;
+const BulletNotePageWithCtx = connectCtx(ContextStore)(undefined, mapDispatchToProps)(BulletNotePage);
+
+export default BulletNotePageWithCtx;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { Box } from '@material-ui/core';
 import NotePart from '../../components/NotePart/NotePart';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
@@ -24,7 +24,9 @@ const NotePartContainer = (props: NotePartProps) => {
 };
 
 
-interface OwnProps {}
+interface OwnProps {
+  notePartRef?: RefObject<HTMLDivElement>
+}
 
 const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, Omit<NotePartProps, 'setMessageFromDB'>> = (state) => {
   return ({
