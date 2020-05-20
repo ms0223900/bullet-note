@@ -72,19 +72,19 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
       paddingLeft={tabSpace}
       paddingBottom={1}
     >
-      <ToggleDisplayWrapper
-        isDisplay={!handledMessageListByIsDone.isAllDone}
-      >
-        <TagTitle 
-          {...props}
-        />
-      </ToggleDisplayWrapper>
         
       <Paper
         elevation={1}
       >
         <ToggleDisplayWrapper
-          paddingBottom={1}
+          isDisplay={!handledMessageListByIsDone.isAllDone}
+        >
+          <TagTitle 
+            {...props}
+          />
+        </ToggleDisplayWrapper>
+        <ToggleDisplayWrapper
+          // paddingBottom={1}
           isDisplay={isShowMessages}
         >
           {seperatedMessageListByStar.starMessageList.length > 0 && (

@@ -31,7 +31,7 @@ export const sepMessageListByStarLevelNum = (messageList: MessageList): seperate
   };
 
   res.notStarMessageList = messageList.filter(m => {
-    return !m.message.starLevelNum;
+    return typeof m.message.starLevelNum !== 'number' || m.message.starLevelNum <= 0;
   });
 
   res.starMessageList = messageList.filter(m => {
