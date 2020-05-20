@@ -12,3 +12,9 @@ export interface MoveToBottomWrapperProps {
   scrollToBottomDeps?: any[]
   children: ReactChildren
 }
+
+export interface DelayRenderWrapperProps {
+  initShouldRender?: boolean
+  delayTimeout?: number
+  children: ReactChildren
+}

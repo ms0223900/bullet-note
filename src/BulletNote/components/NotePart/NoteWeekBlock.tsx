@@ -4,6 +4,7 @@ import HandleMessageList from 'BulletNote/functions/handleMessageListToMessageWi
 import { NoteWeekBlockProps } from 'BulletNote/types';
 import NoteBlockListWithCtx from '../NoteBlockList';
 import MoveToBottomWrapper from '../wrappers/MoveToBottomWrapper';
+import DelayRenderWrapper from '../wrappers/DelayRenderWrapper';
 
 const NoteWeekBlock = (props: NoteWeekBlockProps) => {
   const {
@@ -18,11 +19,14 @@ const NoteWeekBlock = (props: NoteWeekBlockProps) => {
     <MoveToBottomWrapper 
       scrollToBottomDeps={[props.messageList.length]}
     >
+      
       {messageListWithDateSplitByWeek.map((m, i) => (
-        <NoteBlockListWithCtx 
-          key={i}
-          singleMessageListWithDateSplitByWeek={m}
-        />
+        <DelayRenderWrapper delayTimeout={i * 2}>
+          <NoteBlockListWithCtx 
+            key={i}
+            singleMessageListWithDateSplitByWeek={m}
+          />
+        </DelayRenderWrapper>
       ))}
     </MoveToBottomWrapper>
   );

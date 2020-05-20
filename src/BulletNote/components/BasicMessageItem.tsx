@@ -5,6 +5,7 @@ import { BasicMessageItemProps } from './types';
 import MessageButtonsPart from './MessageComponents/MessageButtonsPart';
 import MessageContentPart from './MessageComponents/MessageContentPart';
 import MessageContentPartContainer from 'BulletNote/containers/MessageComponents/MessageContentPartContainer';
+import DelayRenderWrapper from './wrappers/DelayRenderWrapper';
 
 const BasicMessageItem = (props: BasicMessageItemProps) => {
   return (
