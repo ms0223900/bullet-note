@@ -12,7 +12,7 @@ const MoveToBottomWrapper = (props: MoveToBottomWrapperProps) => {
 
   return (
     <RootRef rootRef={ref}>
-      <Box>
+      <Box onScroll={() => console.log('scroll in move to bottom')}>
         {props.children}
         <MoveToBottomButton
           moveToBottomFn={handleScrollToView}

@@ -15,6 +15,7 @@ import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapCont
 import { BulletNotePageProps } from './types';
 import { setDaysRange, addDaysRange } from './actions/config-actions';
 import { connectCtx } from 'react-function-helpers';
+import useScrollToUpdate from 'lib/customHooks/useScrollToUpdate';
 
 const getTopOfNoteBlock = (ref: RefObject<HTMLDivElement>) => {
   let top = -Infinity;
@@ -51,15 +52,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const useBulletNotePage = (params: {
-  addShowingDaysRange: BulletNotePageProps['addShowingDaysRange']
-}) => {
-  const {
-    addShowingDaysRange,
-  } = params;
-  const noteBlockPartRef = React.useRef<HTMLDivElement>(null);
-  const timeoutRef = React.useRef<NodeJS.Timeout>();
-  
+const useBulletNotePage = () => {
   const {
     userId
   } = useParams<{ userId: string }>();
@@ -111,38 +104,32 @@ const useBulletNotePage = (params: {
     }
   }, [handleSetFirebaseDataToLS, userId]);
 
-  const handleScroll = useCallback(() => {
-    const top = getTopOfNoteBlock(noteBlockPartRef);
-    const shouldTriggerUpdate = top > 0 && !timeoutRef.current;
-    
-    if(shouldTriggerUpdate) {
-      timeoutRef.current = setTimeout(() => {
-        addShowingDaysRange();
-      }, 500);
-    } else if(top < 0 && timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = undefined;
-    }
-    // timeout && clearTimeout(timeout);
-  }, [addShowingDaysRange]);
-
   return ({
     ...state,
-    noteBlockPartRef,
-    handleScroll,
   });
 };
 
 const BulletNotePage = (props: BulletNotePageProps) => {
+  const {
+    addShowingDaysRange,
+  } = props;
+
   const classes = useStyles();
   const {
     loading,
     error,
     isOffline,
+  } = useBulletNotePage();
 
-    noteBlockPartRef,
+  const {
+    loading: loadingUpdating,
+    domRef,
     handleScroll,
-  } = useBulletNotePage(props);
+  } = useScrollToUpdate({
+    updateCb: addShowingDaysRange,
+    scrollToPosition: -50
+  });
+  console.log(loadingUpdating);
 
   if(loading) {
     return (
@@ -171,7 +158,7 @@ const BulletNotePage = (props: BulletNotePageProps) => {
             onScroll={handleScroll}
           >
             <NotePartContainerWithCtx
-              notePartRef={noteBlockPartRef}
+              notePartRef={domRef}
             />
           </Box>
           <Box className={classes.inputPart}>

@@ -1,7 +1,7 @@
 {
   "extends": "react-app",
   "rules": {
-    "indent": [
+    "@typescript-eslint/indent": [
       "warn",
       2
     ],

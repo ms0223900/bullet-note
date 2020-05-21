@@ -25,7 +25,7 @@ const NotePartContainer = (props: NotePartProps) => {
 
 
 interface OwnProps {
-  notePartRef?: RefObject<HTMLDivElement>
+  notePartRef?: RefObject<HTMLElement>
 }
 
 const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, Omit<NotePartProps, 'setMessageFromDB'>> = (state) => {
