@@ -1,18 +1,21 @@
 import React from 'react';
-import { Box, Paper } from '@material-ui/core';
+import { Box, Paper, Button } from '@material-ui/core';
 import TagTitle from './TagTitle';
 import { WholeNoteBlogItemProps } from './types';
 import renderSingleMessageItemFn from '../_functions/renderSingleMessageItemFn';
 import ToggleDisplayWrapper from '../wrappers/ToggleDisplayWrapper';
 import getDateOrMessageItemFromDateMessageList, { WholeNoteBlockComponent } from '../_functions/getDateOrMessageItemFromDateMessageList';
 import WholeNoteBlockDateItem from './WholeNoteBlockDateItem';
+import sortMessageList from '../_functions/sortMessageList';
 
 export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteBlockComoponent: WholeNoteBlockComponent, index: number) => {
   if(wholeNoteBlockComoponent.type === 'message-item') {
     return (
       renderSingleMessageItemFn(true, isFilteringDone)(wholeNoteBlockComoponent.component, index)
     );
-  } else if(wholeNoteBlockComoponent.type === 'date') {
+  } 
+  
+  else if(wholeNoteBlockComoponent.type === 'date') {
     return (
       <WholeNoteBlockDateItem 
         key={index} 
@@ -20,17 +23,22 @@ export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteB
       />
     );
   }
+
   return null;
 };
 
-const WholeNoteBlogItem = (props: WholeNoteBlogItemProps) => {
+const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
   const {
+    sortTypeRule,
+
     isFilteringDone,
     messageList,
     isShowMessages,
   } = props;
 
-  const dateOrMessageItemList = getDateOrMessageItemFromDateMessageList(messageList)(isFilteringDone);
+  const sortedMessageList = sortMessageList(sortTypeRule)(messageList);
+  
+  const dateOrMessageItemList = getDateOrMessageItemFromDateMessageList(sortedMessageList)(isFilteringDone);
 
   return (
     <Box
@@ -41,6 +49,8 @@ const WholeNoteBlogItem = (props: WholeNoteBlogItemProps) => {
         <TagTitle 
           {...props}
         />
+        <Box>
+        </Box>
         <Box
           padding={0.5}
         >
@@ -55,4 +65,4 @@ const WholeNoteBlogItem = (props: WholeNoteBlogItemProps) => {
   );
 };
 
-export default WholeNoteBlogItem;
+export default WholeNoteBlockItem;

@@ -127,7 +127,6 @@ const BulletNotePage = (props: BulletNotePageProps) => {
     handleScroll,
   } = useScrollToUpdate({
     updateCb: addShowingDaysRange,
-    scrollToPosition: -50
   });
   console.log(loadingUpdating);
 

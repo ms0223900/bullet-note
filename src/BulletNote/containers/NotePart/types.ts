@@ -6,7 +6,7 @@ export interface PinMessageListContainerProps extends Omit<PinMessageListProps, 
 
 }
 
-export interface WholeNoteBlogItemContainerProps extends Omit<WholeNoteBlogItemProps, keyof TagNoteBlockItemStates> {
+export interface WholeNoteBlogItemContainerProps extends Omit<WholeNoteBlogItemProps, keyof WholeNoteBlogItemProps> {
 
 }
 export interface WholeNoteBlogItemContainerWithCtxProps extends Omit<WholeNoteBlogItemContainerProps, 'isFilteringDone'> {

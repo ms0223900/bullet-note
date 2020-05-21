@@ -8,6 +8,13 @@ type RawMessage = string
 export type StarLevelNum = number
 export type DueType = 'due-soon' | 'due-normal'
 
+export type SortType = 'default' | 'star-num'
+export type SortRule = 'desc' | 'asc'
+export interface SortTypeRule {
+  sortType: SortType
+  sortRule: SortRule
+}
+
 export enum MESSAGE_TYPE  {
   'DEFAULT' = 'DEFAULT',
   'URGENT' = 'URGENT',
@@ -29,14 +36,14 @@ export interface BulletTagListProps {
 }
 
 export interface DateTagItem {
-    date: Date
-  }
+  date: Date
+}
 
 export interface UrgentMessageStatus {
-    dueTime: Date
-    urgentLevel: number
-    name: string
-  }
+  dueTime: Date
+  urgentLevel: number
+  name: string
+}
 
 export interface TodoMessageStatus {
   name: string
@@ -131,8 +138,8 @@ export interface NoteWeekBlockProps {
 }
 
 export interface DateTitleProps {
-    date: Date | string
-  }
+  date: Date | string
+}
 
 export interface BulletNoteRouteProps extends RouteChildrenProps {
 

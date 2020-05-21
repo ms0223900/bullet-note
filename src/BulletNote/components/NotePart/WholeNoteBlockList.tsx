@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { WholeNoteBlockListProps } from './types';
 import { getNoteBlockItemTagList } from '../NoteBlockItem';
-import WholeNoteBlogItemContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlogItemContainer';
+import WholeNoteBlockItemContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlockItemContainer';
 import MoveToBottomWrapper from '../wrappers/MoveToBottomWrapper';
 
 const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
@@ -27,7 +27,7 @@ const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
         {tagListData.tagList.map((t) => {
           if(t.isShow) {
             return (
-              <WholeNoteBlogItemContainerWithCtx  
+              <WholeNoteBlockItemContainerWithCtx  
                 key={t.tagName}
                 {...tagListData.tagNoteBlockObj[t.tagName]}
               />

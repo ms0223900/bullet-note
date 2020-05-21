@@ -5,7 +5,8 @@ import ContextWrapperFn from "react-function-helpers/lib/functions/ContextWrappe
 
 export type NoteMode = 'normal' | 'tag-whole-page'
 export const initNoteMode: NoteMode = 'normal';
-export const initShowingDaysRange = 7;
+export const initShowingDaysRange = 7; //one week for performance better
+export const initIsFilteringDone = true;
 
 export interface BulletNoteConfig {
   // showTagList: boolean
@@ -24,8 +25,8 @@ export interface BulletNoteState {
 const initBulletNoteConfig: BulletNoteConfig = {
   noteMode: initNoteMode,
   selectedFilterTags: [],
-  showingDaysRange: initShowingDaysRange, //two weeks
-  isFilteringDone: false,
+  showingDaysRange: initShowingDaysRange,
+  isFilteringDone: initIsFilteringDone,
   isFilteringStared: false,
 };
 
