@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { Box, Typography, Fab, Divider } from '@material-ui/core';
+import { Box, Typography, Fab, Divider, RootRef } from '@material-ui/core';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { NoteBlockListProps, NoteBlockListWithCtxProps } from '../types';
 import HandleMessageList from '../functions/handleMessageListToMessageWithDateList';
@@ -47,26 +47,28 @@ const NoteBlockList = (props: NoteBlockListProps) => {
     .filterMessageListByDaysRange(messageListWithDateList, showingDaysRange);
   
   return (
-    <Box
-      position={'relative'}
-    >
-      {messageListWithDateFilterByDaysRange.length > 0 && (
-        <>{weekTitle}</>
-      )}
+    <RootRef>
       <Box
-        style={{
-          display: toggle ? 'block' : 'none',
-        }}
+        position={'relative'}
       >
-        {messageListWithDateFilterByDaysRange.map((m, i) => (
-          <NoteBlockItem
-            {...m}
-            key={m.date.toString()}
-            selected={checkDateIsToday(m.date)} />
-        ))}
+        {messageListWithDateFilterByDaysRange.length > 0 && (
+          <>{weekTitle}</>
+        )}
+        <Box
+          style={{
+            display: toggle ? 'block' : 'none',
+          }}
+        >
+          {messageListWithDateFilterByDaysRange.map((m, i) => (
+            <NoteBlockItem
+              {...m}
+              key={m.date.toString()}
+              selected={checkDateIsToday(m.date)} />
+          ))}
+        </Box>
+        <Divider />
       </Box>
-      <Divider />
-    </Box>
+    </RootRef>
   );
 };
 

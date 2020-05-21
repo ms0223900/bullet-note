@@ -8,7 +8,7 @@ export interface ToggleDisplayWrapperProps extends BoxProps {
   children: ReactChildren
 }
 
-export interface MoveToBottomWrapperProps {
+export interface MoveToBottomWrapperProps extends BoxProps {
   scrollToBottomDeps?: any[]
   children: ReactChildren
 }

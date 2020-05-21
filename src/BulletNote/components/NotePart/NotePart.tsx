@@ -5,11 +5,12 @@ import PinMessageListContainer from 'BulletNote/containers/NotePart/PinMessageLi
 import NoteWeekBlock from './NoteWeekBlock';
 import WholeNoteBlockList from './WholeNoteBlockList';
 import WholeNoteBlockListContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlockListContainer';
+import { navHeight } from '../CommonComponents/NavBar';
 
 const useStyles = makeStyles(() => ({
   pinMessageListPart: {
     position: 'sticky',
-    top: 0,
+    top: navHeight,
     maxHeight: 200,
     overflow: 'auto',
     zIndex: 1000,
@@ -37,14 +38,12 @@ const NotePart = (props: NotePartProps) => {
           <PinMessageListContainer
             messageList={messageList} />
         </Box>
-        <Box>
-          {noteMode === 'normal' && (
-            <NoteWeekBlock 
-              key={noteMode}
-              messageList={messageList}
-            />
-          )}
-        </Box>
+        {noteMode === 'normal' && (
+          <NoteWeekBlock 
+            key={noteMode}
+            messageList={messageList}
+          />
+        )}
         {noteMode === 'tag-whole-page' && (
           <WholeNoteBlockListContainerWithCtx 
             key={noteMode}

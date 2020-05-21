@@ -3,6 +3,7 @@ import { Box, RootRef } from '@material-ui/core';
 import useScrollToView from 'BulletNote/functions/useScrollToView';
 import MoveToBottomButton from '../CommonComponents/MoveToBottomButton';
 import { MoveToBottomWrapperProps } from './types';
+import useScrollToUpdate from 'lib/customHooks/useScrollToUpdate';
 
 const MoveToBottomWrapper = (props: MoveToBottomWrapperProps) => {
   const {
@@ -12,7 +13,9 @@ const MoveToBottomWrapper = (props: MoveToBottomWrapperProps) => {
 
   return (
     <RootRef rootRef={ref}>
-      <Box onScroll={() => console.log('scroll in move to bottom')}>
+      <Box 
+        {...props}
+      >
         {props.children}
         <MoveToBottomButton
           moveToBottomFn={handleScrollToView}

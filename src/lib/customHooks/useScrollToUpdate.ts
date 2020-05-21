@@ -9,6 +9,7 @@ export interface DomSpecs {
 }
 
 export interface UseScrollToUpdateOptions {
+  outerRef: RefObject<HTMLElement>
   scrollToPosition?: number
   scrollToWhere?: ScrollToWhere
   timeoutTime?: number
@@ -16,12 +17,23 @@ export interface UseScrollToUpdateOptions {
 }
 
 const defaultOptions: UseScrollToUpdateOptions = {
+  outerRef: { current: null },
   scrollToPosition: 0,
   scrollToWhere: 'top',
   timeoutTime: 500,
 };
 
 class ScrollToUpdateHandler {
+  static calTopBottom(innerEl: HTMLElement, outerEl: HTMLElement) {
+    const top = innerEl.getBoundingClientRect().top - outerEl.offsetTop;
+    const bottom = innerEl.getBoundingClientRect().bottom - (outerEl.offsetTop + outerEl.offsetHeight);
+
+    return ({
+      top,
+      bottom
+    });
+  }
+
   static checkScrollIsToPostition = (options: UseScrollToUpdateOptions & DomSpecs): boolean => {
     const {
       top, bottom, scrollToWhere, scrollToPosition,
@@ -37,16 +49,17 @@ class ScrollToUpdateHandler {
     }
   };
 
-  static getDomSpecs(ref: RefObject<HTMLElement>)  {
+  static getDomSpecs(ref: RefObject<HTMLElement>, outerRef: RefObject<HTMLElement>)  {
     let res: DomSpecs = {};
-    if(ref.current) {
-      res = ref.current.getBoundingClientRect();
+    if(ref.current && outerRef.current) {
+      res = this.calTopBottom(ref.current, outerRef.current);
     }
     return res;
   }
 
   static checkDOMIsToPosition(ref: RefObject<HTMLElement>, options: UseScrollToUpdateOptions) {
-    const domSpecs = this.getDomSpecs(ref);
+    const domSpecs = this.getDomSpecs(ref, options.outerRef);
+    // console.log(domSpecs.top, domSpecs.bottom);
     const res = this.checkScrollIsToPostition({
       ...options,
       top: domSpecs.top,
@@ -58,9 +71,11 @@ class ScrollToUpdateHandler {
 
 
 const useScrollToUpdate = (options?: UseScrollToUpdateOptions) => {
-  const myOptions = {
+  const outerRef = useRef<HTMLElement>(null);
+  const myOptions: UseScrollToUpdateOptions = {
     ...defaultOptions,
-    ...options
+    ...options,
+    outerRef,
   };
   const {
     timeoutTime,
@@ -95,6 +110,7 @@ const useScrollToUpdate = (options?: UseScrollToUpdateOptions) => {
   }, [loading, myOptions, timeoutTime, updateCb]);
 
   return ({
+    outerRef,
     domRef,
     handleScroll,
     loading,

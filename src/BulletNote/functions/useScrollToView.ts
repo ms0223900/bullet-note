@@ -5,9 +5,14 @@ const useScrollToView = (deps=[] as any[]) => {
 
   const handleScrollToView = useCallback(() => {
     if(ref.current) {
-      ref.current.scrollIntoView({
-        block: 'end',
+      console.log(ref.current.getBoundingClientRect());
+      ref.current.scrollTo({
+        top: 1000000,
+        
       });
+      // ref.current.scrollIntoView({
+      //   block: 'end',
+      // });
     }
   }, []);
 

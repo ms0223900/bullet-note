@@ -7,6 +7,7 @@ import ToggleDisplayWrapper from '../wrappers/ToggleDisplayWrapper';
 import getDateOrMessageItemFromDateMessageList, { WholeNoteBlockComponent } from '../_functions/getDateOrMessageItemFromDateMessageList';
 import WholeNoteBlockDateItem from './WholeNoteBlockDateItem';
 import sortMessageList from '../_functions/sortMessageList';
+import SortButtons from './SortButtons';
 
 export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteBlockComoponent: WholeNoteBlockComponent, index: number) => {
   if(wholeNoteBlockComoponent.type === 'message-item') {
@@ -47,6 +48,9 @@ const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
     >
       <Paper>
         <TagTitle 
+          {...props}
+        />
+        <SortButtons 
           {...props}
         />
         <Box>

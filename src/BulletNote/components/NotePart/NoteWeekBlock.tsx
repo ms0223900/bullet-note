@@ -4,34 +4,54 @@ import HandleMessageList from 'BulletNote/functions/handleMessageListToMessageWi
 import { NoteWeekBlockProps } from 'BulletNote/types';
 import NoteBlockListWithCtx from '../NoteBlockList';
 import MoveToBottomWrapper from '../wrappers/MoveToBottomWrapper';
-import DelayRenderWrapper from '../wrappers/DelayRenderWrapper';
-import { Button } from '@material-ui/core';
+import { Button, makeStyles, Box, RootRef } from '@material-ui/core';
+import { navHeight } from '../CommonComponents/NavBar';
+import useNotePartStyles from 'BulletNote/styles/stylesObj/useNotePartStyles';
+import useScrollToUpdate from 'lib/customHooks/useScrollToUpdate';
 
 const NoteWeekBlock = (props: NoteWeekBlockProps) => {
   const {
     messageList,
   } = props;
+  const classes = useNotePartStyles();
 
   const messageListWithDate = HandleMessageList
     .convertToMessageWithDateList(messageList);
 
   const messageListWithDateSplitByWeek = splitMessageListWithDataByWeek(messageListWithDate);
+
+  const {
+    outerRef,
+    domRef,
+    handleScroll,
+  } = useScrollToUpdate();
+
   return (
-    <MoveToBottomWrapper 
-      scrollToBottomDeps={[props.messageList.length]}
+    <RootRef
+      rootRef={outerRef}
     >
-      <Button>
-        {'Add one day'}
-      </Button>
-      {messageListWithDateSplitByWeek.map((m, i) => (
-        // <DelayRenderWrapper delayTimeout={i * 2}>
-        <NoteBlockListWithCtx 
-          key={i}
-          singleMessageListWithDateSplitByWeek={m}
-        />
-        // </DelayRenderWrapper>
-      ))}
-    </MoveToBottomWrapper>
+      <MoveToBottomWrapper 
+        className={classes.root}
+        onScroll={handleScroll}
+        scrollToBottomDeps={[props.messageList.length]}
+      >
+        <RootRef
+          rootRef={domRef}
+        >
+          <Box>
+            <Button>
+              {'Add one day'}
+            </Button>
+            {messageListWithDateSplitByWeek.map((m, i) => (
+              <NoteBlockListWithCtx 
+                key={i}
+                singleMessageListWithDateSplitByWeek={m}
+              />
+            ))}
+          </Box>
+        </RootRef>
+      </MoveToBottomWrapper>
+    </RootRef>
   );
 };
 

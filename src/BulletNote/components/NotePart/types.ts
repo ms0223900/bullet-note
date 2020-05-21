@@ -1,11 +1,11 @@
 import { TagNoteBlockItemProps, MessageList, SortRule, SortTypeRule } from "BulletNote/types";
 
 export interface SortButtonsProps {
+  sortTypeRule: SortTypeRule
   sortByStarNumsFn: (sortRule: SortRule) => any
 }
 
 export interface WholeNoteBlogItemProps extends TagNoteBlockItemProps, SortButtonsProps {
-  sortTypeRule: SortTypeRule
 }
 
 export interface WholeNoteBlockListProps {

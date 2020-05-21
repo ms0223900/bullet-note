@@ -6,10 +6,7 @@ import useToggle from 'BulletNote/functions/useToggle';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { connectCtx } from 'react-function-helpers';
-
-export const useSortTypeRules = () => {
-  
-};
+import useSortTypeRules from 'lib/customHooks/useSortTypeRules';
 
 const WholeNoteBlockItemContainer = (props: WholeNoteBlogItemContainerProps) => {
   const {
@@ -17,9 +14,16 @@ const WholeNoteBlockItemContainer = (props: WholeNoteBlogItemContainerProps) => 
     handleToggle,
   } = useToggle(true);
 
+  const {
+    sortTypeRule,
+    handleSortByStarNums,
+  } = useSortTypeRules();
+
   return (
     <WholeNoteBlockItem
       {...props}
+      sortTypeRule={sortTypeRule}
+      sortByStarNumsFn={handleSortByStarNums}
       isShowMessages={toggle}
       toggleShowMessagesFn={handleToggle}
     />

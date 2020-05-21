@@ -13,6 +13,9 @@ export const navHeight = 32;
 
 const useStyles = makeStyles(theme => ({
   root: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 2020,
     backgroundColor: theme.palette.primary.light,
     height: navHeight,
   }

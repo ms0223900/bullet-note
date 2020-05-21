@@ -41,8 +41,6 @@ const useStyles = makeStyles(theme => ({
     }
   },
   notePart: {
-    maxHeight: `calc(100vh - 80px - ${navHeight}px)`,
-    overflow: 'auto',
   },
   inputPart: {
     position: 'fixed',
@@ -121,15 +119,6 @@ const BulletNotePage = (props: BulletNotePageProps) => {
     isOffline,
   } = useBulletNotePage();
 
-  const {
-    loading: loadingUpdating,
-    domRef,
-    handleScroll,
-  } = useScrollToUpdate({
-    updateCb: addShowingDaysRange,
-  });
-  console.log(loadingUpdating);
-
   if(loading) {
     return (
       <>
@@ -154,10 +143,10 @@ const BulletNotePage = (props: BulletNotePageProps) => {
         <Box className={classes.root}>
           <Box 
             className={classes.notePart}
-            onScroll={handleScroll}
+            // onScroll={handleScroll}
           >
             <NotePartContainerWithCtx
-              notePartRef={domRef}
+              // notePartRef={domRef}
             />
           </Box>
           <Box className={classes.inputPart}>
