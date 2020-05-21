@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, RefObject, useState } from "react";
+import React, { useRef, useCallback, RefObject, useState, useEffect } from "react";
 import { Callback } from "common-types";
 
 type ScrollToWhere = 'top' | 'bottom'
@@ -16,6 +16,8 @@ export interface UseScrollToUpdateOptions {
   updateCb?: Callback
 }
 
+const defaultMessageItemHeight = 60;
+const defaultRenderAddCount = 5;
 const defaultOptions: UseScrollToUpdateOptions = {
   outerRef: { current: null },
   scrollToPosition: 0,
@@ -69,6 +71,22 @@ class ScrollToUpdateHandler {
   }
 }
 
+export const getStartEndIndexFromDOM = (innerEl: HTMLElement, outerEl: HTMLElement) => {
+  let startEndIndex: number[] = [];
+  const startPx = Math.abs(
+    ScrollToUpdateHandler.calTopBottom(innerEl, outerEl).top
+  );
+  const outerHeight = outerEl.offsetHeight;
+  const listCount = Math.ceil(outerHeight / defaultMessageItemHeight);
+  const startIndex = Math.floor(startPx / defaultMessageItemHeight);
+  const endIndex = startIndex + listCount;
+  startEndIndex = [
+    startIndex - defaultRenderAddCount,
+    endIndex + defaultRenderAddCount,
+  ];
+  // console.log('startEndIndex: ', startEndIndex);
+  return startEndIndex;
+};
 
 const useScrollToUpdate = (options?: UseScrollToUpdateOptions) => {
   const outerRef = useRef<HTMLElement>(null);
@@ -85,6 +103,16 @@ const useScrollToUpdate = (options?: UseScrollToUpdateOptions) => {
   const domRef = useRef<HTMLElement>(null);
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const [loading, setLoading] = useState(false);
+  const [startEndIndex, setStartEndIndex] = useState([0, 0]);
+  // const startEndIndexRef = useRef([0, 0]);
+
+  const handleSetStartEndIndex = useCallback(() => {
+    if(domRef.current && outerRef.current) {
+      const startEndIndexNow = getStartEndIndexFromDOM(domRef.current, outerRef.current);
+      // startEndIndexRef.current = startEndIndexNow;
+      setStartEndIndex(startEndIndexNow);
+    }
+  }, []);
 
   const handleScroll = useCallback(() => {
     const isScrollToPos = ScrollToUpdateHandler.checkDOMIsToPosition(domRef, myOptions);
@@ -107,13 +135,22 @@ const useScrollToUpdate = (options?: UseScrollToUpdateOptions) => {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = undefined;
     }
-  }, [loading, myOptions, timeoutTime, updateCb]);
+
+    handleSetStartEndIndex();
+  }, [handleSetStartEndIndex, loading, myOptions, timeoutTime, updateCb]);
+
+  useEffect(() => {
+    handleSetStartEndIndex();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return ({
     outerRef,
     domRef,
     handleScroll,
     loading,
+    // startEndIndex: startEndIndexRef.current,
+    startEndIndex: startEndIndex,
   });
 };
 

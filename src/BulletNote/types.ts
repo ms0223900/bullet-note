@@ -1,5 +1,5 @@
 import { ID, Callback } from "common-types";
-import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps, ToggleTodoFn } from "./components/types";
+import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps, ToggleTodoFn, EmptyMessageItemProps } from "./components/types";
 import { BulletNoteState } from "./constants/context";
 import { RouterProps, RouteChildrenProps } from "react-router";
 import { TagNoteBlockItemContainerWithCtxProps } from "./containers/types";
@@ -16,6 +16,7 @@ export interface SortTypeRule {
 }
 
 export enum MESSAGE_TYPE  {
+  'EMPTY' = 'EMPTY',
   'DEFAULT' = 'DEFAULT',
   'URGENT' = 'URGENT',
   'TODO' = 'TODO',
@@ -74,7 +75,8 @@ export interface BasicMessage {
 export type MessageItem = 
   ToDoMessageItemProps | 
   UrgentMessageItemProps | 
-  DefaultMessageItemProps
+  DefaultMessageItemProps |
+  EmptyMessageItemProps
 
 export type MessageList = MessageItem[]
 

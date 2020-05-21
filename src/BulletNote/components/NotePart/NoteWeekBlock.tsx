@@ -15,16 +15,18 @@ const NoteWeekBlock = (props: NoteWeekBlockProps) => {
   } = props;
   const classes = useNotePartStyles();
 
-  const messageListWithDate = HandleMessageList
-    .convertToMessageWithDateList(messageList);
-
-  const messageListWithDateSplitByWeek = splitMessageListWithDataByWeek(messageListWithDate);
-
   const {
     outerRef,
     domRef,
     handleScroll,
+    startEndIndex,
   } = useScrollToUpdate();
+  console.log(startEndIndex);
+
+  const messageListWithDate = HandleMessageList
+    .convertToMessageWithDateList(messageList);
+
+  const messageListWithDateSplitByWeek = splitMessageListWithDataByWeek(messageListWithDate);
 
   return (
     <RootRef
