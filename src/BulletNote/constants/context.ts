@@ -4,7 +4,7 @@ import reducers from "../reducers";
 import ContextWrapperFn from "react-function-helpers/lib/functions/ContextWrapper";
 
 export type NoteMode = 'normal' | 'tag-whole-page'
-export const initNoteMode: NoteMode = 'tag-whole-page';
+export const initNoteMode: NoteMode = 'normal';
 export const initShowingDaysRange = 7; //one week for performance better
 export const initIsFilteringDone = true;
 export const initSelectedFilterTags = ['#bullet-note'];
