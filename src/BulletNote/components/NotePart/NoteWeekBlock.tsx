@@ -4,7 +4,7 @@ import HandleMessageList from 'BulletNote/functions/handleMessageListToMessageWi
 import { NoteWeekBlockProps } from 'BulletNote/types';
 import NoteBlockListWithCtx from '../NoteBlockList';
 import MoveToBottomWrapper from '../wrappers/MoveToBottomWrapper';
-import { Button, makeStyles, Box, RootRef } from '@material-ui/core';
+import { Button, makeStyles, Box, RootRef, CircularProgress } from '@material-ui/core';
 import { navHeight } from '../CommonComponents/NavBar';
 import useNotePartStyles from 'BulletNote/styles/stylesObj/useNotePartStyles';
 import useScrollToUpdate from 'lib/customHooks/useScrollToUpdate';
@@ -16,12 +16,13 @@ const NoteWeekBlock = (props: NoteWeekBlockProps) => {
   const classes = useNotePartStyles();
 
   const {
+    loading,
     outerRef,
     domRef,
     handleScroll,
     startEndIndex,
   } = useScrollToUpdate();
-  console.log(startEndIndex);
+  console.log(loading, startEndIndex);
 
   const messageListWithDate = HandleMessageList
     .convertToMessageWithDateList(messageList);
@@ -41,6 +42,7 @@ const NoteWeekBlock = (props: NoteWeekBlockProps) => {
           rootRef={domRef}
         >
           <Box>
+            {loading && <CircularProgress />}
             <Button>
               {'Add one day'}
             </Button>

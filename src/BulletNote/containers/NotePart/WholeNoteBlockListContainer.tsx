@@ -5,10 +5,18 @@ import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContext
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { WholeNoteBlockListContainerProps, WholeNoteBlockListContainerWithCtxProps } from './types';
 import { connectCtx } from 'react-function-helpers';
+import useScrollToUpdate from 'lib/customHooks/useScrollToUpdate';
 
 const WholeNoteBlockListContainer = (props: WholeNoteBlockListContainerProps) => {
+  const states = useScrollToUpdate({
+    updateTimeout: 250,
+  });
+
   return (
-    <WholeNoteBlockList {...props} />
+    <WholeNoteBlockList 
+      {...props}
+      scrollUpdateStates={states}
+    />
   );
 };
 

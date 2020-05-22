@@ -8,6 +8,7 @@ import getDateOrMessageItemFromDateMessageList, { WholeNoteBlockComponent } from
 import WholeNoteBlockDateItem from './WholeNoteBlockDateItem';
 import sortMessageList from '../_functions/sortMessageList';
 import SortButtons from './SortButtons';
+import getDynamicMessageList from './functions/getDynamicMessageList';
 
 export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteBlockComoponent: WholeNoteBlockComponent, index: number) => {
   if(wholeNoteBlockComoponent.type === 'message-item') {
@@ -30,6 +31,7 @@ export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteB
 
 const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
   const {
+    startEndIndex,
     sortTypeRule,
 
     isFilteringDone,
@@ -37,7 +39,11 @@ const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
     isShowMessages,
   } = props;
 
-  const sortedMessageList = sortMessageList(sortTypeRule)(messageList);
+  const dynamicMessageList = getDynamicMessageList()({
+    messageList, startEndIndex, isFilteringDone
+  });
+  console.log(dynamicMessageList);
+  const sortedMessageList = sortMessageList(sortTypeRule)(dynamicMessageList);
   
   const dateOrMessageItemList = getDateOrMessageItemFromDateMessageList(sortedMessageList)(isFilteringDone);
 

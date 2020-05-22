@@ -36,7 +36,9 @@ const NavBar = (props: NavBarProps) => {
       justifyContent={'space-between'}
       className={classes.root}
     >
-      <SyncToFirebaseWithCtx />
+      {process.env.NODE_ENV === 'development' ? null : (
+        <SyncToFirebaseWithCtx />
+      )}
       {isOffline && (
         <Box
           display={'flex'}

@@ -32,6 +32,7 @@ export interface DefaultMessageItemProps extends Omit<BasicMessageItemProps, 'on
 export interface EmptyMessageItemProps {
   type: MESSAGE_TYPE.EMPTY
   message: BasicMessage
+  status: {}
 }
 
 export type ToggleTodoFn = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => any

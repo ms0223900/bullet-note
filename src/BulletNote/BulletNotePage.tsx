@@ -1,6 +1,6 @@
 import React, { useCallback, RefObject } from 'react';
 import { Box, makeStyles, Container, CircularProgress } from '@material-ui/core';
-import ContextWrapper, { ContextStore } from './constants/context';
+import { ContextStore } from './constants/context';
 import InputPartContainerWithCtx from './containers/InputPart/InputPartContainer';
 import NotePartContainerWithCtx from './containers/NotePart/NotePartContainer';
 import './styles/style.scss';
@@ -8,28 +8,13 @@ import { useParams } from 'react-router';
 import HandleDataInLocalStorage from './functions/HandleDataInLocalStorage';
 import readFromDB from './functions/firebase/readFromDB';
 import { offLineModeParam } from './config';
-import NavBar, { navHeight } from './components/CommonComponents/NavBar';
 import UserNotFoundPage from './components/CommonComponents/UserNotFoundPage';
 import NavBarContainer from './containers/CommonComponents/NavBarContainer';
 import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNotePageProps } from './types';
-import { setDaysRange, addDaysRange } from './actions/config-actions';
+import { addDaysRange } from './actions/config-actions';
 import { connectCtx } from 'react-function-helpers';
-import useScrollToUpdate from 'lib/customHooks/useScrollToUpdate';
 
-const getTopOfNoteBlock = (ref: RefObject<HTMLDivElement>) => {
-  let top = -Infinity;
-
-  if(ref.current) {
-    const {
-      top: blockTop,
-    } = ref.current.getBoundingClientRect();
-    top = blockTop;
-    // console.log(top);
-  }
-  
-  return top;
-};
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -50,17 +35,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const initBulletNotePageStates = {
+  loading: false,
+  error: { message: '', },
+  isOffline: false,
+};
+
 const useBulletNotePage = () => {
   const {
     userId
   } = useParams<{ userId: string }>();
 
   console.log(userId);
-  const [state, setState] = React.useState({
-    loading: true,
-    error: { message: '', },
-    isOffline: false,
-  });
+  const [state, setState] = React.useState(initBulletNotePageStates);
   // const [initMessageList, setMessageList] = React.useState<BulletNoteState['messageList']>([]);
 
   const handleSetFirebaseDataToLS = useCallback((_userId: string) => {
@@ -85,6 +72,10 @@ const useBulletNotePage = () => {
   }, []);
 
   React.useEffect(() => {
+    //dev mode get localstorage data directly
+    if(process.env.NODE_ENV === 'development') {
+      return;
+    }
     //init check local and online  
     HandleDataInLocalStorage.initCheckLocalWithOnlineLS();
     const LSdata = HandleDataInLocalStorage.getData();
@@ -98,6 +89,9 @@ const useBulletNotePage = () => {
         loading: false,
       }));
     } else {
+      setState(s => ({
+        ...s, loading: true
+      }));
       handleSetFirebaseDataToLS(userId);
     }
   }, [handleSetFirebaseDataToLS, userId]);
@@ -108,11 +102,8 @@ const useBulletNotePage = () => {
 };
 
 const BulletNotePage = (props: BulletNotePageProps) => {
-  const {
-    addShowingDaysRange,
-  } = props;
-
   const classes = useStyles();
+
   const {
     loading,
     error,

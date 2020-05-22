@@ -15,6 +15,8 @@ export interface SortTypeRule {
   sortRule: SortRule
 }
 
+export type StartEndIndex = [number, number]
+
 export enum MESSAGE_TYPE  {
   'EMPTY' = 'EMPTY',
   'DEFAULT' = 'DEFAULT',

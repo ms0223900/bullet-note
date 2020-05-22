@@ -1,4 +1,5 @@
-import { TagNoteBlockItemProps, MessageList, SortRule, SortTypeRule } from "BulletNote/types";
+import { TagNoteBlockItemProps, MessageList, SortRule, SortTypeRule, StartEndIndex } from "BulletNote/types";
+import { UseScrollToUpdateStates } from "lib/customHooks/useScrollToUpdate";
 
 export interface SortButtonsProps {
   sortTypeRule: SortTypeRule
@@ -6,9 +7,11 @@ export interface SortButtonsProps {
 }
 
 export interface WholeNoteBlogItemProps extends TagNoteBlockItemProps, SortButtonsProps {
+  startEndIndex?: StartEndIndex
 }
 
 export interface WholeNoteBlockListProps {
+  scrollUpdateStates: UseScrollToUpdateStates
   messageList: MessageList
   tagList: string[]
 }

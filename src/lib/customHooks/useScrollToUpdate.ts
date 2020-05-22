@@ -1,5 +1,7 @@
 import React, { useRef, useCallback, RefObject, useState, useEffect } from "react";
 import { Callback } from "common-types";
+import DelayTickTock from "BulletNote/functions/DelayTickTock";
+import { StartEndIndex } from "BulletNote/types";
 
 type ScrollToWhere = 'top' | 'bottom'
 
@@ -9,20 +11,28 @@ export interface DomSpecs {
 }
 
 export interface UseScrollToUpdateOptions {
-  outerRef: RefObject<HTMLElement>
   scrollToPosition?: number
   scrollToWhere?: ScrollToWhere
   timeoutTime?: number
+
   updateCb?: Callback
+  updateTimeout?: number
+}
+export interface UseScrollToUpdateStates {
+  outerRef: RefObject<HTMLElement>
+  domRef: RefObject<HTMLElement>
+  handleScroll?: Callback
+  loading?: boolean
+  startEndIndex: StartEndIndex
 }
 
 const defaultMessageItemHeight = 60;
 const defaultRenderAddCount = 5;
 const defaultOptions: UseScrollToUpdateOptions = {
-  outerRef: { current: null },
   scrollToPosition: 0,
   scrollToWhere: 'top',
-  timeoutTime: 500,
+  timeoutTime: 10,
+  updateTimeout: 500,
 };
 
 class ScrollToUpdateHandler {
@@ -59,31 +69,45 @@ class ScrollToUpdateHandler {
     return res;
   }
 
-  static checkDOMIsToPosition(ref: RefObject<HTMLElement>, options: UseScrollToUpdateOptions) {
-    const domSpecs = this.getDomSpecs(ref, options.outerRef);
-    // console.log(domSpecs.top, domSpecs.bottom);
-    const res = this.checkScrollIsToPostition({
-      ...options,
-      top: domSpecs.top,
-      bottom: domSpecs.bottom,
-    });
-    return res;
+  static checkDOMIsToPosition(ref: RefObject<HTMLElement>, outerRef: RefObject<HTMLElement>) {
+    return (options: UseScrollToUpdateOptions) => {
+      const domSpecs = this.getDomSpecs(ref, outerRef);
+      // console.log(domSpecs.top, domSpecs.bottom);
+      const res = this.checkScrollIsToPostition({
+        ...options,
+        top: domSpecs.top,
+        bottom: domSpecs.bottom,
+      });
+      return res;
+    };
   }
 }
 
 export const getStartEndIndexFromDOM = (innerEl: HTMLElement, outerEl: HTMLElement) => {
-  let startEndIndex: number[] = [];
-  const startPx = Math.abs(
-    ScrollToUpdateHandler.calTopBottom(innerEl, outerEl).top
-  );
   const outerHeight = outerEl.offsetHeight;
   const listCount = Math.ceil(outerHeight / defaultMessageItemHeight);
+
+  let startEndIndex: StartEndIndex = [0, listCount * 1.5];
+
+  const {
+    top, bottom,
+  } = ScrollToUpdateHandler.calTopBottom(innerEl, outerEl);
+  const startPx = Math.abs(top);
   const startIndex = Math.floor(startPx / defaultMessageItemHeight);
   const endIndex = startIndex + listCount;
-  startEndIndex = [
-    startIndex - defaultRenderAddCount,
-    endIndex + defaultRenderAddCount,
-  ];
+  
+  if(top >= 10) {
+    startEndIndex = [0, listCount * 1.5];
+  }
+  else if(bottom <= defaultMessageItemHeight) {
+    startEndIndex = [endIndex - listCount * 3, Infinity];
+  }
+  else {
+    startEndIndex = [
+      startIndex - defaultRenderAddCount * 2,
+      endIndex + defaultRenderAddCount * 2,
+    ];
+  }
   // console.log('startEndIndex: ', startEndIndex);
   return startEndIndex;
 };
@@ -93,51 +117,63 @@ const useScrollToUpdate = (options?: UseScrollToUpdateOptions) => {
   const myOptions: UseScrollToUpdateOptions = {
     ...defaultOptions,
     ...options,
-    outerRef,
   };
   const {
+    updateTimeout,
     timeoutTime,
     updateCb,
   } = myOptions;
 
   const domRef = useRef<HTMLElement>(null);
-  const timeoutRef = React.useRef<NodeJS.Timeout>();
+  const updateTickTockRef = useRef(new DelayTickTock({
+    timeoutTime: updateTimeout,
+  }));
+  const scrollTopBottomDelayTickTockRef = useRef(new DelayTickTock({
+    timeoutTime: timeoutTime,
+  }));
+
   const [loading, setLoading] = useState(false);
-  const [startEndIndex, setStartEndIndex] = useState([0, 0]);
+  const [startEndIndex, setStartEndIndex] = useState<StartEndIndex>([0, 0]);
   // const startEndIndexRef = useRef([0, 0]);
 
   const handleSetStartEndIndex = useCallback(() => {
     if(domRef.current && outerRef.current) {
       const startEndIndexNow = getStartEndIndexFromDOM(domRef.current, outerRef.current);
-      // startEndIndexRef.current = startEndIndexNow;
+      const isSameWithPrev = startEndIndexNow.join('') === startEndIndex.join('');
+
+      if(isSameWithPrev)
+        return;
       setStartEndIndex(startEndIndexNow);
     }
+  }, [startEndIndex]);
+
+  const handleUpdate = useCallback(() => {
+    updateCb && updateCb();
+    setLoading(false);
+  }, [updateCb]);
+  const handleRemoveUpdate = useCallback(() => {
+    setLoading(false);
   }, []);
 
   const handleScroll = useCallback(() => {
-    const isScrollToPos = ScrollToUpdateHandler.checkDOMIsToPosition(domRef, myOptions);
+    const isScrollToPos = ScrollToUpdateHandler.checkDOMIsToPosition(domRef, outerRef)( myOptions);
 
-    if(isScrollToPos && !timeoutRef.current && !loading) {
+    if(isScrollToPos && !loading) {
       setLoading(true);
-      const domRefNow = domRef.current;
-
-      timeoutRef.current = setTimeout(() => {
-        updateCb && updateCb();
-        setLoading(false);
-        domRefNow?.scrollIntoView({
-          block: 'nearest',
-        });
-      }, timeoutTime as number);
+      scrollTopBottomDelayTickTockRef.current.delayCallback(
+        handleUpdate
+      );
+    }
+    else if(!isScrollToPos) {
+      scrollTopBottomDelayTickTockRef.current.clearTimeoutNow(
+        handleRemoveUpdate
+      );
     }
 
-    else if(!isScrollToPos && timeoutRef.current) {
-      setLoading(false);
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = undefined;
-    }
-
-    handleSetStartEndIndex();
-  }, [handleSetStartEndIndex, loading, myOptions, timeoutTime, updateCb]);
+    updateTickTockRef.current.delayCallback(
+      handleSetStartEndIndex
+    );
+  }, [handleRemoveUpdate, handleSetStartEndIndex, handleUpdate, loading, myOptions]);
 
   useEffect(() => {
     handleSetStartEndIndex();
