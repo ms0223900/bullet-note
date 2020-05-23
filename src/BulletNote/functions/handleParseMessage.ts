@@ -1,4 +1,4 @@
-import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB, StarLevelNum } from "../types";
+import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB, StarLevelNum, SortRule } from "../types";
 import { weekTargetTag } from 'BulletNote/functions/getTagsFromMessageList';
 import WeekDatesHandler from "./WeekDatesHandler";
 
@@ -14,7 +14,7 @@ class HandleParseMessage {
     name: '#未分類'
   }
 
-  static sortByDateFn(accOrDec: AccOrDec) {
+  static sortByDateFn(accOrDec: SortRule) {
     return (prevDate?: Date | string, nextDate?: Date | string) => {
       if(!prevDate || !nextDate) {
         return 0;
@@ -22,12 +22,12 @@ class HandleParseMessage {
       const prev = (new Date(prevDate)).getTime();
       const next = (new Date(nextDate)).getTime();
       if(next - prev > 0) {
-        return accOrDec === 'acc' ? -1 : 1;
+        return accOrDec === 'asc' ? -1 : 1;
       } 
-      return accOrDec === 'acc' ? 1 : -1;
+      return accOrDec === 'asc' ? 1 : -1;
     };
   }
-  static sortMessageListByDateFn(accOrDec: AccOrDec) {
+  static sortMessageListByDateFn(accOrDec: SortRule) {
     return (prev: MessageItem, next: MessageItem) => {
       const res = this.sortByDateFn(accOrDec)(prev.message.createdAt, next.message.createdAt);
       return res;
@@ -148,19 +148,19 @@ class HandleParseMessage {
     });
 
     switch (messageType) {
-    case MESSAGE_TYPE.TODO: {
-      return ({
-        type: MESSAGE_TYPE.TODO,
-        status,
-        message,
-      });
-    }
-    default:
-      return ({
-        type: MESSAGE_TYPE.DEFAULT,
-        status,
-        message,
-      });
+      case MESSAGE_TYPE.TODO: {
+        return ({
+          type: MESSAGE_TYPE.TODO,
+          status,
+          message,
+        });
+      }
+      default:
+        return ({
+          type: MESSAGE_TYPE.DEFAULT,
+          status,
+          message,
+        });
     }
   }
 

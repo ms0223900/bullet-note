@@ -1,25 +1,29 @@
-import { SortTypeRule, SortRule } from "BulletNote/types";
+import { SortTypeRule, SortRule, SortType } from "BulletNote/types";
 import { useState, useCallback } from "react";
 
 const defaultSortTypeRule: SortTypeRule = {
   sortRule: 'asc',
-  sortType: 'default',
+  sortType: 'date',
 };
 
 const useSortTypeRules = (initSortTypeRuleOption=defaultSortTypeRule) => {
   const [sortTypeRule, setSortTypeRule] = useState(initSortTypeRuleOption);
 
-  const handleSortByStarNums = useCallback((sortRule: SortRule) => {
+  const handleSort = useCallback((sortType: SortType) => (sortRule: SortRule) => {
     return () => setSortTypeRule(s => ({
-      sortType: 'star-num',
+      sortType,
       sortRule
     }));
   }, []);
+
+  const handleSortByStarNums = handleSort('star-num');
+  const handleSortByDate = handleSort('date');
 
   return ({
     sortTypeRule, 
     setSortTypeRule,
     handleSortByStarNums,
+    handleSortByDate,
   });
 };
 

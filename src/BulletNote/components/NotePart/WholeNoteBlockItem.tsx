@@ -20,7 +20,7 @@ export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteB
   else if(wholeNoteBlockComoponent.type === 'date') {
     return (
       <WholeNoteBlockDateItem 
-        key={index} 
+        key={wholeNoteBlockComoponent.component.toString()} 
         date={wholeNoteBlockComoponent.component} 
       />
     );
@@ -31,9 +31,6 @@ export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteB
 
 const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
   const {
-    startEndIndex,
-    sortTypeRule,
-
     isFilteringDone,
     messageList,
     isShowMessages,

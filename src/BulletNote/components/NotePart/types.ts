@@ -2,8 +2,9 @@ import { TagNoteBlockItemProps, MessageList, SortRule, SortTypeRule, StartEndInd
 import { UseScrollToUpdateStates } from "lib/customHooks/useScrollToUpdate";
 
 export interface SortButtonsProps {
-  sortTypeRule: SortTypeRule
+  // sortTypeRule: SortTypeRule
   sortByStarNumsFn: (sortRule: SortRule) => any
+  sortByDateFn: (sortRule: SortRule) => any
 }
 
 export interface WholeNoteBlogItemProps extends TagNoteBlockItemProps, SortButtonsProps {

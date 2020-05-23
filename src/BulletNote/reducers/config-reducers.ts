@@ -23,7 +23,7 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
     case BulletNoteActionTypes.SET_FILTER_TAGS:
       return ({
         ...state.bulletNoteConfig,
-        isFilteringDone: initIsFilteringDone,
+        isFilteringDone: true,
         selectedFilterTags: action.payload.tags,
       });
   
@@ -36,7 +36,7 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
     case BulletNoteActionTypes.SET_NOTE_MODE: {
       return ({
         ...state.bulletNoteConfig,
-        isFilteringDone: initIsFilteringDone,
+        isFilteringDone: true,
         showingDaysRange: initShowingDaysRange,
         noteMode: action.payload.noteMode,
       });

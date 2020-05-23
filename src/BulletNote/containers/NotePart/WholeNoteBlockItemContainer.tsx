@@ -76,6 +76,7 @@ const WholeNoteBlockItemContainer = (props: WholeNoteBlogItemContainerProps) => 
   const {
     sortTypeRule,
     handleSortByStarNums,
+    handleSortByDate,
   } = useSortTypeRules();
   
   const sortedMessageList = sortMessageList(sortTypeRule)(messageList);
@@ -91,8 +92,8 @@ const WholeNoteBlockItemContainer = (props: WholeNoteBlogItemContainerProps) => 
     <WholeNoteBlockItem
       {...props}
       messageList={dynamicMessageList}
-      sortTypeRule={sortTypeRule}
       sortByStarNumsFn={handleSortByStarNums}
+      sortByDateFn={handleSortByDate}
       isShowMessages={toggle}
       toggleShowMessagesFn={handleToggle}
     />

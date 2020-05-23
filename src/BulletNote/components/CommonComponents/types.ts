@@ -21,6 +21,9 @@ export interface StarLevelProps {
 export interface MoveToBottomButtonProps {
   moveToBottomFn: Callback
 }
+export interface MoveToTopButtonProps {
+  moveToTopFn: Callback
+}
 
 export interface DueDateItemProps {
   date: Date

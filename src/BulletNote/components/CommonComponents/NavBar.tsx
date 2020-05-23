@@ -54,11 +54,11 @@ const NavBar = (props: NavBarProps) => {
           </Button>
         </Box>
       )}
-      {!isOffline && (
+      {/* {!isOffline && (
         <Button color={'primary'} href={`/${myBulletNoteParam}/${offLineModeParam}`}>
           {'Offline-mode'}
         </Button>
-      )}
+      )} */}
       <Box>
         <FilterDoneCheckBoxWithCtx />
         <Button

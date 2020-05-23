@@ -20,12 +20,14 @@ const ToggleButton = (props: ToggleButtonProps) => {
   }, [handleToggle, toggle, toggleFns]);
   
   return (
-    <Button
-      {...props}
-      onClick={handleClick}
-    >
-      {toggle ? toggleEls[0] : toggleEls[1]}
-    </Button>
+    <Box display={'inline-block'} paddingRight={1}>
+      <Button
+        {...props}
+        onClick={handleClick}
+      >
+        {toggle ? toggleEls[0] : toggleEls[1]}
+      </Button>
+    </Box>
   );
 };
 

@@ -16,7 +16,10 @@ const useStyles = makeStyles<Theme, MessageItemWrapperProps>(theme => ({
       paddingBottom: theme.spacing(1.5),
       alignItems: 'start',
     },
+    transition: '0.1s',
     '&:hover': {
+      transition: '0.1s',
+      opacity: 1,
       backgroundColor: '#eee',
     }
   }
