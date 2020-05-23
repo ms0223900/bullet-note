@@ -13,6 +13,9 @@ export interface ToggleIsFilteringDonePayload {
 export interface SetNoteModePayload {
   noteMode: BulletNoteState['bulletNoteConfig']['noteMode']
 }
+export interface SetBulletNoteConfigPayload {
+  bulletNoteConfig: Partial<BulletNoteState['bulletNoteConfig']>
+}
 
 export interface SetDaysRangeAction {
   type: BulletNoteActionTypes.SET_DAYS_RANGE,
@@ -33,6 +36,10 @@ export interface ToggleIsFilteringDoneAction {
 export interface SetNoteModeAction {
   type: BulletNoteActionTypes.SET_NOTE_MODE,
   payload: SetNoteModePayload
+}
+export interface SetBulletNoteConfigAction {
+  type: BulletNoteActionTypes.SET_BULLET_NOTE_CONFIG,
+  payload: SetBulletNoteConfigPayload
 }
 
 export const setDaysRange = (daysRange: number): SetDaysRangeAction => ({
@@ -59,11 +66,17 @@ export const setNoteMode = (noteMode: SetNoteModePayload['noteMode']): SetNoteMo
   payload: { noteMode, }
 });
 
+export const setBulletNoteConfig = (bulletNoteConfig: SetBulletNoteConfigPayload['bulletNoteConfig']): SetBulletNoteConfigAction => ({
+  type: BulletNoteActionTypes.SET_BULLET_NOTE_CONFIG,
+  payload: { bulletNoteConfig, }
+});
+
 type ConfigActions = 
   SetDaysRangeAction |
   AddDaysRangeAction |
   SetFilterTagsAction |
   ToggleIsFilteringDoneAction |
-  SetNoteModeAction
+  SetNoteModeAction |
+  SetBulletNoteConfigAction
 
 export default ConfigActions;

@@ -16,10 +16,8 @@ const useScrollToView = (deps=[] as any[]) => {
     };
   }, []);
 
-
-
   useEffect(() => {
-    handleScrollToView();
+    handleScrollToView()();
   }, [handleScrollToView, ...deps]);
 
   return ({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
-import useToggle from 'BulletNote/functions/useToggle';
+import useToggle from 'lib/customHooks/useToggle';
 import { PinItemContainerProps } from '../types';
 import { Flag, FlagOutlined } from '@material-ui/icons';
 

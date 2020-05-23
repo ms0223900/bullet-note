@@ -1,7 +1,7 @@
 import React from 'react';
 import TagNoteBlockItem from 'BulletNote/components/TagNoteBlockItem';
 import { TagNoteBlockItemContainerProps } from '../types';
-import useToggle from 'BulletNote/functions/useToggle';
+import useToggle from 'lib/customHooks/useToggle';
 
 const TagNoteBlockItemContainer = (props: TagNoteBlockItemContainerProps) => {
   const {

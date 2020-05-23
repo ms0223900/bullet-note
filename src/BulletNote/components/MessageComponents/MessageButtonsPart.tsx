@@ -6,8 +6,8 @@ import MessageItemButtons from '../MessageItemButtons';
 import { MessageButtonsPartProps } from './types';
 import { MoreHoriz, Star } from '@material-ui/icons';
 import StarLevelContainer from 'BulletNote/containers/CommonComponents/StarLevelContainer';
-import { otherColors } from 'BulletNote/theme/theme';
-import useToggle from 'BulletNote/functions/useToggle';
+import { otherColors, zIndexes } from 'BulletNote/theme/theme';
+import useToggle from 'lib/customHooks/useToggle';
 import ClickBackground from '../CommonComponents/ClickBackground';
 
 const buttonPartWidth = 154;
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 
   morePart: {
     position: 'relative',
-    zIndex: 100,
+    zIndex: zIndexes.messageButtonsPart,
     // cursor: 'pointer',
     // opacity: 0.8,
     // '&:hover > div': {

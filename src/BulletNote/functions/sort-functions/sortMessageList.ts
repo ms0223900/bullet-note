@@ -1,6 +1,6 @@
-import sortMessageListByStarLevelNum from "BulletNote/functions/sortMessageListByStarLevelNum";
+import sortMessageListByStarLevelNum from "BulletNote/functions/sort-functions/sortMessageListByStarLevelNum";
 import { MessageList, SortType, SortRule } from "BulletNote/types";
-import HandleParseMessage from "BulletNote/functions/handleParseMessage";
+import HandleParseMessage from "BulletNote/functions/Handlers/handleParseMessage";
 
 export interface SortOptions {
   sortType: SortType

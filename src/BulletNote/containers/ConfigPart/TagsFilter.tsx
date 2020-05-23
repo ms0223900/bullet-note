@@ -9,7 +9,7 @@ import getTagsFromMessageList from 'BulletNote/functions/getTagsFromMessageList'
 import { connectCtx } from 'react-function-helpers';
 import RemoveTagItem from 'BulletNote/components/ConfigPart/RemoveTagItem';
 import { setFilterTags } from 'BulletNote/actions/config-actions';
-import { dueDateRegExp } from 'BulletNote/functions/DueDateHandler';
+import { dueDateRegExp } from 'BulletNote/functions/Handlers/DueDateHandler';
 
 const defaultSelect = 'Select Tag';
 

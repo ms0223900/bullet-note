@@ -5,15 +5,16 @@ import InputPartContainerWithCtx from './containers/InputPart/InputPartContainer
 import NotePartContainerWithCtx from './containers/NotePart/NotePartContainer';
 import './styles/style.scss';
 import { useParams } from 'react-router';
-import HandleDataInLocalStorage from './functions/HandleDataInLocalStorage';
+import HandleDataInLocalStorage from './functions/Handlers/HandleDataInLocalStorage';
 import readFromDB from './functions/firebase/readFromDB';
 import { offLineModeParam } from './config';
 import UserNotFoundPage from './components/CommonComponents/UserNotFoundPage';
 import NavBarContainer from './containers/CommonComponents/NavBarContainer';
 import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNotePageProps } from './types';
-import { addDaysRange } from './actions/config-actions';
+import { addDaysRange, setBulletNoteConfig } from './actions/config-actions';
 import { connectCtx } from 'react-function-helpers';
+import ConfigLocalStorageHandler from './functions/Handlers/ConfigLocalStorageHandler';
 
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +42,11 @@ const initBulletNotePageStates = {
   isOffline: false,
 };
 
-const useBulletNotePage = () => {
+const useBulletNotePage = (params: BulletNotePageProps) => {
+  const {
+    initBulletNoteConfigFromLS,
+  } = params;
+
   const {
     userId
   } = useParams<{ userId: string }>();
@@ -71,7 +76,17 @@ const useBulletNotePage = () => {
     });
   }, []);
 
+  const handleSetConfigFromLS = useCallback(() => {
+    const LSData = ConfigLocalStorageHandler.getData();
+    initBulletNoteConfigFromLS(LSData);
+  }, [initBulletNoteConfigFromLS]);
+
   React.useEffect(() => {
+    handleSetConfigFromLS();
+  }, [handleSetConfigFromLS]);
+
+  React.useEffect(() => {
+
     //dev mode get localstorage data directly
     if(process.env.NODE_ENV === 'development') {
       return;
@@ -96,6 +111,8 @@ const useBulletNotePage = () => {
     }
   }, [handleSetFirebaseDataToLS, userId]);
 
+
+
   return ({
     ...state,
   });
@@ -108,7 +125,7 @@ const BulletNotePage = (props: BulletNotePageProps) => {
     loading,
     error,
     isOffline,
-  } = useBulletNotePage();
+  } = useBulletNotePage(props);
 
   if(loading) {
     return (
@@ -134,10 +151,8 @@ const BulletNotePage = (props: BulletNotePageProps) => {
         <Box className={classes.root}>
           <Box 
             className={classes.notePart}
-            // onScroll={handleScroll}
           >
             <NotePartContainerWithCtx
-              // notePartRef={domRef}
             />
           </Box>
           <Box className={classes.inputPart}>
@@ -149,16 +164,21 @@ const BulletNotePage = (props: BulletNotePageProps) => {
   );
 };
 
-interface OwnProps extends Omit<BulletNotePageProps, 'addShowingDaysRange'> {
+interface OwnProps {
 
 }
 
 const mapDispatchToProps: MapDispatchToProps<OwnProps, {
-  addShowingDaysRange: BulletNotePageProps['addShowingDaysRange']
+  // addShowingDaysRange: BulletNotePageProps['addShowingDaysRange']
+  initBulletNoteConfigFromLS: BulletNotePageProps['initBulletNoteConfigFromLS']
 }> = (dispatch) => {
   return ({
-    addShowingDaysRange: (daysRange=1) => {
-      const action = addDaysRange(daysRange);
+    // addShowingDaysRange: (daysRange=1) => {
+    //   const action = addDaysRange(daysRange);
+    //   dispatch(action);
+    // },
+    initBulletNoteConfigFromLS: (bulletNoteConfig) => {
+      const action = setBulletNoteConfig(bulletNoteConfig);
       dispatch(action);
     }
   });

@@ -2,14 +2,14 @@ import React, { memo, useMemo } from 'react';
 import { Box, Typography, Fab, Divider, RootRef } from '@material-ui/core';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { NoteBlockListProps, NoteBlockListWithCtxProps } from '../types';
-import HandleMessageList from '../functions/handleMessageListToMessageWithDateList';
+import HandleMessageList from '../functions/Handlers/handleMessageListToMessageWithDateList';
 import NoteBlockItem from './NoteBlockItem';
 import checkDateIsToday from '../functions/checkDateIsToday';
 import { ArrowDownward } from '@material-ui/icons';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { connectCtx } from 'react-function-helpers';
 import WeekDatesHandler from 'BulletNote/functions/WeekDatesHandler';
-import useToggle from 'BulletNote/functions/useToggle';
+import useToggle from 'lib/customHooks/useToggle';
 
 const NoteBlockList = (props: NoteBlockListProps) => {
   const {

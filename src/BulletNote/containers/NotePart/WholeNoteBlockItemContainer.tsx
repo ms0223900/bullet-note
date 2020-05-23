@@ -2,12 +2,12 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import WholeNoteBlockItem from 'BulletNote/components/NotePart/WholeNoteBlockItem';
 import { WholeNoteBlogItemContainerProps, WholeNoteBlogItemContainerWithCtxProps } from './types';
-import useToggle from 'BulletNote/functions/useToggle';
+import useToggle from 'lib/customHooks/useToggle';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { connectCtx } from 'react-function-helpers';
 import useSortTypeRules from 'lib/customHooks/useSortTypeRules';
-import sortMessageList from 'BulletNote/components/_functions/sortMessageList';
+import sortMessageList from 'BulletNote/functions/sort-functions/sortMessageList';
 import getDynamicMessageList from 'BulletNote/components/NotePart/functions/getDynamicMessageList';
 import { MessageList, MESSAGE_TYPE, StartEndIndex } from 'BulletNote/types';
 

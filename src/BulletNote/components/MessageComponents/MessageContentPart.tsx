@@ -3,9 +3,9 @@ import { Box, Typography, TextField, Grid, makeStyles } from '@material-ui/core'
 import BulletTagList from '../BullteTagList';
 import { BasicMessageItemProps } from '../types';
 import { MessageContentPartProps } from './types';
-import MessageContentHandler from 'BulletNote/functions/MessageContentHandler';
+import MessageContentHandler from 'BulletNote/functions/Handlers/MessageContentHandler';
 import DueDateItem from '../CommonComponents/DueDateItem';
-import DueDateHandler from 'BulletNote/functions/DueDateHandler';
+import DueDateHandler from 'BulletNote/functions/Handlers/DueDateHandler';
 
 const addZeroToSmallerThanTenNumber = (num: number) => (
   num < 10 ? `0${num}` : String(num)

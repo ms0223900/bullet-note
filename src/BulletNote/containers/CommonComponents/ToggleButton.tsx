@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Box, Button } from '@material-ui/core';
 import { ToggleButtonProps } from './types';
-import useToggle from 'BulletNote/functions/useToggle';
+import useToggle from 'lib/customHooks/useToggle';
 
 const ToggleButton = (props: ToggleButtonProps) => {
   const {

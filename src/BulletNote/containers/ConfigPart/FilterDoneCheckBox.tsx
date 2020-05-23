@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, FormControlLabel, Checkbox } from '@material-ui/core';
-import useToggle from 'BulletNote/functions/useToggle';
+import useToggle from 'lib/customHooks/useToggle';
 import { MapDispatchToProps, MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { FilterDoneCheckBoxProps } from './types';
 import { toggleIsFilteringDone } from 'BulletNote/actions/config-actions';

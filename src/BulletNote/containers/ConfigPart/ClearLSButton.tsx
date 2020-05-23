@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Box, Button } from '@material-ui/core';
-import HandleDataInLocalStorage from 'BulletNote/functions/HandleDataInLocalStorage';
+import HandleDataInLocalStorage from 'BulletNote/functions/Handlers/HandleDataInLocalStorage';
 
 const clearLSAlert = 'Do you sure to clear local storage?';
 

@@ -1,4 +1,4 @@
-import { MessageList, TagNoteBlockList, TagNoteBlockItem, MessageItem, TagNoteBlockObj } from "../types";
+import { MessageList, TagNoteBlockList, TagNoteBlockItem, MessageItem, TagNoteBlockObj } from "../../types";
 
 class HandleTagSortMessage {
   static checkNewStrIsInStrList(strList: string[], newStr: string) {

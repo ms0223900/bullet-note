@@ -1,6 +1,6 @@
 import { ID, Callback } from "common-types";
 import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps, ToggleTodoFn, EmptyMessageItemProps } from "./components/types";
-import { BulletNoteState } from "./constants/context";
+import { BulletNoteState, BulletNoteConfig } from "./constants/context";
 import { RouterProps, RouteChildrenProps } from "react-router";
 import { TagNoteBlockItemContainerWithCtxProps } from "./containers/types";
 
@@ -150,6 +150,7 @@ export interface BulletNoteRouteProps extends RouteChildrenProps {
 }
 
 export interface BulletNotePageProps {
-  addShowingDaysRange: Callback
+  // addShowingDaysRange: Callback
+  initBulletNoteConfigFromLS: (config: Partial<BulletNoteConfig>) => any
 }
 

@@ -1,8 +1,8 @@
 import { BulletNoteState } from "../constants/context";
 import InputPartActions from "../actions/message-actions";
 import { BulletNoteActionTypes } from "../actions";
-import HandleParseMessage from "../functions/handleParseMessage";
-import HandleDataInLocalStorage from "../functions/HandleDataInLocalStorage";
+import HandleParseMessage from "../functions/Handlers/handleParseMessage";
+import HandleDataInLocalStorage from "../functions/Handlers/HandleDataInLocalStorage";
 import { MESSAGE_TYPE, MessageItem } from "../types";
 import { ToDoMessageItemProps } from "../components/types";
 import { weekTargetTag } from "BulletNote/functions/getTagsFromMessageList";

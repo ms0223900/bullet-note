@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import NavBar from 'BulletNote/components/CommonComponents/NavBar';
 import { NavBarContainerProps } from './types';
-import useToggle from 'BulletNote/functions/useToggle';
+import useToggle from 'lib/customHooks/useToggle';
 
 const NavBarContainer = (props: NavBarContainerProps) => {
   const {

@@ -39,8 +39,8 @@ class FastInputHandler {
     return (tags: string[]) => {
       let res = inputStr;
 
-      const matchedTag = this.getInputStrMatchedTags(inputStr);
-      const matchedTagsInTags = matchedTag.map(tag => this.findTagsByMatchedTag(tags, tag));
+      const matchedTags = this.getInputStrMatchedTags(inputStr);
+      const matchedTagsInTags = matchedTags.map(tag => this.findTagsByMatchedTag(tags, tag));
 
       const valueWithoutTags = this.getValueWithoutTags(inputStr);
       const joinedTags = this.joinTags(matchedTagsInTags);

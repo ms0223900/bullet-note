@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import FastInputHandler from 'BulletNote/functions/FastInputHandler';
+import FastInputHandler from 'BulletNote/functions/Handlers/FastInputHandler';
 import { KEY_CODES } from 'BulletNote/config';
 
 type SetValueFn = (prevValue: (value: string) => any | string) => any

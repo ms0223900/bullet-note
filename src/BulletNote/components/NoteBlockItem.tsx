@@ -3,7 +3,7 @@ import { Box, makeStyles, Theme, Divider } from '@material-ui/core';
 import { NoteBlockItemProps, MessageList } from '../types';
 import switchMessagesByType from '../functions/switchMessagesByType';
 import DateTitle from './DateTitle';
-import HandleTagSortMessage from '../functions/handleTagSortMessage';
+import HandleTagSortMessage from '../functions/Handlers/handleTagSortMessage';
 import TagNoteBlockItem from './TagNoteBlockItem';
 import TagNoteBlockItemContainerWithCtx from '../containers/NotePart/TagNoteBlockItemContainer';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';

@@ -1,6 +1,6 @@
 import React from 'react';
 import splitMessageListWithDataByWeek from 'BulletNote/functions/splitMessageListWithDateByWeek';
-import HandleMessageList from 'BulletNote/functions/handleMessageListToMessageWithDateList';
+import HandleMessageList from 'BulletNote/functions/Handlers/handleMessageListToMessageWithDateList';
 import { NoteWeekBlockProps } from 'BulletNote/types';
 import NoteBlockListWithCtx from '../NoteBlockList';
 import MoveToBottomWrapper from '../wrappers/MoveToBottomWrapper';

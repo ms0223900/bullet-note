@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import PinMessageList from 'BulletNote/components/NotePart/PinMessageList';
 import { PinMessageListContainerProps } from './types';
-import useToggle from 'BulletNote/functions/useToggle';
+import useToggle from 'lib/customHooks/useToggle';
 
 const PinMessageListContainer = (props: PinMessageListContainerProps) => {
   const {

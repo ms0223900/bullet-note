@@ -10,12 +10,16 @@ class WeekDatesHandler {
     }
     return false;
   }
-  static checkNextDatesIsBigger(prev: Date, next: Date) {
-    const prevDateStr = this.convertDateToString(prev);
-    const nextDateStr = this.convertDateToString(next);
+  
+  static getDateTime(date: Date): number {
+    const dateStr = this.convertDateToString(date);
+    const res = new Date(dateStr).getTime();
+    return res;
+  }
 
-    const prevTime = new Date(prevDateStr).getTime();
-    const nextTime = new Date(nextDateStr).getTime();
+  static checkNextDatesIsBigger(prev: Date, next: Date) {
+    const prevTime = this.getDateTime(prev);
+    const nextTime = this.getDateTime(next);
     
     if(nextTime > prevTime) {
       return true;

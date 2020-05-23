@@ -1,4 +1,4 @@
-import { MessageList, SingleRawMessageFromDB, MESSAGE_TYPE } from "../types";
+import { MessageList, SingleRawMessageFromDB, MESSAGE_TYPE } from "../../types";
 
 const messageListLS = 'messageListLS';
 const checkLocalDataIsSameWithOnline = 'checkLocalWithOnline';

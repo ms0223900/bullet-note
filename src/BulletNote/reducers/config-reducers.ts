@@ -1,6 +1,7 @@
 import { BulletNoteState, initShowingDaysRange, initIsFilteringDone } from "BulletNote/constants/context";
 import ConfigActions from "BulletNote/actions/config-actions";
 import { BulletNoteActionTypes } from "BulletNote/actions";
+import ConfigLocalStorageHandler from "BulletNote/functions/Handlers/ConfigLocalStorageHandler";
 
 const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState['bulletNoteConfig'] => {
   switch (action.type) {
@@ -20,12 +21,15 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
       });
     }
     
-    case BulletNoteActionTypes.SET_FILTER_TAGS:
-      return ({
+    case BulletNoteActionTypes.SET_FILTER_TAGS: {
+      const newConfig = ({
         ...state.bulletNoteConfig,
         isFilteringDone: true,
         selectedFilterTags: action.payload.tags,
       });
+      ConfigLocalStorageHandler.setData(newConfig);
+      return newConfig;
+    }
   
     case BulletNoteActionTypes.TOGGLE_IS_FILTERING_DONE:
       return ({
@@ -34,12 +38,22 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
       });
   
     case BulletNoteActionTypes.SET_NOTE_MODE: {
-      return ({
+      const newConfig = ({
         ...state.bulletNoteConfig,
         isFilteringDone: true,
         showingDaysRange: initShowingDaysRange,
         noteMode: action.payload.noteMode,
       });
+      ConfigLocalStorageHandler.setData(newConfig);
+      return newConfig;
+    }
+
+    case BulletNoteActionTypes.SET_BULLET_NOTE_CONFIG: {
+      const newConfig = ({
+        ...state.bulletNoteConfig,
+        ...action.payload.bulletNoteConfig,
+      });
+      return newConfig;
     }
 
     default:

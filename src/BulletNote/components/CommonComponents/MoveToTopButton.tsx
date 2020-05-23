@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Fab } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { MoveToTopButtonProps } from './types';
+import { zIndexes } from 'BulletNote/theme/theme';
 
 const MoveToBottomButton = (props: MoveToTopButtonProps) => {
   return (
@@ -10,6 +11,7 @@ const MoveToBottomButton = (props: MoveToTopButtonProps) => {
         position: 'fixed',
         bottom: 140,
         right: 20,
+        zIndex: zIndexes.moveToButtons,
       }}
     >
       <Fab

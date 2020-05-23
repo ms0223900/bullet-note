@@ -26,7 +26,6 @@ const PinMessageList = (props: PinMessageListProps) => {
           position: 'sticky',
           top: 0,
           backgroundColor: '#fff',
-          zIndex: 100,
         }}
       >
         <Typography>

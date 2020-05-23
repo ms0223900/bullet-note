@@ -14,4 +14,13 @@ export const otherColors = {
   starPart: '#edda8c',
 };
 
+export const zIndexes = {
+  clickBackground: -1,
+  pinMessageList: 10,
+  morePart: 11,
+  messageButtonsPart: 12,
+  navBar: 20,
+  moveToButtons: 1000,
+};
+
 export default theme;

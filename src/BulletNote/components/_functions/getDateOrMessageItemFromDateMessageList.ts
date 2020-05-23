@@ -1,5 +1,5 @@
 import { MessageList, MessageItem, NoteBlockItem } from "BulletNote/types";
-import HandleMessageList from "BulletNote/functions/handleMessageListToMessageWithDateList";
+import HandleMessageList from "BulletNote/functions/Handlers/handleMessageListToMessageWithDateList";
 import checkMessageItemIsDone from "BulletNote/functions/checkMessageItemIsDone";
 import checkMessageListAreAllDone from "BulletNote/functions/checkMessageListAreAllDone";
 

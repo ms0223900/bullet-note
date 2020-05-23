@@ -6,6 +6,7 @@ import NoteWeekBlock from './NoteWeekBlock';
 import WholeNoteBlockList from './WholeNoteBlockList';
 import WholeNoteBlockListContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlockListContainer';
 import { navHeight } from '../CommonComponents/NavBar';
+import { zIndexes } from 'BulletNote/theme/theme';
 
 const useStyles = makeStyles(() => ({
   pinMessageListPart: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles(() => ({
     top: navHeight,
     maxHeight: 200,
     overflow: 'auto',
-    zIndex: 1000,
+    zIndex: zIndexes.pinMessageList,
     boxShadow: '0px 10px 10px rgba(0, 0, 0, 0.07)',
   },
   root: {

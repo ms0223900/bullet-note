@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Paper } from '@material-ui/core';
 import { TagNoteBlockItemProps, MESSAGE_TYPE, MessageItem } from '../types';
 import { tabSpace } from '../config';
-import { sepMessageListByStarLevelNum } from 'BulletNote/functions/sortMessageListByStarLevelNum';
+import { sepMessageListByStarLevelNum } from 'BulletNote/functions/sort-functions/sortMessageListByStarLevelNum';
 import { otherColors } from 'BulletNote/theme/theme';
 import TagTitle from './NotePart/TagTitle';
 import renderSingleMessageItemFn from './_functions/renderSingleMessageItemFn';

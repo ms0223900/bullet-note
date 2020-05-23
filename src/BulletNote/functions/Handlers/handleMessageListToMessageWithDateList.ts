@@ -1,4 +1,4 @@
-import { MessageList, NoteBlockItemProps, MessageListWithDate, NoteBlockItem } from "../types";
+import { MessageList, NoteBlockItemProps, MessageListWithDate, NoteBlockItem } from "../../types";
 
 class HandleMessageList {
   static getMillSecondsForDays(day: number) {

@@ -4,7 +4,7 @@ import { DownloadMessageListProps } from './types';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNoteState, ContextStore } from '../constants/context';
 import { connectCtx } from 'react-function-helpers';
-import HandleDataInLocalStorage from 'BulletNote/functions/HandleDataInLocalStorage';
+import HandleDataInLocalStorage from 'BulletNote/functions/Handlers/HandleDataInLocalStorage';
 
 export const getJSONFile = (data: any) => {
   return `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`;

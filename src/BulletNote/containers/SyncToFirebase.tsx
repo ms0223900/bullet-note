@@ -7,7 +7,7 @@ import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { SyncToFirebaseProps } from './types';
 import { connectCtx } from 'react-function-helpers';
 import { useParams } from 'react-router';
-import HandleDataInLocalStorage from 'BulletNote/functions/HandleDataInLocalStorage';
+import HandleDataInLocalStorage from 'BulletNote/functions/Handlers/HandleDataInLocalStorage';
 import { Check } from '@material-ui/icons';
 import checkIsSignIn from 'BulletNote/functions/SignAndLog/checkIsSignIn';
 import readFromDB from 'BulletNote/functions/firebase/readFromDB';

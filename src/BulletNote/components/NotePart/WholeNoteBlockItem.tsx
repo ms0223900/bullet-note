@@ -6,7 +6,7 @@ import renderSingleMessageItemFn from '../_functions/renderSingleMessageItemFn';
 import ToggleDisplayWrapper from '../wrappers/ToggleDisplayWrapper';
 import getDateOrMessageItemFromDateMessageList, { WholeNoteBlockComponent } from '../_functions/getDateOrMessageItemFromDateMessageList';
 import WholeNoteBlockDateItem from './WholeNoteBlockDateItem';
-import sortMessageList from '../_functions/sortMessageList';
+import sortMessageList from '../../functions/sort-functions/sortMessageList';
 import SortButtons from './SortButtons';
 import getDynamicMessageList from './functions/getDynamicMessageList';
 
