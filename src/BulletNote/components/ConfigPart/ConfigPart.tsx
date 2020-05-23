@@ -4,8 +4,8 @@ import DaysRangeInputWithCtx from 'BulletNote/containers/ConfigPart/DaysRangeInp
 import DownloadMessageListWithCtx from '../DownloadMessageList';
 import RestoreBackup from '../RestoreBackup';
 import TagsFilterWithCtx from 'BulletNote/containers/ConfigPart/TagsFilter';
-import FilterDoneCheckBoxWithCtx from 'BulletNote/containers/ConfigPart/FilterDoneCheckBox';
 import NoteModeSelectorWithCtx from 'BulletNote/containers/ConfigPart/NoteModeSelector';
+import CLearLSButton from 'BulletNote/containers/ConfigPart/ClearLSButton';
 
 const ConfigPart = () => {
   return (
@@ -40,6 +40,7 @@ const ConfigPart = () => {
           overflow={'hidden'}
         >
           <Divider />
+          <CLearLSButton />
           <DownloadMessageListWithCtx />
           <RestoreBackup />
         </Box>

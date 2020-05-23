@@ -28,6 +28,10 @@ class HandleDataInLocalStorage {
     localStorage.setItem(messageListLS, dataStr);
   }
 
+  static clearMessageListLS() {
+    this.setData([]);
+  }
+
   static setDataFromRawData(rawMessageList: SingleRawMessageFromDB[]) {
     const dataStr = JSON.stringify(rawMessageList);
     localStorage.setItem(messageListLS, dataStr);

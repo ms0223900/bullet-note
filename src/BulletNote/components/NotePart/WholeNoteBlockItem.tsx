@@ -38,14 +38,8 @@ const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
     messageList,
     isShowMessages,
   } = props;
-
-  const dynamicMessageList = getDynamicMessageList()({
-    messageList, startEndIndex, isFilteringDone
-  });
-  console.log(dynamicMessageList);
-  const sortedMessageList = sortMessageList(sortTypeRule)(dynamicMessageList);
   
-  const dateOrMessageItemList = getDateOrMessageItemFromDateMessageList(sortedMessageList)(isFilteringDone);
+  const dateOrMessageItemList = getDateOrMessageItemFromDateMessageList(messageList)(isFilteringDone);
 
   return (
     <Box

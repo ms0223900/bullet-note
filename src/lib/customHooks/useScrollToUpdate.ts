@@ -2,6 +2,7 @@ import React, { useRef, useCallback, RefObject, useState, useEffect } from "reac
 import { Callback } from "common-types";
 import DelayTickTock from "BulletNote/functions/DelayTickTock";
 import { StartEndIndex } from "BulletNote/types";
+import { defaultMessageItemHeight } from "BulletNote/config";
 
 type ScrollToWhere = 'top' | 'bottom'
 
@@ -26,7 +27,6 @@ export interface UseScrollToUpdateStates {
   startEndIndex: StartEndIndex
 }
 
-const defaultMessageItemHeight = 60;
 const defaultRenderAddCount = 5;
 const defaultOptions: UseScrollToUpdateOptions = {
   scrollToPosition: 0,

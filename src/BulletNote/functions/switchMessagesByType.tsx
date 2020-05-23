@@ -4,6 +4,8 @@ import { MessageItem, MESSAGE_TYPE, TagNoteBlockItemProps } from '../types';
 import TodoMessageItemContainerWithCtx from '../containers/NotePart/TodoMessageItemContainer';
 import DefaultMessageItem from 'BulletNote/components/DefaultMessageItem';
 import { Box } from '@material-ui/core';
+import { ButtonsPaperPart } from 'BulletNote/components/MessageComponents/MessageButtonsPart';
+import { defaultMessageItemHeight } from 'BulletNote/config';
 
 const switchMessagesByType = ({
   index, 
@@ -35,7 +37,7 @@ const switchMessagesByType = ({
       return (
         <Box 
           style={{
-            height: 60,
+            height: defaultMessageItemHeight,
           }}
         />
       );

@@ -14,21 +14,26 @@ const getDynamicMessageList = (useDynamicRendering=process.env.REACT_APP_USE_DYN
     return messageList;
   }
 
-  let res: MessageList = [];
+  let res: MessageList = [...messageList];
+  const isFirstTimeDynamicRendering = !messageList.find(m => m.type === MESSAGE_TYPE.EMPTY);
   const startIndex = startEndIndex[0];
   const endIndex = startEndIndex[1];
 
-  const filteredMessageList = isFilteringDone? 
+  const filteredMessageList = isFilteringDone ? 
     messageList.filter(m => !checkMessageItemIsDone(m)) : 
     messageList;
 
   for (let i = 0; i < filteredMessageList.length; i++) {
     const messageItem = filteredMessageList[i];
     const isInRenderRange = i >= startIndex && i <= endIndex;
+    const isEmptyType = messageItem.type === MESSAGE_TYPE.EMPTY;
 
+    // if(!isEmptyType && !isFirstTimeDynamicRendering) {
+    //   break;
+    // }
     if(isInRenderRange) {
       res[i] = messageItem;
-    } 
+    }
     else {
       res[i] = {
         ...messageItem,
