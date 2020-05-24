@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 import ToggleButton from 'BulletNote/containers/CommonComponents/ToggleButton';
 import { ToggleButtonProps } from 'BulletNote/containers/CommonComponents/types';
 import { SortButtonsProps } from './types';
-import { Star, ArrowDownward, ArrowUpward, DateRangeOutlined } from '@material-ui/icons';
+import { Star, ArrowDownward, ArrowUpward, DateRangeOutlined, AlarmOutlined } from '@material-ui/icons';
 import { otherColors } from 'BulletNote/theme/theme';
 
 const sortByStarNumsEls = [
@@ -44,8 +44,28 @@ const sortByDateEls = [
   </>
 ] as ToggleButtonProps['toggleEls'];
 
+const sortByDueDateEls = [
+  <>
+    <AlarmOutlined 
+      style={{
+        fill: '#333',
+      }}
+    />
+    <ArrowUpward />
+  </>, 
+  <>
+    <AlarmOutlined 
+      style={{
+        fill: '#333',
+      }}
+    />
+    <ArrowDownward />
+  </>
+] as ToggleButtonProps['toggleEls'];
+
 const SortButtons = (props: SortButtonsProps) => {
   const {
+    sortByDueDateFn,
     sortByDateFn,
     sortByStarNumsFn,
   } = props;
@@ -64,8 +84,15 @@ const SortButtons = (props: SortButtonsProps) => {
         sortByDateFn('desc'),
       ],
       toggleEls: sortByDateEls
+    },
+    {
+      toggleFns: [
+        sortByDueDateFn('asc'),
+        sortByDueDateFn('desc'),
+      ],
+      toggleEls: sortByDueDateEls
     }
-  ], [sortByDateFn, sortByStarNumsFn]);
+  ], [sortByDateFn, sortByDueDateFn, sortByStarNumsFn]);
 
   return (
     <Box>

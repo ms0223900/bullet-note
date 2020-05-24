@@ -1,6 +1,7 @@
 import sortMessageListByStarLevelNum from "BulletNote/functions/sort-functions/sortMessageListByStarLevelNum";
 import { MessageList, SortType, SortRule } from "BulletNote/types";
 import HandleParseMessage from "BulletNote/functions/Handlers/handleParseMessage";
+import sortMessageListByDueDateSortFn from "./sortMessageListByDueDateSortFn";
 
 export interface SortOptions {
   sortType: SortType
@@ -13,8 +14,15 @@ const sortMessageList = (options: SortOptions) => (messageList: MessageList) => 
     case 'star-num':
       res = sortMessageListByStarLevelNum(messageList)(options.sortRule);
       break;
+    case 'due-date':
+      res = messageList.sort(
+        sortMessageListByDueDateSortFn(options.sortRule)
+      );
+      break;
     default:
-      res = messageList.sort(HandleParseMessage.sortMessageListByDateFn(options.sortRule));
+      res = messageList.sort(
+        HandleParseMessage.sortMessageListByDateFn(options.sortRule)
+      );
       break;
   }
 

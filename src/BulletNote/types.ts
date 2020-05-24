@@ -8,7 +8,7 @@ type RawMessage = string
 export type StarLevelNum = number
 export type DueType = 'due-soon' | 'due-normal'
 
-export type SortType = 'date' | 'star-num'
+export type SortType = 'date' | 'star-num' | 'due-date'
 export type SortRule = 'desc' | 'asc'
 export interface SortTypeRule {
   sortType: SortType

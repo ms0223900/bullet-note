@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, makeStyles, Theme, Typography } from '@material-ui/core';
 import { DueDateItemProps } from './types';
 import WeekDatesHandler from 'BulletNote/functions/WeekDatesHandler';
+import DueDateHandler from 'BulletNote/functions/Handlers/DueDateHandler';
 
 export const getDueDateStr = (dueDate: Date) => {
   const date = WeekDatesHandler.convertDateToString(dueDate);
@@ -26,16 +27,20 @@ const useStyles = makeStyles<Theme, DueDateItemProps>(theme => ({
 }));
 
 const DueDateItem = (props: DueDateItemProps) => {
+  const {
+    date,
+    dueDateStr,
+  } = props;
+
   const classes = useStyles(props);
-  const dueDateStr = getDueDateStr(props.date);
   
   return (
-    <Typography
+    <Box
       className={classes.root}
-      variant={'subtitle2'}
+      title={date.toLocaleString()}
     >
       {dueDateStr}
-    </Typography>
+    </Box>
   );
 };
 

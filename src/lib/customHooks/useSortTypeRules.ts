@@ -18,12 +18,15 @@ const useSortTypeRules = (initSortTypeRuleOption=defaultSortTypeRule) => {
 
   const handleSortByStarNums = handleSort('star-num');
   const handleSortByDate = handleSort('date');
+  const handleSortByDueDate = handleSort('due-date');
 
   return ({
     sortTypeRule, 
     setSortTypeRule,
+    
     handleSortByStarNums,
     handleSortByDate,
+    handleSortByDueDate,
   });
 };
 

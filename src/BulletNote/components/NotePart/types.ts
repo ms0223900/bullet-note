@@ -5,6 +5,7 @@ export interface SortButtonsProps {
   // sortTypeRule: SortTypeRule
   sortByStarNumsFn: (sortRule: SortRule) => any
   sortByDateFn: (sortRule: SortRule) => any
+  sortByDueDateFn: (sortRule: SortRule) => any
 }
 
 export interface WholeNoteBlogItemProps extends TagNoteBlockItemProps, SortButtonsProps {

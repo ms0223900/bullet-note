@@ -1,25 +1,27 @@
-import { MessageList, SortRule } from "BulletNote/types";
+import { MessageList, SortRule, MessageItem } from "BulletNote/types";
 
 interface seperatedMessageListByStar {
   starMessageList: MessageList
   notStarMessageList: MessageList
 }
 
+export const sortMessageListByStarLevelNumSortFn = (sortRule: SortRule) => (prev: MessageItem, next: MessageItem) => {
+  const prevStarNum = prev.message.starLevelNum || 0;
+  const nextStarNum = next.message.starLevelNum || 0;
+
+  if(prevStarNum > nextStarNum) {
+    return sortRule === 'asc' ? -1 : 1;
+  }
+  else if(prevStarNum < nextStarNum) {
+    return sortRule === 'asc' ? 1 : -1;
+  }
+  return 0;
+};
+
 const sortMessageListByStarLevelNum = (messageList: MessageList) => (sortRule: SortRule): MessageList => {
   let res: MessageList = [];
 
-  res = messageList.sort((prev, next) => {
-    const prevStarNum = prev.message.starLevelNum || 0;
-    const nextStarNum = next.message.starLevelNum || 0;
-
-    if(prevStarNum > nextStarNum) {
-      return sortRule === 'asc' ? -1 : 1;
-    }
-    else if(prevStarNum < nextStarNum) {
-      return sortRule === 'asc' ? 1 : -1;
-    }
-    return 0;
-  });
+  res = messageList.sort(sortMessageListByStarLevelNumSortFn(sortRule));
 
   return res;
 };

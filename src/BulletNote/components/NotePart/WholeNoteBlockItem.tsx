@@ -47,15 +47,15 @@ const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
         <TagTitle 
           {...props}
         />
-        <SortButtons 
-          {...props}
-        />
         <Box>
         </Box>
         <Box
           padding={0.5}
         >
           <ToggleDisplayWrapper isDisplay={isShowMessages}> 
+            <SortButtons 
+              {...props}
+            />
             {dateOrMessageItemList
               .map(renderDateOrMessageItem(isFilteringDone))
             }

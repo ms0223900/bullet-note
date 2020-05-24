@@ -10,6 +10,7 @@ import useSortTypeRules from 'lib/customHooks/useSortTypeRules';
 import sortMessageList from 'BulletNote/functions/sort-functions/sortMessageList';
 import getDynamicMessageList from 'BulletNote/components/NotePart/functions/getDynamicMessageList';
 import { MessageList, MESSAGE_TYPE, StartEndIndex } from 'BulletNote/types';
+import { SortButtonsProps } from 'BulletNote/components/NotePart/types';
 
 export const getMinMaxIndex = (originIndexes: StartEndIndex, newIndexes: StartEndIndex | undefined) => {
   let res: StartEndIndex = originIndexes;
@@ -63,23 +64,23 @@ export function useDynamicRenderList({
 
 const WholeNoteBlockItemContainer = (props: WholeNoteBlogItemContainerProps) => {
   const {
-    startEndIndex,
-    isFilteringDone,
     messageList,
   } = props;
 
-  const {
-    toggle,
-    handleToggle,
-  } = useToggle(true);
+  const toggleStates = useToggle(true);
+  const toggleStatesProps = {
+    isShowMessages: toggleStates.toggle,
+    toggleShowMessagesFn: toggleStates.handleToggle,
+  };
 
-  const {
-    sortTypeRule,
-    handleSortByStarNums,
-    handleSortByDate,
-  } = useSortTypeRules();
+  const sortTypeRulesStates = useSortTypeRules();
+  const sortTypeRulesStatesProps: SortButtonsProps = {
+    sortByDateFn: sortTypeRulesStates.handleSortByDate,
+    sortByDueDateFn: sortTypeRulesStates.handleSortByDueDate,
+    sortByStarNumsFn: sortTypeRulesStates.handleSortByStarNums,
+  };
   
-  const sortedMessageList = sortMessageList(sortTypeRule)(messageList);
+  const sortedMessageList = sortMessageList(sortTypeRulesStates.sortTypeRule)(messageList);
 
   const {
     messageList: dynamicMessageList,
@@ -91,11 +92,9 @@ const WholeNoteBlockItemContainer = (props: WholeNoteBlogItemContainerProps) => 
   return (
     <WholeNoteBlockItem
       {...props}
+      {...sortTypeRulesStatesProps}
+      {...toggleStatesProps}
       messageList={dynamicMessageList}
-      sortByStarNumsFn={handleSortByStarNums}
-      sortByDateFn={handleSortByDate}
-      isShowMessages={toggle}
-      toggleShowMessagesFn={handleToggle}
     />
   );
 };

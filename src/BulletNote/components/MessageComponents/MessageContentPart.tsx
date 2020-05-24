@@ -6,6 +6,7 @@ import { MessageContentPartProps } from './types';
 import MessageContentHandler from 'BulletNote/functions/Handlers/MessageContentHandler';
 import DueDateItem from '../CommonComponents/DueDateItem';
 import DueDateHandler from 'BulletNote/functions/Handlers/DueDateHandler';
+import DueDateItemContainer from 'BulletNote/containers/CommonComponents/DueDateItemContainer';
 
 const addZeroToSmallerThanTenNumber = (num: number) => (
   num < 10 ? `0${num}` : String(num)
@@ -46,8 +47,7 @@ const MessageContentPart = (props: MessageContentPartProps) => {
     createdAt,
   } = message;
 
-  const tagStrList = tagList.map(t => t.name);
-  const dueDate = DueDateHandler.convertTagsToDate(tagStrList);
+  const dueDate = DueDateHandler.getMessageItemDueDate(tagList);
   
   return (
     <Box
@@ -83,7 +83,7 @@ const MessageContentPart = (props: MessageContentPartProps) => {
           {regDateToString(createdAt)}
         </Typography> */}
         {dueDate && (
-          <DueDateItem 
+          <DueDateItemContainer 
             date={dueDate}
             dueType={'due-normal'}
           />

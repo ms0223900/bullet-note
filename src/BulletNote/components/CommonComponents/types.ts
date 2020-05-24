@@ -27,5 +27,6 @@ export interface MoveToTopButtonProps {
 
 export interface DueDateItemProps {
   date: Date
+  dueDateStr: string
   dueType: DueType
 }

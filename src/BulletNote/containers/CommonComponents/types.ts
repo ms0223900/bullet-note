@@ -1,4 +1,4 @@
-import { NavBarProps } from "BulletNote/components/CommonComponents/types";
+import { NavBarProps, DueDateItemProps } from "BulletNote/components/CommonComponents/types";
 import { StarLevelNum } from "BulletNote/types";
 import { ReactNodeArray, ReactNode } from "react";
 import { Callback } from "common-types";
@@ -17,4 +17,7 @@ export interface ToggleButtonProps extends ButtonProps {
   onClick?: Callback
   toggleFns: [Callback, Callback]
   toggleEls: [ReactNode, ReactNode]
+}
+
+export interface DueDateItemContainerProps extends Omit<DueDateItemProps, 'dueDateStr'> {
 }
