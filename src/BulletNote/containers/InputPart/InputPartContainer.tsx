@@ -6,11 +6,11 @@ import { InputPartContainerProps } from '../types';
 import { addMessage } from 'BulletNote/actions/message-actions';
 import { connectCtx } from 'react-function-helpers';
 import { ContextStore, BulletNoteState } from '../../constants/context';
-import { useFnsByKeyCode } from 'react-function-helpers/lib/lib/customHooks/useFnsByKeyCode';
 import useSelectorSelect from 'lib/customHooks/useSelectorSelect';
 import getTagsFromMessageList from 'BulletNote/functions/getTagsFromMessageList';
 import { KEY_CODES } from 'BulletNote/config';
 import useFastInput from 'lib/customHooks/useFastInput';
+import useTriggerCallbackByKeyCodes, { defaultKeyCodes } from 'lib/customHooks/useTriggerCallbackByKeyCodes';
 
 const InputPartContainer = (props: InputPartContainerProps) => {
   const {
@@ -51,11 +51,7 @@ const InputPartContainer = (props: InputPartContainerProps) => {
     triggerKeyCode: KEY_CODES.SPACE,
   });
 
-  useFnsByKeyCode({
-    lastIndex: 0,
-    confirmFn: handleSendMessage,
-    escapeFn: () => {}
-  }); 
+  useTriggerCallbackByKeyCodes(handleSendMessage);
 
   return (
     <InputPart

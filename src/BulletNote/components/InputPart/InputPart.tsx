@@ -1,7 +1,14 @@
 import React from 'react';
-import { Box, TextField, Button } from '@material-ui/core';
+import { Box, TextField, Button, TextareaAutosize, makeStyles } from '@material-ui/core';
 import { InputPartProps } from './types';
 import TagList from './TagList';
+import CustomTextArea from './CustomTextArea';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+     
+  }
+}));
 
 const InputPart = (props: InputPartProps) => {
   const {
@@ -9,6 +16,7 @@ const InputPart = (props: InputPartProps) => {
     onChange,
     onSendMessage
   } = props;
+  const classes = useStyles();
 
   return (
     <Box display={'flex'} paddingTop={1}>
@@ -16,12 +24,15 @@ const InputPart = (props: InputPartProps) => {
         position={'relative'}
         width={'100%'}
       >
-        <TextField
+        <CustomTextArea
+          {...props}
+        />
+        {/* <TextField
           autoFocus={true}
           variant={'outlined'}
           fullWidth={true}
           value={value}
-          onChange={onChange} />
+          onChange={onChange} /> */}
         <Box
           style={{
             position: 'absolute',

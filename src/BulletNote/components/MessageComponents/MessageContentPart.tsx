@@ -7,6 +7,7 @@ import MessageContentHandler from 'BulletNote/functions/Handlers/MessageContentH
 import DueDateItem from '../CommonComponents/DueDateItem';
 import DueDateHandler from 'BulletNote/functions/Handlers/DueDateHandler';
 import DueDateItemContainer from 'BulletNote/containers/CommonComponents/DueDateItemContainer';
+import CustomTextArea from '../InputPart/CustomTextArea';
 
 const addZeroToSmallerThanTenNumber = (num: number) => (
   num < 10 ? `0${num}` : String(num)
@@ -25,7 +26,9 @@ const useStyles = makeStyles(theme => ({
      
   },
   contentPart: {
+    fontSize: '1.2em',
     overflowWrap: 'anywhere',
+    whiteSpace: 'pre-wrap',
   }
 }));
 
@@ -57,18 +60,17 @@ const MessageContentPart = (props: MessageContentPartProps) => {
       onBlur={onConfirmEdit}
     >
       {isEditing ? (
-        <TextField 
-          fullWidth={true}
+        <CustomTextArea 
+          {...props}
           onChange={onChangeInput}
-          autoFocus={true}
-          value={value} />
+        />
       ) : (
-        <Typography 
+        <Box 
           className={classes.contentPart}
-          variant={'subtitle1'} 
+          // variant={'subtitle1'} 
         >
           {MessageContentHandler.renderParsedContent(content)}
-        </Typography>
+        </Box>
       )}
       {/* <BulletTagList
         tagList={tagList} 

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
 import MessageContentPart from 'BulletNote/components/MessageComponents/MessageContentPart';
 import { MessageContentPartContainerProps } from './types';
-import { useFnsByKeyCode } from 'react-function-helpers/lib/lib/customHooks/useFnsByKeyCode';
+import useTriggerCallbackByKeyCodes, { defaultKeyCodes } from 'lib/customHooks/useTriggerCallbackByKeyCodes';
+import { KEY_CODES } from 'BulletNote/config';
 
 const MessageContentPartContainer = (props: MessageContentPartContainerProps) => {
   const {
@@ -18,11 +18,10 @@ const MessageContentPartContainer = (props: MessageContentPartContainerProps) =>
     }
   }, [isEditing, onEditMessage]);
 
-  useFnsByKeyCode({
-    lastIndex: 0,
-    confirmFn: handleConfirmEdit,
-    escapeFn: handleConfirmEdit,
-  });
+  useTriggerCallbackByKeyCodes(handleConfirmEdit, [
+    defaultKeyCodes,
+    [KEY_CODES.ESC]
+  ]);
 
   return (
     <MessageContentPart 

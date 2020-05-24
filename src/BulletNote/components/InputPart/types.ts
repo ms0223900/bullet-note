@@ -1,9 +1,12 @@
 import { ChangeEvent } from "react";
 import { Callback } from "common-types";
 
-export interface InputPartProps extends TagListProps {
+export interface InputProps {
   value?: string
   onChange?: (e: ChangeEvent<HTMLInputElement>) => any
+}
+
+export interface InputPartProps extends TagListProps, InputProps {
   onSendMessage?: Callback
 }
 
