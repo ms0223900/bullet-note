@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, Divider, Hidden } from '@material-ui/core';
 import { EditContentProps } from './types';
 import CustomTextArea from '../InputPart/CustomTextArea';
 import MessageContentHandler from 'BulletNote/functions/Handlers/MessageContentHandler';
@@ -9,9 +9,20 @@ const useStyles = makeStyles(theme => ({
      
   },
   contentPart: {
+    width: '100%',
     fontSize: '1em',
+    lineHeight: 1.5,
     overflowWrap: 'anywhere',
     whiteSpace: 'pre-wrap',
+
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    WebkitLineClamp: 3,
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    '&:hover': {
+      WebkitLineClamp: 1000,
+    }
   }
 }));
 
@@ -35,6 +46,7 @@ const EditContent = (props: EditContentProps) => {
     <Box 
       className={classes.contentPart}
       onDoubleClick={() => setEditFn(true)}
+      paddingBottom={0.5}
       // onBlur={onConfirmEdit}
     >
       {MessageContentHandler.renderParsedContent(content)}

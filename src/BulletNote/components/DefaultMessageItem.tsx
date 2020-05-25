@@ -7,7 +7,8 @@ import { KeyboardArrowRight } from '@material-ui/icons';
 const DefaultMessageItem = (props: DefaultMessageItemProps) => {
   return (
     <MessageItemWrapperContainerWithCtx
-      {...props}>
+      {...props}
+    >
       <Box
         padding={1}
       >

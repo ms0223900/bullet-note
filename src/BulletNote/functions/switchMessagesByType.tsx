@@ -3,7 +3,7 @@ import TodoMessageItem from '../components/TodoMessageItem';
 import { MessageItem, MESSAGE_TYPE, TagNoteBlockItemProps } from '../types';
 import TodoMessageItemContainerWithCtx from '../containers/NotePart/TodoMessageItemContainer';
 import DefaultMessageItem from 'BulletNote/components/DefaultMessageItem';
-import { Box } from '@material-ui/core';
+import { Box, Divider } from '@material-ui/core';
 import { ButtonsPaperPart } from 'BulletNote/components/MessageComponents/MessageButtonsPart';
 import { defaultMessageItemHeight } from 'BulletNote/config';
 
@@ -27,9 +27,12 @@ const switchMessagesByType = ({
 
     case MESSAGE_TYPE.DEFAULT: {
       return (
-        <DefaultMessageItem
-          key={messageItemProps.message.id}
-          {...messageItemProps} />
+        <>
+          <DefaultMessageItem
+            key={messageItemProps.message.id}
+            {...messageItemProps} />
+          <Divider />
+        </>
       );
     }
 
