@@ -1,6 +1,6 @@
 import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB, StarLevelNum, SortRule } from "../../types";
-import { weekTargetTag } from 'BulletNote/functions/getTagsFromMessageList';
 import WeekDatesHandler from "../WeekDatesHandler";
+import { weekTargetTag } from "BulletNote/config";
 
 type AccOrDec = 'acc' | 'dec'
 

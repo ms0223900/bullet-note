@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Box, makeStyles, Theme, Divider } from '@material-ui/core';
-import { NoteBlockItemProps, MessageList } from '../types';
+import { NoteBlockItemProps, MessageList, TagNoteBlockObj } from '../types';
 import switchMessagesByType from '../functions/switchMessagesByType';
 import DateTitle from './DateTitle';
 import HandleTagSortMessage from '../functions/Handlers/handleTagSortMessage';
@@ -9,18 +9,43 @@ import TagNoteBlockItemContainerWithCtx from '../containers/NotePart/TagNoteBloc
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { connectCtx } from 'react-function-helpers';
+import { dueDateUniqueTag } from 'BulletNote/config';
+
+export interface TagItemForNoteBlockItem {
+  tagName: string
+  isShow: boolean
+}
 
 export const getNoteBlockItemTagList = (messageList: MessageList, selectedFilterTags: string[]) => {
-  const tagNoteBlockObj = HandleTagSortMessage.getTagNoteBlockObj(messageList);
-  const tags = Object.keys(tagNoteBlockObj);
+  let tagList: TagItemForNoteBlockItem[] = [];
+  let isEmptyAfterFiltered = false;
+  let tagNoteBlockObj: TagNoteBlockObj;
 
-  const filteredTags = HandleTagSortMessage.filterTagsBySelectedFilterTags(tags, selectedFilterTags);
-  const isEmptyAfterFiltered = filteredTags.length === 0;
-
-  const tagList = tags.map((t, i) => ({
-    tagName: t,
-    isShow: HandleTagSortMessage.checkNewStrIsInStrList(filteredTags, t),
-  }));
+  if(selectedFilterTags.includes(dueDateUniqueTag)) {
+    const filteredMessageList = HandleTagSortMessage.filterMessageListByDueDateUniqueTag(messageList);
+    tagList = [{
+      tagName: dueDateUniqueTag,
+      isShow: true,
+    }];
+    tagNoteBlockObj = {
+      [dueDateUniqueTag]: {
+        tagTitle: dueDateUniqueTag,
+        messageList: filteredMessageList,
+      }
+    };
+  }
+  else {
+    tagNoteBlockObj = HandleTagSortMessage.getTagNoteBlockObj(messageList);
+    const tags = Object.keys(tagNoteBlockObj);
+  
+    const filteredTags = HandleTagSortMessage.filterTagsBySelectedFilterTags(tags, selectedFilterTags);
+    isEmptyAfterFiltered = filteredTags.length === 0;
+  
+    tagList = tags.map((t, i) => ({
+      tagName: t,
+      isShow: HandleTagSortMessage.checkNewStrIsInStrList(filteredTags, t),
+    }));
+  }
 
   const res = {
     isEmptyAfterFiltered,

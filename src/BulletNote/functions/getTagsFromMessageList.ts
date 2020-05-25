@@ -1,9 +1,6 @@
 import { MessageList } from "BulletNote/types";
-
-export const weekTargetTag = '#week-target';
-const defaultTags = [
-  weekTargetTag
-];
+import removeListInList from "lib/removeListInList";
+import { defaultTags } from "BulletNote/config";
 
 const getTagsFromMessageList = (messageList: MessageList): string[] => {
   let tags: string[] = [];
@@ -18,6 +15,8 @@ const getTagsFromMessageList = (messageList: MessageList): string[] => {
     ];
   }
   tags = [...new Set(tags)];
+  tags = removeListInList(tags, defaultTags);
+  
   tags = [
     ...tags,
     ...defaultTags,

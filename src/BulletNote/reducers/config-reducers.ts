@@ -53,6 +53,7 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
         ...state.bulletNoteConfig,
         ...action.payload.bulletNoteConfig,
       });
+      ConfigLocalStorageHandler.setData(newConfig);
       return newConfig;
     }
 

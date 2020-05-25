@@ -6,6 +6,7 @@ import RestoreBackup from '../RestoreBackup';
 import TagsFilterWithCtx from 'BulletNote/containers/ConfigPart/TagsFilter';
 import NoteModeSelectorWithCtx from 'BulletNote/containers/ConfigPart/NoteModeSelector';
 import CLearLSButton from 'BulletNote/containers/ConfigPart/ClearLSButton';
+import DueDateButtonContainerWithCtx from 'BulletNote/containers/ConfigPart/DueDateButtonContainer';
 
 const ConfigPart = () => {
   return (
@@ -25,14 +26,23 @@ const ConfigPart = () => {
         justifyContent={'space-between'}
         height={'100%'}
       >
-        <Box>
+        <Box
+        >
           <DaysRangeInputWithCtx />
           <Box paddingY={1} />
-          <TagsFilterWithCtx />
-          <Box paddingBottom={1}>
-            
+          <Box
+            border={'1px solid #ddd'}
+            borderRadius={8}
+            padding={1}
+            paddingBottom={2}
+          >
+            <TagsFilterWithCtx />
+            <Box paddingBottom={1}>
+              <NoteModeSelectorWithCtx />
+            </Box>
           </Box>
-          <NoteModeSelectorWithCtx />
+          <Box paddingY={1} />
+          <DueDateButtonContainerWithCtx />
         </Box>
         <Box
           // display={'flex'}

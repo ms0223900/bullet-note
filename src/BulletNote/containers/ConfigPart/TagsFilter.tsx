@@ -98,16 +98,18 @@ const TagsFilter = (props: TagsFilterProps) => {
           />
         ))}
       </Box>
-      {dividedTags.map((t, i) => {
-        return (
-          <TagList 
-            label={defaultSelect}
-            tags={t}
-            tagValue={values['tagList']}
-            onChangeSelect={handleSelect('tagList')}
-          />
-        );
-      })}
+      {dividedTags
+        .slice(0, 1)
+        .map((t, i) => {
+          return (
+            <TagList 
+              label={defaultSelect}
+              tags={t}
+              tagValue={values['tagList']}
+              onChangeSelect={handleSelect('tagList')}
+            />
+          );
+        })}
     </Box>
   );
 };

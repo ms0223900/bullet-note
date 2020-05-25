@@ -38,7 +38,6 @@ class DueDateHandler {
     const res = `${year}/${month}/${date}`;
     return res;
   }
-
   static getHoursMinsStr({
     hours, mins
   }: {
@@ -144,6 +143,20 @@ class DueDateHandler {
   static getDueDateRemainTimeStr(dueDate: Date) {
     const dueDateRemainTimes = this.calRemainTimes(dueDate);
     const res = this.handleRemainTimesToStr(dueDateRemainTimes);
+    return res;
+  }
+
+  static checkMessageItemHaveDueDateAndIsInRange(tagList: MessageItem['message']['tagList']) {
+    let res = false;
+
+    const dueDate = this.getMessageItemDueDate(tagList);
+    if(dueDate) {
+      const remainTimes = this.calRemainTimes(dueDate);
+      if(remainTimes) {
+        res = true;
+      }
+    }
+    
     return res;
   }
 }

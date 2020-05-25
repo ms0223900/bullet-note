@@ -1,4 +1,6 @@
 import { BulletNoteState, NoteMode } from "BulletNote/constants/context";
+import { DueDateButtonProps } from "BulletNote/components/ConfigPart/types";
+import { MessageList } from "BulletNote/types";
 
 export interface DaysRangeInputProps {
   initDaysRange: number
@@ -25,4 +27,8 @@ export interface NoteModeSelectorProps {
   initNoteMode: NoteMode
 }
 export interface NoteModeSelectorWithCtxProps {
+}
+
+export interface DueDateButtonContainerProps extends Omit<DueDateButtonProps, 'dueDateMessageListCount'> {
+  messageList: MessageList
 }

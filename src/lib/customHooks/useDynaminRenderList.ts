@@ -29,8 +29,10 @@ const useDynamiceRenderList = (list: any[], selectedIndexFromProps?: number) => 
           firstListItem,
           listPart,
         });
+      if(startToEndIndexesFromDOM[1] > initStarToEndIndexes[1]) {
+        setIndexes(startToEndIndexesFromDOM);
+      }
       
-      setIndexes(startToEndIndexesFromDOM);
     }
   };
 
@@ -56,6 +58,7 @@ const useDynamiceRenderList = (list: any[], selectedIndexFromProps?: number) => 
       setListItemIndexNow(listItemIndexByScroll);
     }
   }, [listRefs]);
+  console.log(startToEndIndexesForRendering);
 
   return ({
     listPartRef,

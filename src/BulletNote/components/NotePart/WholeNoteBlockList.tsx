@@ -5,7 +5,6 @@ import { getNoteBlockItemTagList } from '../NoteBlockItem';
 import WholeNoteBlockItemContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlockItemContainer';
 import MoveToBottomWrapper from '../wrappers/MoveToBottomWrapper';
 import useNotePartStyles from 'BulletNote/styles/stylesObj/useNotePartStyles';
-import { MessageList, MESSAGE_TYPE } from 'BulletNote/types';
 
 const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
   const {
@@ -31,29 +30,6 @@ const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
     );
   }
 
-  const getDynamicMessageList = (useDynamicRendering=process.env.REACT_APP_USE_DYNAMIC_RENDERING) => (messageList: MessageList) => {
-    if(!useDynamicRendering) {
-      return messageList;
-    }
-
-    let res: MessageList = [];
-
-    for (let i = 0; i < messageList.length; i++) {
-      const messageItem = messageList[i];
-      const isInRenderRange = i >= startEndIndex[0] && i <= startEndIndex[1];
-      if(isInRenderRange) {
-        res[i] = messageItem;
-      } else {
-        res[i] = {
-          ...messageItem,
-          type: MESSAGE_TYPE.EMPTY,
-        };
-      }
-    }
-
-    return res;
-  };
-
   const tagListData = getNoteBlockItemTagList(messageList, tagList);
 
   return (
@@ -71,9 +47,6 @@ const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
           <Box>
             {tagListData.tagList.map((t) => {
               if(t.isShow) {
-                const messageList = tagListData.tagNoteBlockObj[t.tagName].messageList;
-                // const dynamicMessageList = getDynamicMessageList("true")(messageList);
-                // console.log(dynamicMessageList);
                 
                 return (
                   <WholeNoteBlockItemContainerWithCtx  

@@ -1,4 +1,5 @@
 import { MessageList, TagNoteBlockList, TagNoteBlockItem, MessageItem, TagNoteBlockObj } from "../../types";
+import DueDateHandler from "./DueDateHandler";
 
 class HandleTagSortMessage {
   static checkNewStrIsInStrList(strList: string[], newStr: string) {
@@ -86,6 +87,22 @@ class HandleTagSortMessage {
     const res = tags.filter(tag => {
       return this.checkNewStrIsInStrList(selectedFilterTags, tag);
     });
+    return res;
+  }
+
+  static filterMessageListByDueDateUniqueTag(_messageList: MessageList) {
+    let res: MessageList = [];
+
+    _messageList.forEach((messageItem) => {
+      const dueDateIsInRange = DueDateHandler.checkMessageItemHaveDueDateAndIsInRange(messageItem.message.tagList);
+      if(dueDateIsInRange) {
+        res = [
+          ...res,
+          messageItem
+        ];
+      }
+    });
+
     return res;
   }
 }

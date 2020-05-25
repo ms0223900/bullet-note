@@ -5,7 +5,7 @@ import HandleParseMessage from "../functions/Handlers/handleParseMessage";
 import HandleDataInLocalStorage from "../functions/Handlers/HandleDataInLocalStorage";
 import { MESSAGE_TYPE, MessageItem, MessageList } from "../types";
 import { ToDoMessageItemProps } from "../components/types";
-import { weekTargetTag } from "BulletNote/functions/getTagsFromMessageList";
+import { weekTargetTag } from "BulletNote/config";
 
 export const handleMessageItemRemoveTag = (tag: string) => (messageItem: MessageItem) => {
   let filteredTagList = messageItem.message.tagList.filter(t => {
