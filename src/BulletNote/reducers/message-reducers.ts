@@ -3,7 +3,7 @@ import InputPartActions from "../actions/message-actions";
 import { BulletNoteActionTypes } from "../actions";
 import HandleParseMessage from "../functions/Handlers/handleParseMessage";
 import HandleDataInLocalStorage from "../functions/Handlers/HandleDataInLocalStorage";
-import { MESSAGE_TYPE, MessageItem } from "../types";
+import { MESSAGE_TYPE, MessageItem, MessageList } from "../types";
 import { ToDoMessageItemProps } from "../components/types";
 import { weekTargetTag } from "BulletNote/functions/getTagsFromMessageList";
 
@@ -26,19 +26,23 @@ export const handleMessageItemRemoveTag = (tag: string) => (messageItem: Message
   return res;
 };
 
+export const makeNewId = (date: Date) => {
+  const res = date.getTime() + '-' + ~~(Math.random() * 1000000);
+  return res;
+};
+
+export const findMessageListIdIndex = (id: string, messageList: MessageList) => {
+  const res = messageList.findIndex((m) => m.message.id === id);
+  return res;
+};
+
 const inputPartReducers = (state: BulletNoteState, action: InputPartActions): BulletNoteState['messageList'] => {
   let newMessageList = [...state.messageList];
 
   switch (action.type) {
 
     case BulletNoteActionTypes.ADD_MESSAGE: {
-      const {
-        messageList
-      } = state;
-      const lastMessageId = messageList.length === 0 ? (
-        -1
-      ): Number(messageList.slice(-1)[0].message.id);
-      const newId = String(lastMessageId + 1);
+      const newId = makeNewId(new Date());
     
       let handledMessage = HandleParseMessage
         .convertRawMessageToMessageItem({
@@ -83,19 +87,18 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
       const {
         id
       } = action.payload;
-      const index = newMessageList.findIndex((m) => m.message.id === id);
+
+      const index = findMessageListIdIndex(id, newMessageList);
       if(index !== -1) {
-        const lastMessageId = newMessageList.length === 0 ? (
-          -1
-        ): Number(newMessageList.slice(-1)[0].message.id);
-        const newId = String(lastMessageId + 1);
+        const createdAt = new Date();
+        const newId = makeNewId(createdAt);
 
         let movedNewMessage: MessageItem = {
           ...newMessageList[index],
           message: {
             ...newMessageList[index].message,
             id: newId,
-            createdAt: new Date(),
+            createdAt,
           }
         };
         movedNewMessage = handleMessageItemRemoveTag(weekTargetTag)(movedNewMessage);
@@ -115,7 +118,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
         isDone
       } = action.payload;
 
-      const index = newMessageList.findIndex((m) => m.message.id === id);
+      const index = findMessageListIdIndex(id, newMessageList);
       if(index !== -1) {
         if(newMessageList[index].type === MESSAGE_TYPE.TODO) {
           newMessageList[index] = {
@@ -138,7 +141,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
       // console.log(id,
       //   starLevelNum);
 
-      const index = newMessageList.findIndex((m) => m.message.id === id);
+      const index = findMessageListIdIndex(id, newMessageList);
       if(index !== -1) {
         newMessageList[index] = {
           ...newMessageList[index],
@@ -157,7 +160,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
         isPin
       } = action.payload;
 
-      const index = newMessageList.findIndex((m) => m.message.id === id);
+      const index = findMessageListIdIndex(id, newMessageList);
       if(index !== -1) {
         newMessageList[index] = {
           ...newMessageList[index],
@@ -176,12 +179,8 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
         newMessage: newRawMessage
       } = action.payload;
 
-      const index = newMessageList.findIndex((m) => m.message.id === id);
+      const index = findMessageListIdIndex(id, newMessageList);
       if(index !== -1) {
-      // const tagsStr = newMessageList[index].message.tagList.map(t => {
-      //   if(t.id === HandleParseMessage.defaultTag.id) return '';
-      //   return t.name;
-      // }).join(' ');
         const originMessage = newMessageList[index];
         const isDone = originMessage.type === MESSAGE_TYPE.TODO ? originMessage.status.isDone : false;
 
@@ -192,7 +191,6 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
         });
       
         newMessageList[index] = newMessage;
-        console.log(newMessageList[index].message.tagList);
       }
       break;
     }

@@ -1,19 +1,15 @@
 import React from 'react';
-import { Box, Typography, TextField, Grid, makeStyles } from '@material-ui/core';
-import BulletTagList from '../BullteTagList';
-import { BasicMessageItemProps } from '../types';
+import { Box, makeStyles } from '@material-ui/core';
 import { MessageContentPartProps } from './types';
-import MessageContentHandler from 'BulletNote/functions/Handlers/MessageContentHandler';
-import DueDateItem from '../CommonComponents/DueDateItem';
 import DueDateHandler from 'BulletNote/functions/Handlers/DueDateHandler';
 import DueDateItemContainer from 'BulletNote/containers/CommonComponents/DueDateItemContainer';
-import CustomTextArea from '../InputPart/CustomTextArea';
+import EditContentContainer from 'BulletNote/containers/MessageComponents/EditContentContainer';
 
 const addZeroToSmallerThanTenNumber = (num: number) => (
   num < 10 ? `0${num}` : String(num)
 );
 
-const regDateToString = (date: Date | string) => {
+export const regDateToString = (date: Date | string) => {
   if(typeof date === 'string') return date;
   const hour = addZeroToSmallerThanTenNumber(date.getHours());
   const min = addZeroToSmallerThanTenNumber(date.getMinutes());
@@ -21,24 +17,19 @@ const regDateToString = (date: Date | string) => {
   return `${hour}:${min}`;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
      
   },
   contentPart: {
-    fontSize: '1.2em',
+    fontSize: '1em',
     overflowWrap: 'anywhere',
     whiteSpace: 'pre-wrap',
   }
 }));
 
 const MessageContentPart = (props: MessageContentPartProps) => {
-  const classes = useStyles();
   const {
-    value,
-    isEditing,
-    setEditFn,
-    onConfirmEdit,
     onChangeInput,
     message,
   } = props;
@@ -46,8 +37,6 @@ const MessageContentPart = (props: MessageContentPartProps) => {
   const {
     content,
     tagList,
-    rawMessage,
-    createdAt,
   } = message;
 
   const dueDate = DueDateHandler.getMessageItemDueDate(tagList);
@@ -56,30 +45,17 @@ const MessageContentPart = (props: MessageContentPartProps) => {
     <Box
       display={'flex'} 
       alignItems={'center'}
-      onDoubleClick={() => setEditFn(true)}
-      onBlur={onConfirmEdit}
     >
-      {isEditing ? (
-        <CustomTextArea 
-          {...props}
-          onChange={onChangeInput}
-        />
-      ) : (
-        <Box 
-          className={classes.contentPart}
-          // variant={'subtitle1'} 
-        >
-          {MessageContentHandler.renderParsedContent(content)}
-        </Box>
-      )}
+      <EditContentContainer
+        {...props}
+        content={content}
+        onChange={onChangeInput}
+      />
       {/* <BulletTagList
         tagList={tagList} 
         /> */}
       <Box 
         paddingLeft={1}
-        style={{
-          // opacity: 0.6
-        }}
       >
         {/* <Typography variant={'body1'} color={'textSecondary'}>
           {regDateToString(createdAt)}
