@@ -14,4 +14,5 @@ export enum KEY_CODES {
   TAB = 9,
   SPACE = 32,
   ESC = 27,
+  CMD = 91,
 }

@@ -3,7 +3,19 @@ import { KEY_CODES } from "BulletNote/config";
 import { useCallback, useEffect, useRef } from "react";
 import KeyCodeCombiner from "BulletNote/functions/KeyCodeCombiner";
 
-export const defaultKeyCodes = [KEY_CODES.CTRL, KEY_CODES.ENTER];
+export const getDefaultKeyCodes = () => {
+  const osPlatform = navigator.appVersion;
+  const isMacOS = osPlatform.indexOf('Mac') !== -1;
+  const isWinOS = osPlatform.indexOf('Win') !== -1;
+
+  console.log(osPlatform);
+  if(isMacOS) {
+    return [KEY_CODES.CMD, KEY_CODES.ENTER];
+  }
+  return [KEY_CODES.CTRL, KEY_CODES.ENTER];
+};
+
+export const defaultKeyCodes = getDefaultKeyCodes();
 
 function useTriggerCallbackByKeyCodes(callback: Callback, keyCodes=[defaultKeyCodes]) {
   const keyCodeCompinerRef = useRef(new KeyCodeCombiner({

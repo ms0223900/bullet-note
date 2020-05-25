@@ -1,13 +1,15 @@
-import { MessageList, SortRule, MessageItem } from "BulletNote/types";
+import { MessageList, SortRule, MessageItem, MESSAGE_TYPE } from "BulletNote/types";
 
 interface seperatedMessageListByStar {
   starMessageList: MessageList
   notStarMessageList: MessageList
 }
 
+const defaultMessageTypeSortSeq = -1000;
+
 export const sortMessageListByStarLevelNumSortFn = (sortRule: SortRule) => (prev: MessageItem, next: MessageItem) => {
-  const prevStarNum = prev.message.starLevelNum || 0;
-  const nextStarNum = next.message.starLevelNum || 0;
+  const prevStarNum = prev.type !== MESSAGE_TYPE.DEFAULT ? (prev.message.starLevelNum || 0) : defaultMessageTypeSortSeq;
+  const nextStarNum = next.type !== MESSAGE_TYPE.DEFAULT ? (next.message.starLevelNum || 0) : defaultMessageTypeSortSeq;
 
   if(prevStarNum > nextStarNum) {
     return sortRule === 'asc' ? -1 : 1;
