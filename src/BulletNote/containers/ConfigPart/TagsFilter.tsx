@@ -6,36 +6,13 @@ import useSelectorSelect from 'lib/customHooks/useSelectorSelect';
 import { MapStateToProps, MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import getTagsFromMessageList from 'BulletNote/functions/getTagsFromMessageList';
-import { connectCtx } from 'react-function-helpers';
+import { connectCtx, FilterSelector } from 'react-function-helpers';
 import RemoveTagItem from 'BulletNote/components/ConfigPart/RemoveTagItem';
 import { setFilterTags } from 'BulletNote/actions/config-actions';
 import { dueDateRegExp } from 'BulletNote/functions/Handlers/DueDateHandler';
+import divideTagStrList from 'BulletNote/functions/divideTagStrList';
 
 const defaultSelect = 'Select Tag';
-
-export const divideTagList = (tags: string[]): string[][] => {
-  let res: string[][] = [];
-  res = [[], []];
-
-  for (let i = 0; i < tags.length; i++) {
-    const tag = tags[i];
-    const isDueDataTag = tag.match(dueDateRegExp);
-    if(isDueDataTag) {
-      res[1] = [
-        ...res[1],
-        tag
-      ];
-    } 
-    else {
-      res[0] = [
-        ...res[0],
-        tag
-      ];
-    }
-  }
-
-  return res;
-};
 
 const TagsFilter = (props: TagsFilterProps) => {
   const {
@@ -43,7 +20,7 @@ const TagsFilter = (props: TagsFilterProps) => {
     tags,
     setTagsToCtx,
   } = props;
-  const dividedTags = divideTagList(tags);
+  const dividedTags = divideTagStrList(tags);
 
   const [selectedTags, setSelectedTags] = useState<string[]>(initSelectedFilterTags);
 
@@ -52,11 +29,13 @@ const TagsFilter = (props: TagsFilterProps) => {
     if(isHaveTag || !tag) {
       return; 
     }
+    
     setSelectedTags(s => {
-      const newTags = [
+      let newTags = [
         ...s,
         tag,
       ];
+      newTags = [...new Set(newTags)];
       setTagsToCtx(newTags);
       return newTags;
     });
@@ -68,7 +47,9 @@ const TagsFilter = (props: TagsFilterProps) => {
     handleResetSelect,
   } = useSelectorSelect({
     'tagList': '',
-  }, (values) => handleAddSelectedTag(values.tagList));
+  }, 
+  (values) => handleAddSelectedTag(values.tagList)
+  );
 
   const handleRamoveSelectedTag = useCallback((tag: string) => {
     return () => {
@@ -84,6 +65,8 @@ const TagsFilter = (props: TagsFilterProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTags.length]);
 
+  const tagsKeys = Object.keys(dividedTags);
+
   return (
     <Box>
       <Typography>{'Select Filter Tags'}</Typography>
@@ -98,15 +81,23 @@ const TagsFilter = (props: TagsFilterProps) => {
           />
         ))}
       </Box>
-      {dividedTags
+      {tagsKeys
         .slice(0, 1)
         .map((t, i) => {
           return (
-            <TagList 
-              label={defaultSelect}
-              tags={t}
-              tagValue={values['tagList']}
-              onChangeSelect={handleSelect('tagList')}
+            // <TagList 
+            //   label={defaultSelect}
+            //   tags={t}
+            //   tagValue={values['tagList']}
+            //   onChangeSelect={handleSelect('tagList')}
+            // />
+            <FilterSelector 
+              defaultSelectedText={'Choose Tags'}
+              options={dividedTags['normalTags'].map(t => ({
+                text: t,
+                value: t
+              }))}
+              getSelectedOptionFn={(val) => handleAddSelectedTag(val.value)}
             />
           );
         })}

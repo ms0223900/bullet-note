@@ -11,6 +11,7 @@ import getTagsFromMessageList from 'BulletNote/functions/getTagsFromMessageList'
 import { KEY_CODES } from 'BulletNote/config';
 import useFastInput from 'lib/customHooks/useFastInput';
 import useTriggerCallbackByKeyCodes, { defaultKeyCodes } from 'lib/customHooks/useTriggerCallbackByKeyCodes';
+import divideTagStrList from 'BulletNote/functions/divideTagStrList';
 
 const InputPartContainer = (props: InputPartContainerProps) => {
   const {
@@ -52,10 +53,13 @@ const InputPartContainer = (props: InputPartContainerProps) => {
   });
 
   useTriggerCallbackByKeyCodes(handleSendMessage);
+  const {
+    normalTags
+  } = divideTagStrList(tags);
 
   return (
     <InputPart
-      tags={tags}
+      tags={normalTags}
       value={value}
       tagValue={values.tagValue}
       onChange={handleChange}

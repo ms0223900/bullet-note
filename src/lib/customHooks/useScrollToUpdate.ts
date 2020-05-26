@@ -83,9 +83,13 @@ class ScrollToUpdateHandler {
   }
 }
 
+export const getListCount = (outerHeight: number) => (
+  Math.ceil(outerHeight / defaultMessageItemHeight)
+);
+
 export const getStartEndIndexFromDOM = (innerEl: HTMLElement, outerEl: HTMLElement) => {
   const outerHeight = outerEl.offsetHeight;
-  const listCount = Math.ceil(outerHeight / defaultMessageItemHeight);
+  const listCount = getListCount(outerHeight);
 
   let startEndIndex: StartEndIndex = [0, listCount * 1.5];
 
@@ -133,7 +137,7 @@ const useScrollToUpdate = (options?: UseScrollToUpdateOptions) => {
   }));
 
   const [loading, setLoading] = useState(false);
-  const [startEndIndex, setStartEndIndex] = useState<StartEndIndex>([0, 0]);
+  const [startEndIndex, setStartEndIndex] = useState<StartEndIndex>([0, 20]);
   // const startEndIndexRef = useRef([0, 0]);
 
   const handleSetStartEndIndex = useCallback(() => {
