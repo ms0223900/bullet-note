@@ -14,13 +14,12 @@ const getTagsFromMessageList = (messageList: MessageList): string[] => {
       ...tagsInSingleMessage,
     ];
   }
-  tags = [...new Set(tags)];
-  tags = removeListInList(tags, defaultTags);
   
   tags = [
     ...tags,
     ...defaultTags,
   ];
+  tags = [...new Set(tags)];
 
   return tags;
 };

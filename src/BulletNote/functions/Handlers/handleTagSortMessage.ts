@@ -1,5 +1,6 @@
 import { MessageList, TagNoteBlockList, TagNoteBlockItem, MessageItem, TagNoteBlockObj } from "../../types";
 import DueDateHandler from "./DueDateHandler";
+import checkMessageItemIsDone from "../checkMessageItemIsDone";
 
 class HandleTagSortMessage {
   static checkNewStrIsInStrList(strList: string[], newStr: string) {
@@ -95,7 +96,8 @@ class HandleTagSortMessage {
 
     _messageList.forEach((messageItem) => {
       const dueDateIsInRange = DueDateHandler.checkMessageItemHaveDueDateAndIsInRange(messageItem.message.tagList);
-      if(dueDateIsInRange) {
+      const messageIsNotDone = !checkMessageItemIsDone(messageItem);
+      if(dueDateIsInRange && messageIsNotDone) {
         res = [
           ...res,
           messageItem
