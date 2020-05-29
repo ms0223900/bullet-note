@@ -2,8 +2,8 @@ import { SortTypeRule, SortRule, SortType } from "BulletNote/types";
 import { useState, useCallback } from "react";
 
 const defaultSortTypeRule: SortTypeRule = {
-  sortRule: 'asc',
-  sortType: 'date',
+  sortRule: 'desc',
+  sortType: 'due-date',
 };
 
 const useSortTypeRules = (initSortTypeRuleOption=defaultSortTypeRule) => {

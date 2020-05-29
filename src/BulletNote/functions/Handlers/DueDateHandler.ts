@@ -159,6 +159,12 @@ class DueDateHandler {
     
     return res;
   }
+
+  static getTagListWithoutDueDateTag(tagList: MessageItem['message']['tagList']): MessageItem['message']['tagList'] {
+    let res: MessageItem['message']['tagList'] = tagList;
+    res = res.filter(t => !t.name.match(dueDateRegExp));
+    return res;
+  }
 }
 
 export default DueDateHandler;

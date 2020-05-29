@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { MessageContentPartProps } from './types';
-import DueDateHandler from 'BulletNote/functions/Handlers/DueDateHandler';
+import DueDateHandler, { dueDateRegExp } from 'BulletNote/functions/Handlers/DueDateHandler';
 import DueDateItemContainer from 'BulletNote/containers/CommonComponents/DueDateItemContainer';
 import EditContentContainer from 'BulletNote/containers/MessageComponents/EditContentContainer';
+import BulletTagList from '../BullteTagList';
 
 const addZeroToSmallerThanTenNumber = (num: number) => (
   num < 10 ? `0${num}` : String(num)
@@ -40,6 +41,7 @@ const MessageContentPart = (props: MessageContentPartProps) => {
   } = message;
 
   const dueDate = DueDateHandler.getMessageItemDueDate(tagList);
+  const tagListWithoutDueDate = DueDateHandler.getTagListWithoutDueDateTag(tagList);
   
   return (
     <Box
@@ -51,9 +53,11 @@ const MessageContentPart = (props: MessageContentPartProps) => {
         content={content}
         onChange={onChangeInput}
       />
-      {/* <BulletTagList
-        tagList={tagList} 
-        /> */}
+      {dueDate && (
+        <BulletTagList
+          tagList={tagListWithoutDueDate} 
+        />
+      )}
       <Box 
         paddingLeft={1}
       >
@@ -61,10 +65,16 @@ const MessageContentPart = (props: MessageContentPartProps) => {
           {regDateToString(createdAt)}
         </Typography> */}
         {dueDate && (
-          <DueDateItemContainer 
-            date={dueDate}
-            dueType={'due-normal'}
-          />
+          <> 
+            {/* <BulletTagList
+              tagList={tagList} 
+            /> */}
+            <DueDateItemContainer 
+              date={dueDate}
+              dueType={'due-normal'}
+            />
+          
+          </>
         )}
       </Box>
     </Box>
