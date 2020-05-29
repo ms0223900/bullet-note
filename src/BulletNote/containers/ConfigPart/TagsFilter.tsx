@@ -12,7 +12,7 @@ import { setFilterTags } from 'BulletNote/actions/config-actions';
 import { dueDateRegExp } from 'BulletNote/functions/Handlers/DueDateHandler';
 import divideTagStrList from 'BulletNote/functions/divideTagStrList';
 
-const defaultSelect = 'Select Tag';
+const defaultSelect = 'Choose Tags';
 
 const TagsFilter = (props: TagsFilterProps) => {
   const {
@@ -85,14 +85,8 @@ const TagsFilter = (props: TagsFilterProps) => {
         .slice(0, 1)
         .map((t, i) => {
           return (
-            // <TagList 
-            //   label={defaultSelect}
-            //   tags={t}
-            //   tagValue={values['tagList']}
-            //   onChangeSelect={handleSelect('tagList')}
-            // />
             <FilterSelector 
-              defaultSelectedText={'Choose Tags'}
+              defaultSelectedText={defaultSelect}
               options={dividedTags['normalTags'].map(t => ({
                 text: t,
                 value: t
