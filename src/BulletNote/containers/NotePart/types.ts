@@ -16,6 +16,6 @@ export interface WholeNoteBlogItemContainerWithCtxProps extends Omit<WholeNoteBl
 export interface WholeNoteBlockListContainerProps extends Omit<WholeNoteBlockListProps, 'scrollUpdateStates'> {
   
 }
-export interface WholeNoteBlockListContainerWithCtxProps extends Omit<WholeNoteBlockListContainerProps, 'tagList'> {
+export interface WholeNoteBlockListContainerWithCtxProps extends Omit<WholeNoteBlockListContainerProps, 'tagList' | 'searchingText'> {
   
 }

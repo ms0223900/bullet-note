@@ -2,6 +2,7 @@ import { BulletNoteState, initShowingDaysRange, initIsFilteringDone } from "Bull
 import ConfigActions from "BulletNote/actions/config-actions";
 import { BulletNoteActionTypes } from "BulletNote/actions";
 import ConfigLocalStorageHandler from "BulletNote/functions/Handlers/ConfigLocalStorageHandler";
+import { searchingTag } from "BulletNote/config";
 
 const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState['bulletNoteConfig'] => {
   switch (action.type) {
@@ -43,6 +44,20 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
         isFilteringDone: true,
         showingDaysRange: initShowingDaysRange,
         noteMode: action.payload.noteMode,
+      });
+      ConfigLocalStorageHandler.setData(newConfig);
+      return newConfig;
+    }
+
+    case BulletNoteActionTypes.SET_SEARCHING_TEXT: {
+      const newConfig: BulletNoteState['bulletNoteConfig'] = ({
+        ...state.bulletNoteConfig,
+        isFilteringDone: true,
+        selectedFilterTags: [
+          searchingTag,
+        ],
+        noteMode: 'tag-whole-page',
+        searchingText: action.payload.searchingText,
       });
       ConfigLocalStorageHandler.setData(newConfig);
       return newConfig;

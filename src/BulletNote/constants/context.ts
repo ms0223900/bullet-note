@@ -7,6 +7,7 @@ export type NoteMode = 'normal' | 'tag-whole-page'
 export const initNoteMode: NoteMode = 'normal';
 // export const initNoteMode: NoteMode = 'tag-whole-page';
 
+export const initSearchingText = '';
 export const initShowingDaysRange = 7; //one week for performance better
 // export const initIsFilteringDone = false;
 export const initIsFilteringDone = true;
@@ -17,6 +18,7 @@ export const initSelectedFilterTags = [
 
 export interface BulletNoteConfig {
   // showTagList: boolean
+  searchingText: string | number | undefined
   noteMode: NoteMode
   selectedFilterTags: string[]
   showingDaysRange: number
@@ -35,6 +37,7 @@ const initBulletNoteConfig: BulletNoteConfig = {
   showingDaysRange: initShowingDaysRange,
   isFilteringDone: initIsFilteringDone,
   isFilteringStared: false,
+  searchingText: initSearchingText,
 };
 
 const initState: BulletNoteState = {

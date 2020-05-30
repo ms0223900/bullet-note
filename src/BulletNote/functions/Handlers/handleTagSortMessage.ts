@@ -1,6 +1,7 @@
 import { MessageList, TagNoteBlockList, TagNoteBlockItem, MessageItem, TagNoteBlockObj } from "../../types";
 import DueDateHandler from "./DueDateHandler";
 import checkMessageItemIsDone from "../checkMessageItemIsDone";
+import { BulletNoteState } from "BulletNote/constants/context";
 
 class HandleTagSortMessage {
   static checkNewStrIsInStrList(strList: string[], newStr: string) {
@@ -106,6 +107,21 @@ class HandleTagSortMessage {
     });
 
     return res;
+  }
+
+  static filterMessageListSearching(_messageList: MessageList) {
+    return (searchText: BulletNoteState['bulletNoteConfig']['searchingText']) => {
+      let res: MessageList = [];
+
+      if(searchText === '' || typeof searchText === 'undefined') {
+        res = [];
+      }
+      else {
+        res = _messageList.filter(m => m.message.content.includes(String(searchText)));
+      }
+
+      return res;
+    };
   }
 }
 
