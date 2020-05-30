@@ -141,11 +141,11 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
           alignItems={'center'}
         >
           <Check />
-          <Typography
+          {/* <Typography
             color={'textSecondary'}
           >
             {'Sync success'}
-          </Typography>
+          </Typography> */}
         </Box>
       )}
     </Box>

@@ -4,6 +4,7 @@ import { Callback } from "common-types";
 import { InputProps } from "../InputPart/types";
 
 export interface EditStates {
+  handleConfirmEdit: Callback
   setEditFn: (edit: boolean) => any
   isEditing?: boolean
 }
