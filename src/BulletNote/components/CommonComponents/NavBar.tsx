@@ -6,7 +6,7 @@ import { MenuRounded } from '@material-ui/icons';
 import ConfigPart from '../ConfigPart/ConfigPart';
 import FilterDoneCheckBoxWithCtx from 'BulletNote/containers/ConfigPart/FilterDoneCheckBox';
 import { zIndexes } from 'BulletNote/theme/theme';
-import SearchPart from 'BulletNote/containers/SearchPart/SearchPartContainer';
+import SearchPartContainerWithCtx from 'BulletNote/containers/SearchPart/SearchPartContainer';
 
 export const navHeight = 32;
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     top: 0,
     zIndex: zIndexes.navBar,
     backgroundColor: theme.palette.primary.light,
-    height: navHeight,
+    minHeight: navHeight,
   }
 }));
 
@@ -59,6 +59,7 @@ const NavBar = (props: NavBarProps) => {
           {'Offline-mode'}
         </Button>
       )} */}
+      {/* <SearchPartContainerWithCtx /> */}
       <Box>
         <FilterDoneCheckBoxWithCtx />
         <Button

@@ -42,10 +42,10 @@ const ConfigPart = () => {
               <NoteModeSelectorWithCtx />
             </Box>
           </Box>
-          <Box paddingY={1} />
-          <DueDateButtonContainerWithCtx />
           <Box paddingBottom={2} />
           <SearchPartContainerWithCtx />
+          <Box paddingY={1} />
+          <DueDateButtonContainerWithCtx />
         </Box>
         <Box
           // display={'flex'}
