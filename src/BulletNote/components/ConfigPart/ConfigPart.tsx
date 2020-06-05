@@ -7,6 +7,7 @@ import TagsFilterWithCtx from 'BulletNote/containers/ConfigPart/TagsFilter';
 import NoteModeSelectorWithCtx from 'BulletNote/containers/ConfigPart/NoteModeSelector';
 import CLearLSButton from 'BulletNote/containers/ConfigPart/ClearLSButton';
 import DueDateButtonContainerWithCtx from 'BulletNote/containers/ConfigPart/DueDateButtonContainer';
+import SearchPartContainerWithCtx from 'BulletNote/containers/SearchPart/SearchPartContainer';
 
 const ConfigPart = () => {
   return (
@@ -41,6 +42,8 @@ const ConfigPart = () => {
               <NoteModeSelectorWithCtx />
             </Box>
           </Box>
+          <Box paddingBottom={2} />
+          <SearchPartContainerWithCtx />
           <Box paddingY={1} />
           <DueDateButtonContainerWithCtx />
         </Box>

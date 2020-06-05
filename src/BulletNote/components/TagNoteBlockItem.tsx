@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Paper } from '@material-ui/core';
+import { Box, Paper, makeStyles } from '@material-ui/core';
 import { TagNoteBlockItemProps, MESSAGE_TYPE, MessageItem } from '../types';
 import { tabSpace } from '../config';
 import { sepMessageListByStarLevelNum } from 'BulletNote/functions/sort-functions/sortMessageListByStarLevelNum';
@@ -56,12 +56,23 @@ export const filterMessageListByIsDone = (messageList: MessageItem[]) => (isFilt
   return res;
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    paddingLeft: theme.spacing(tabSpace),
+    paddingBottom: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: theme.spacing(0),
+    }
+  }
+}));
+
 const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
   const {
     messageList,
     isShowMessages,
     isFilteringDone,
   } = props;
+  const classes = useStyles();
 
   const handledMessageListByIsDone = filterMessageListByIsDone(messageList)(isFilteringDone);
 
@@ -69,8 +80,7 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
 
   return (
     <Box 
-      paddingLeft={tabSpace}
-      paddingBottom={1}
+      className={classes.root}
     >
         
       <Paper

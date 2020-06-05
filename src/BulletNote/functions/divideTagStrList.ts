@@ -2,8 +2,8 @@ import { dueDateRegExp } from "./Handlers/DueDateHandler";
 
 function divideTagStrList(tags: string[]) {
   let res = {
-    normalTags: [] as string[],
     dueDateTags: [] as string[],
+    normalTags: [''] as string[],
   };
 
   for (let i = 0; i < tags.length; i++) {
@@ -14,7 +14,10 @@ function divideTagStrList(tags: string[]) {
       res.dueDateTags = [...res.dueDateTags, tag];
     }
     else {
-      res.normalTags = [...res.normalTags, tag];
+      res.normalTags = [
+        ...res.normalTags, 
+        tag
+      ];
     }
   }
 

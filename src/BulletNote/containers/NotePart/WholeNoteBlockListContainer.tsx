@@ -24,8 +24,10 @@ interface OwnProps extends WholeNoteBlockListContainerWithCtxProps {}
 
 const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, {
   tagList: WholeNoteBlockListContainerProps['tagList']
+  searchingText: WholeNoteBlockListContainerProps['searchingText']
 }> = (state) => {
   return ({
+    searchingText: state.bulletNoteConfig.searchingText,
     tagList: state.bulletNoteConfig.selectedFilterTags,
   });
 };

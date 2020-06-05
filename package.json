@@ -13,6 +13,7 @@
     "@types/react-dom": "^16.9.6",
     "@types/react-router": "^5.1.5",
     "@types/react-router-dom": "^5.1.4",
+    "enzyme": "^3.11.0",
     "firebase": "^7.14.1",
     "gh-pages": "^2.2.0",
     "ibus-common-components": "git+https://ms0223900:sJ8hrQe2VYy5A9X4seJ3@bitbucket.org/maxwin-inc/ibus-common-components.git",

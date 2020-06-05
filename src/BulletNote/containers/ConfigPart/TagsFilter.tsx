@@ -6,13 +6,14 @@ import useSelectorSelect from 'lib/customHooks/useSelectorSelect';
 import { MapStateToProps, MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import getTagsFromMessageList from 'BulletNote/functions/getTagsFromMessageList';
-import { connectCtx, FilterSelector } from 'react-function-helpers';
+import { connectCtx } from 'react-function-helpers';
 import RemoveTagItem from 'BulletNote/components/ConfigPart/RemoveTagItem';
 import { setFilterTags } from 'BulletNote/actions/config-actions';
 import { dueDateRegExp } from 'BulletNote/functions/Handlers/DueDateHandler';
 import divideTagStrList from 'BulletNote/functions/divideTagStrList';
+import { FilterSelector } from 'ibus-common-components';
 
-const defaultSelect = 'Select Tag';
+const defaultSelect = 'Choose Tags';
 
 const TagsFilter = (props: TagsFilterProps) => {
   const {
@@ -66,6 +67,10 @@ const TagsFilter = (props: TagsFilterProps) => {
   }, [selectedTags.length]);
 
   const tagsKeys = Object.keys(dividedTags);
+  const tagsOptions = dividedTags['normalTags'].map(t => ({
+    text: t,
+    value: t
+  }));
 
   return (
     <Box>
@@ -85,18 +90,10 @@ const TagsFilter = (props: TagsFilterProps) => {
         .slice(0, 1)
         .map((t, i) => {
           return (
-            // <TagList 
-            //   label={defaultSelect}
-            //   tags={t}
-            //   tagValue={values['tagList']}
-            //   onChangeSelect={handleSelect('tagList')}
-            // />
             <FilterSelector 
-              defaultSelectedText={'Choose Tags'}
-              options={dividedTags['normalTags'].map(t => ({
-                text: t,
-                value: t
-              }))}
+              key={i}
+              defaultSelectedText={defaultSelect}
+              options={tagsOptions}
               getSelectedOptionFn={(val) => handleAddSelectedTag(val.value)}
             />
           );

@@ -7,9 +7,10 @@ import { KEY_CODES } from 'BulletNote/config';
 import { Callback } from 'common-types';
 
 export const useEditContent = (options: {
+  initIsEdit?: boolean,
   onEditMessage: Callback | undefined
 }) => {
-  const [isEditing, setEdit] = React.useState(false);
+  const [isEditing, setEdit] = React.useState(!!options.initIsEdit);
 
   const handleConfirmEdit = React.useCallback(() => {
     if(isEditing) {
@@ -24,6 +25,7 @@ export const useEditContent = (options: {
   ]);
 
   return ({
+    handleConfirmEdit,
     isEditing,
     setEdit,
   });
@@ -37,6 +39,7 @@ const EditContentContainer = (props: EditContentContainerProps) => {
   const {
     isEditing,
     setEdit,
+    handleConfirmEdit
   } = useEditContent({
     onEditMessage,
   });
@@ -44,6 +47,7 @@ const EditContentContainer = (props: EditContentContainerProps) => {
   return (
     <EditContent 
       {...props}
+      handleConfirmEdit={handleConfirmEdit}
       isEditing={isEditing}
       setEditFn={setEdit}
     />

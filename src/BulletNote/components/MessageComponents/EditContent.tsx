@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, makeStyles, Divider, Hidden } from '@material-ui/core';
+import { Box, makeStyles, Divider, Hidden, Button } from '@material-ui/core';
 import { EditContentProps } from './types';
 import CustomTextArea from '../InputPart/CustomTextArea';
 import MessageContentHandler from 'BulletNote/functions/Handlers/MessageContentHandler';
+import { ConfirmationNumberOutlined, CheckOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 const EditContent = (props: EditContentProps) => {
   const {
+    handleConfirmEdit,
     isEditing,
     setEditFn,
     content,
@@ -36,15 +38,28 @@ const EditContent = (props: EditContentProps) => {
 
   if(isEditing) {
     return (
-      <CustomTextArea 
-        {...props}
-      />
+      <Box
+        position={'relative'} 
+        width={'100%'}
+      >
+        <CustomTextArea 
+          {...props}
+        />
+        <Button 
+          color={'primary'}
+          variant={'outlined'}
+          onClick={handleConfirmEdit}
+        >
+          <CheckOutlined />
+        </Button>
+      </Box>
     );
   }
 
   return (
     <Box 
       className={classes.contentPart}
+      onDoubleClickCapture={() => setEditFn(true)}
       onDoubleClick={() => setEditFn(true)}
       paddingBottom={0.5}
       // onBlur={onConfirmEdit}

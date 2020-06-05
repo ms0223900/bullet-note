@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Paper, Button } from '@material-ui/core';
+import { Box, Paper, Button, Typography } from '@material-ui/core';
 import TagTitle from './TagTitle';
 import { WholeNoteBlogItemProps } from './types';
 import renderSingleMessageItemFn from '../_functions/renderSingleMessageItemFn';
@@ -29,6 +29,17 @@ export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteB
   return null;
 };
 
+export const NoMessageInfo = () => {
+  return (
+    <Typography
+      variant={'h6'}
+      color={'textSecondary'}
+    >
+      {'沒有相關訊息 :('}
+    </Typography>
+  );
+};
+
 const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
   const {
     isFilteringDone,
@@ -52,14 +63,18 @@ const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
         <Box
           padding={0.5}
         >
-          <ToggleDisplayWrapper isDisplay={isShowMessages}> 
-            <SortButtons 
-              {...props}
-            />
-            {dateOrMessageItemList
-              .map(renderDateOrMessageItem(isFilteringDone))
-            }
-          </ToggleDisplayWrapper>
+          {messageList.length  > 0 ? (
+            <ToggleDisplayWrapper isDisplay={isShowMessages}> 
+              <SortButtons 
+                {...props}
+              />
+              {dateOrMessageItemList
+                .map(renderDateOrMessageItem(isFilteringDone))
+              }
+            </ToggleDisplayWrapper>
+          ) : (
+            <NoMessageInfo />
+          )}
         </Box>
       </Paper>
     </Box>

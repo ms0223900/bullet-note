@@ -6,6 +6,7 @@ export const offLineModeParam = 'off-line-mode';
 
 export const dueDateUniqueTag = '#due-date-filter';
 export const weekTargetTag = '#week-target';
+export const searchingTag = '#search-result';
 export const defaultTags = [
   weekTargetTag,
   dueDateUniqueTag

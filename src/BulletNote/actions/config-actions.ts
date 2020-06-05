@@ -13,6 +13,9 @@ export interface ToggleIsFilteringDonePayload {
 export interface SetNoteModePayload {
   noteMode: BulletNoteState['bulletNoteConfig']['noteMode']
 }
+export interface SetSearchingTextPayload {
+  searchingText: BulletNoteState['bulletNoteConfig']['searchingText']
+}
 export interface SetBulletNoteConfigPayload {
   bulletNoteConfig: Partial<BulletNoteState['bulletNoteConfig']>
 }
@@ -36,6 +39,10 @@ export interface ToggleIsFilteringDoneAction {
 export interface SetNoteModeAction {
   type: BulletNoteActionTypes.SET_NOTE_MODE,
   payload: SetNoteModePayload
+}
+export interface SetSearchingTextAction {
+  type: BulletNoteActionTypes.SET_SEARCHING_TEXT,
+  payload: SetSearchingTextPayload
 }
 export interface SetBulletNoteConfigAction {
   type: BulletNoteActionTypes.SET_BULLET_NOTE_CONFIG,
@@ -66,6 +73,11 @@ export const setNoteMode = (noteMode: SetNoteModePayload['noteMode']): SetNoteMo
   payload: { noteMode, }
 });
 
+export const setSearchingText = (searchingText: SetSearchingTextPayload['searchingText']): SetSearchingTextAction => ({
+  type: BulletNoteActionTypes.SET_SEARCHING_TEXT,
+  payload: { searchingText: searchingText || '', }
+});
+
 export const setBulletNoteConfig = (bulletNoteConfig: SetBulletNoteConfigPayload['bulletNoteConfig']): SetBulletNoteConfigAction => ({
   type: BulletNoteActionTypes.SET_BULLET_NOTE_CONFIG,
   payload: { bulletNoteConfig, }
@@ -77,6 +89,7 @@ type ConfigActions =
   SetFilterTagsAction |
   ToggleIsFilteringDoneAction |
   SetNoteModeAction |
+  SetSearchingTextAction |
   SetBulletNoteConfigAction
 
 export default ConfigActions;

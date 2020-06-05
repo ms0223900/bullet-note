@@ -1,13 +1,14 @@
 import React from 'react';
 import { Box, Typography, RootRef } from '@material-ui/core';
 import { WholeNoteBlockListProps } from './types';
-import { getNoteBlockItemTagList } from '../NoteBlockItem';
 import WholeNoteBlockItemContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlockItemContainer';
 import MoveToBottomWrapper from '../wrappers/MoveToBottomWrapper';
 import useNotePartStyles from 'BulletNote/styles/stylesObj/useNotePartStyles';
+import WholeNoteBlockHandler from 'BulletNote/functions/Handlers/WholeNoteBlockHandler';
 
 const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
   const {
+    searchingText,
     scrollUpdateStates,
     messageList,
     tagList,
@@ -30,7 +31,9 @@ const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
     );
   }
 
-  const tagListData = getNoteBlockItemTagList(messageList, tagList);
+  const tagListData = WholeNoteBlockHandler.getNoteBlockItemTagList(messageList, tagList)({
+    searchText: searchingText,
+  });
 
   return (
     <RootRef
