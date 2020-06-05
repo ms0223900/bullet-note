@@ -13,6 +13,7 @@ export const getDueDateStr = (dueDate: Date) => {
 
 const useStyles = makeStyles<Theme, DueDateItemProps>(theme => ({
   root: {
+    fontSize: 14,
     borderRadius: theme.spacing(0.5),
     padding: theme.spacing(0.5),
     borderStyle: 'solid',
