@@ -1,5 +1,6 @@
 import checkDateIsValid from "lib/checkDateIsValid";
-import { MessageItem } from "BulletNote/types";
+import { MessageItem, TagItem } from "BulletNote/types";
+import WeekDatesHandler from "../WeekDatesHandler";
 
 export const dueDateJoinStr = '-';
 export const dueDateRegExp = new RegExp(`#due(${dueDateJoinStr}\\d{1,2})+`, 'g');
@@ -157,6 +158,25 @@ class DueDateHandler {
       }
     }
     
+    return res;
+  }
+
+  static makeThisWeekEndDueDateTag(): TagItem {
+    const today = new Date();
+    const sunday = WeekDatesHandler.getThisWeekSunday(today);
+    const saturday = WeekDatesHandler.getThisWeekSaturdayFromSunday(sunday);
+    saturday.setHours(23, 59);
+    
+    const saturdayLastStr = `
+      ${saturday.getMonth()}-
+      ${saturday.getDate()}-
+      ${saturday.getHours()}-
+      ${saturday.getMinutes()}`;
+
+    const res: TagItem = {
+      id: saturdayLastStr,
+      name: saturdayLastStr,
+    };
     return res;
   }
 }

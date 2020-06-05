@@ -1,6 +1,7 @@
 import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB, StarLevelNum, SortRule } from "../../types";
 import WeekDatesHandler from "../WeekDatesHandler";
 import { weekTargetTag } from "BulletNote/config";
+import DueDateHandler from "./DueDateHandler";
 
 type AccOrDec = 'acc' | 'dec'
 
@@ -167,16 +168,22 @@ class HandleParseMessage {
   static handleMessageItemWithWeekTarget(_messageItem: MessageItem) {
     let messageItem = _messageItem;
     let createdAt = _messageItem.message.createdAt;
+    let tagList = _messageItem.message.tagList;
 
     const isWeekTargetMessage = this.checkIsWeekTargetMessage(_messageItem.message.tagList);
+
     if(isWeekTargetMessage) {
+      const thisWeekEndTag = DueDateHandler.makeThisWeekEndDueDateTag();
       createdAt = WeekDatesHandler.getTodayThisWeekSunday();
+      tagList = [...tagList, thisWeekEndTag];
     }
+
     const res: MessageItem = {
       ...messageItem,
       message: {
         ...messageItem.message,
         createdAt,
+        tagList,
       }
     };
     return res;
