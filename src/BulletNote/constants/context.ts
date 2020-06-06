@@ -26,9 +26,14 @@ export interface BulletNoteConfig {
   isFilteringStared: boolean
 }
 
+export interface BulletNoteSetting {
+  isShowDateTagDivier: boolean
+}
+
 export interface BulletNoteState {
   messageList: MessageList
   bulletNoteConfig: BulletNoteConfig
+  bulletNoteSetting: BulletNoteSetting
 }
 
 const initBulletNoteConfig: BulletNoteConfig = {
@@ -40,9 +45,14 @@ const initBulletNoteConfig: BulletNoteConfig = {
   searchingText: initSearchingText,
 };
 
+export const initBulletNoteSetting: BulletNoteSetting = {
+  isShowDateTagDivier: false,
+};
+
 const initState: BulletNoteState = {
   messageList: [],
   bulletNoteConfig: initBulletNoteConfig,
+  bulletNoteSetting: initBulletNoteSetting,
 };
 
 const ContextValueFn  = createContextValueFn(initState, reducers);
