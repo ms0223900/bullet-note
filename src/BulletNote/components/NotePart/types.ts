@@ -10,6 +10,7 @@ export interface SortButtonsProps {
 }
 
 export interface WholeNoteBlogItemProps extends TagNoteBlockItemProps, SortButtonsProps {
+  isShowDateTagDivier: BulletNoteState['bulletNoteSetting']['isShowDateTagDivier']
   startEndIndex?: StartEndIndex
 }
 

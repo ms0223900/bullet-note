@@ -1,6 +1,6 @@
 import { ModalProps, CheckboxProps } from "@material-ui/core";
 
-export interface SettingPartProps extends ModalProps {
+export interface SettingPartProps extends Omit<ModalProps, 'children'> {
   
 }
 

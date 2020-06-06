@@ -2,11 +2,12 @@ import React from 'react';
 import { Box, Typography, Button, makeStyles, Drawer } from '@material-ui/core';
 import SyncToFirebaseWithCtx from 'BulletNote/containers/SyncToFirebase';
 import { NavBarProps } from './types';
-import { MenuRounded } from '@material-ui/icons';
+import { MenuRounded, SettingsOutlined } from '@material-ui/icons';
 import ConfigPart from '../ConfigPart/ConfigPart';
 import FilterDoneCheckBoxWithCtx from 'BulletNote/containers/ConfigPart/FilterDoneCheckBox';
 import { zIndexes } from 'BulletNote/theme/theme';
 import SearchPartContainerWithCtx from 'BulletNote/containers/SearchPart/SearchPartContainer';
+import SettingPart from '../SettingPart/SettingPart';
 
 export const navHeight = 32;
 
@@ -25,6 +26,9 @@ const NavBar = (props: NavBarProps) => {
     isOffline,
     isDrawerOpen,
     onToggleDrawer,
+
+    isSettingOpen,
+    onToggleSetting,
   } = props;
   const classes = useStyles();
   
@@ -67,11 +71,20 @@ const NavBar = (props: NavBarProps) => {
         >
           <MenuRounded />
         </Button>
+        <Button
+          onClick={onToggleSetting}
+        >
+          <SettingsOutlined />
+        </Button>
       </Box>
       
       <Drawer anchor={'right'} open={isDrawerOpen} onClose={onToggleDrawer}>
         <ConfigPart />
       </Drawer>
+      <SettingPart 
+        open={isSettingOpen}
+        onClose={onToggleSetting}
+      />
     </Box>
   );
 };
