@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Modal, makeStyles, Paper } from '@material-ui/core';
 import { SettingPartProps } from './types';
 import TagWholePageDateTagToggle from 'BulletNote/containers/SettingPart/TagWholePageDateTagToggleContainer';
+import ShowOverDueMessagesToggle from 'BulletNote/containers/SettingPart/ShowOverDueMessagesToggleContainer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,6 +28,7 @@ const SettingPart = (props: SettingPartProps) => {
         className={classes.modalContent}
       >
         <TagWholePageDateTagToggle />
+        <ShowOverDueMessagesToggle />
       </Paper>
     </Modal>
   );

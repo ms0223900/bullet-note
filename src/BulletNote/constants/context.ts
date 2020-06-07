@@ -28,6 +28,7 @@ export interface BulletNoteConfig {
 
 export interface BulletNoteSetting {
   isShowDateTagDivier: boolean
+  isShowOverDueMessages: boolean
 }
 
 export interface BulletNoteState {
@@ -47,6 +48,7 @@ const initBulletNoteConfig: BulletNoteConfig = {
 
 export const initBulletNoteSetting: BulletNoteSetting = {
   isShowDateTagDivier: false,
+  isShowOverDueMessages: false,
 };
 
 const initState: BulletNoteState = {

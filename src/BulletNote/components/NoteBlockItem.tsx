@@ -29,7 +29,8 @@ const NoteBlockItem = (props: NoteBlockItemProps) => {
   const classes = useStyles(props);
 
   const tagListData = WholeNoteBlockHandler.getNoteBlockItemTagList(messageList, selectedFilterTags)({
-    searchText: undefined
+    searchText: undefined,
+    isShowOverDueMessages: true,
   });
 
   return (

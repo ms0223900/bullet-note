@@ -11,6 +11,12 @@ export const setting = (state: BulletNoteState, action: SettingActions): BulletN
         isShowDateTagDivier: action.payload.isShowDateTagDivier,
       });
 
+    case BulletNoteActionTypes.TOGGLE_IS_SHOW_OVER_DUE_MESSAGES:
+      return ({
+        ...state.bulletNoteSetting,
+        isShowOverDueMessages: action.payload.isShowOverDueMessages,
+      });
+
     default:
       return state.bulletNoteSetting;
   }

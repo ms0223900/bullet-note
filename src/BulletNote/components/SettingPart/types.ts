@@ -4,6 +4,14 @@ export interface SettingPartProps extends Omit<ModalProps, 'children'> {
   
 }
 
-export interface TagWholePageDateTagToggleProps extends CheckboxProps {
+export interface SettingToggleProps extends CheckboxProps {
+  label?: string
+}
+
+export interface TagWholePageDateTagToggleProps extends SettingToggleProps {
+  
+}
+
+export interface ShowOverDueMessagesToggleProps extends SettingToggleProps {
   
 }

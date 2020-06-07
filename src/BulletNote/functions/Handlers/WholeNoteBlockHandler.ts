@@ -1,5 +1,5 @@
 import { TagNoteBlockObj, MessageList } from "BulletNote/types";
-import HandleTagSortMessage from "./handleTagSortMessage";
+import HandleTagSortMessage, { FilterMessageListByDueDateUniqueTagParams } from "./handleTagSortMessage";
 import { dueDateUniqueTag, searchingTag } from "BulletNote/config";
 import { BulletNoteState } from "BulletNote/constants/context";
 
@@ -10,11 +10,13 @@ export interface TagItemForNoteBlockItem {
 
 export interface Options {
   searchText: BulletNoteState['bulletNoteConfig']['searchingText']
+  isShowOverDueMessages: boolean
 }
 
 class WholeNoteBlockHandler {
-  static getDueDateTagTagNoteBlockObj(messageList: MessageList) {
-    const filteredMessageList = HandleTagSortMessage.filterMessageListByDueDateUniqueTag(messageList);
+  static getDueDateTagTagNoteBlockObj(params: FilterMessageListByDueDateUniqueTagParams) {
+    //--todo--
+    const filteredMessageList = HandleTagSortMessage.filterMessageListByDueDateUniqueTag(params);
     const res = {
       [dueDateUniqueTag]: {
         tagTitle: dueDateUniqueTag,
@@ -81,7 +83,10 @@ class WholeNoteBlockHandler {
           tagName: dueDateUniqueTag,
           isShow: true,
         }];
-        tagNoteBlockObj = this.getDueDateTagTagNoteBlockObj(messageList);
+        tagNoteBlockObj = this.getDueDateTagTagNoteBlockObj({
+          messageList,
+          isShowOverDueMessages: options.isShowOverDueMessages,
+        });
       }
       else if(isSearchingResult) {
         const searchingResultRes = this.getSearchResultTagNoteBlockObj(messageList)(options.searchText);
