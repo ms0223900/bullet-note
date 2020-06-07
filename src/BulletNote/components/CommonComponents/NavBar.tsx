@@ -6,8 +6,6 @@ import { MenuRounded, SettingsOutlined } from '@material-ui/icons';
 import ConfigPart from '../ConfigPart/ConfigPart';
 import FilterDoneCheckBoxWithCtx from 'BulletNote/containers/ConfigPart/FilterDoneCheckBox';
 import { zIndexes } from 'BulletNote/theme/theme';
-import SearchPartContainerWithCtx from 'BulletNote/containers/SearchPart/SearchPartContainer';
-import SettingPart from '../SettingPart/SettingPart';
 
 export const navHeight = 32;
 
@@ -24,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 const NavBar = (props: NavBarProps) => {
   const {
     isOffline,
+    
     isDrawerOpen,
     onToggleDrawer,
 
@@ -71,20 +70,14 @@ const NavBar = (props: NavBarProps) => {
         >
           <MenuRounded />
         </Button>
-        <Button
-          onClick={onToggleSetting}
-        >
-          <SettingsOutlined />
-        </Button>
       </Box>
       
       <Drawer anchor={'right'} open={isDrawerOpen} onClose={onToggleDrawer}>
-        <ConfigPart />
+        <ConfigPart
+          isSettingOpen={isSettingOpen}
+          onToggleSetting={onToggleSetting}
+        />
       </Drawer>
-      <SettingPart 
-        open={isSettingOpen}
-        onClose={onToggleSetting}
-      />
     </Box>
   );
 };
