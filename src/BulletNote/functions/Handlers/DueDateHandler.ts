@@ -148,13 +148,16 @@ class DueDateHandler {
     return res;
   }
 
-  static checkMessageItemHaveDueDateAndIsInRange(tagList: MessageItem['message']['tagList']) {
+  static checkMessageItemHaveDueDateAndIsInRange(
+    tagList: MessageItem['message']['tagList'],
+    isShowOverDueMessages: boolean,
+  ) {
     let res = false;
 
     const dueDate = this.getMessageItemDueDate(tagList);
     if(dueDate) {
       const remainTimes = this.calRemainTimes(dueDate);
-      if(remainTimes) {
+      if(remainTimes || isShowOverDueMessages) {
         res = true;
       }
     }

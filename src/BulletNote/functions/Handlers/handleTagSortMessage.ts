@@ -104,9 +104,8 @@ class HandleTagSortMessage {
     let res: MessageList = [];
 
     messageList.forEach((messageItem) => {
-      const dueDateIsInRange = isShowOverDueMessages ? 
-        true : 
-        DueDateHandler.checkMessageItemHaveDueDateAndIsInRange(messageItem.message.tagList);
+      const dueDateIsInRange = 
+        DueDateHandler.checkMessageItemHaveDueDateAndIsInRange(messageItem.message.tagList, isShowOverDueMessages);
       const messageIsNotDone = !checkMessageItemIsDone(messageItem);
       if(dueDateIsInRange && messageIsNotDone) {
         res = [

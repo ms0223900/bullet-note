@@ -15,7 +15,6 @@ export interface Options {
 
 class WholeNoteBlockHandler {
   static getDueDateTagTagNoteBlockObj(params: FilterMessageListByDueDateUniqueTagParams) {
-    //--todo--
     const filteredMessageList = HandleTagSortMessage.filterMessageListByDueDateUniqueTag(params);
     const res = {
       [dueDateUniqueTag]: {
