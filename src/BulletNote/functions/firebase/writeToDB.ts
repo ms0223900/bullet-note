@@ -31,7 +31,8 @@ const writeWholeDataToDB = ({
         });
       }
     };
-    checkIsSignIn(writeToFirebase);
+    checkIsSignIn()
+      .then(res => writeToFirebase(res.isSignIn, res.user));
   }
 };
 

@@ -17,7 +17,8 @@ const AuthPageWrapper = (props: AuthPageWrapperProps) => {
   }, [history]);
 
   React.useEffect(() => {
-    checkIsSignIn(handleAuthAndRedirect);
+    checkIsSignIn()
+      .then(res => handleAuthAndRedirect(res.isSignIn));
   }, [handleAuthAndRedirect]);
 
   if(!isAuthSuccess) {

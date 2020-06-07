@@ -91,17 +91,23 @@ class MessageContentHandler {
     const parsedContent = this.parseContent(content);
     return parsedContent.map((c, i) => {
       switch (c.type) {
-      case 'url':
-        return (
-          <ParsedLink 
-            index={i}
-            content={c.content}
-          />
-        );
-      default:
-        return (
-          <Box component={'span'} key={i}>{c.content}</Box>
-        );
+        case 'url':
+          return (
+            <ParsedLink 
+              index={i}
+              content={c.content}
+            />
+          );
+        default:
+          return (
+            <Box 
+              key={i}
+              component={'span'} 
+              dangerouslySetInnerHTML={{
+                __html: c.content,
+              }} 
+            />
+          );
       }
     });
   }

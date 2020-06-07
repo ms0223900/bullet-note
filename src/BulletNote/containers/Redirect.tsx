@@ -19,7 +19,10 @@ const Redirect = () => {
       }
     };
 
-    checkIsSignIn(redirectToUserPage);
+    checkIsSignIn()
+      .then(res => {
+        redirectToUserPage(res.isSignIn, res.user);
+      });
   }, [history]);
 
   return (
