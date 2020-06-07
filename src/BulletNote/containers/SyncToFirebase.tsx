@@ -11,44 +11,23 @@ import HandleDataInLocalStorage from 'BulletNote/functions/Handlers/HandleDataIn
 import { Check } from '@material-ui/icons';
 import checkIsSignIn from 'BulletNote/functions/SignAndLog/checkIsSignIn';
 import readFromDB from 'BulletNote/functions/firebase/readFromDB';
-import { Callback } from 'common-types';
-import { stringifyMessageList } from 'BulletNote/functions/stringifySingleMessage';
+import SyncDataHander from 'BulletNote/functions/Handlers/SyncDataHandler';
 
-const refreshErrorMessage = 'Please switch to online mode or refresh page.';
+export interface UseSyncToFirebaseOptions extends SyncToFirebaseProps {
+  
+}
 
-export const checkLocalStorageDataWithOnlineData = ({
-  onlineData,
-  errorCb,
-  successCb
-}: {
-  onlineData: any, 
-  errorCb: Callback
-  successCb: Callback
-}) => {
-  const LSdata = stringifyMessageList(HandleDataInLocalStorage.getData());
-  const stringifiedOnlineData = stringifyMessageList(onlineData);
-  const res = LSdata === stringifiedOnlineData;
-  if(!res) {
-    errorCb({
-      message: refreshErrorMessage,
-    });
-  } else {
-    HandleDataInLocalStorage.setCheckLocalWithOnlineLS(true);
-    successCb();
-  }
-  return res;
-};
-
-const SyncToFirebase = (props: SyncToFirebaseProps) => {
+const useSyncToFirebase = (options: UseSyncToFirebaseOptions) => {
   const {
     messageList,
-  } = props;
-  const syncTimes = React.useRef(0);
-  const isFirstTimeCheckSync = syncTimes.current === 0;
+  } = options;
 
   const {
     userId,
   } = useParams<{ userId: string }>();
+  
+  const syncTimes = React.useRef(0);
+  const isFirstTimeCheckSync = syncTimes.current === 0;
 
   const jsonizedData = JSON.stringify(messageList);
 
@@ -63,6 +42,24 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
     setSuccess(true);
     syncTimes.current += 1;
   }, []);
+
+  const handleFirstTimeCheckSync = useCallback(() => {
+    checkIsSignIn()
+      .then(({
+        user,
+      }) => {
+        user && readFromDB({
+          userId: user.uid,
+        })
+          .then((val) => {
+            SyncDataHander.checkLocalStorageDataWithOnlineData({
+              onlineData: val,
+              errorCb: setErr,
+              successCb: handleSyncSuccess
+            });
+          });
+      });
+  }, [handleSyncSuccess]);
   
   const handleSyncData = useCallback(() => {
     const isSameWithOnline = HandleDataInLocalStorage.getCheckLocalWithOnlineLS();
@@ -83,27 +80,14 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
       });
     }
     else if(isFirstTimeCheckSync) {
-      checkIsSignIn((isSignIn, user) => {
-        if(user) {
-          readFromDB({
-            userId: user.uid,
-            successCb: (val) => {
-              checkLocalStorageDataWithOnlineData({
-                onlineData: val,
-                errorCb: setErr,
-                successCb: handleSyncSuccess
-              });
-            },
-          });
-        }
-      });
+      handleFirstTimeCheckSync();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleSyncSuccess, jsonizedData, syncSuccess, userId, isFirstTimeCheckSync]);
 
   useEffect(() => {
     const syncTimeoutTime = isFirstTimeCheckSync ? 0 : syncTimeout * 1000;
-    console.log(syncTimes.current);
+    // console.log(syncTimes.current);
     const timeout = setTimeout(() => {
       handleSyncData();
     }, syncTimeoutTime);
@@ -116,6 +100,24 @@ const SyncToFirebase = (props: SyncToFirebaseProps) => {
   useEffect(() => {
     setSuccess(false);
   }, [jsonizedData]);
+
+  const states = {
+    loading,
+    error,
+    syncSuccess,
+    handleSyncData,
+  };
+
+  return states;
+};
+
+const SyncToFirebase = (props: SyncToFirebaseProps) => {
+  const {
+    loading,
+    error,
+    syncSuccess,
+    handleSyncData,
+  } = useSyncToFirebase(props);
 
   if(loading) {
     return <CircularProgress />;
