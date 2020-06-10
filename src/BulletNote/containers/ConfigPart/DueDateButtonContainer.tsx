@@ -6,7 +6,7 @@ import { connectCtx } from 'react-function-helpers';
 import DueDateButton from 'BulletNote/components/ConfigPart/DueDateButton';
 import { DueDateButtonContainerProps, DueDateButtonFromCtxStates } from './types';
 import HandleTagSortMessage from 'BulletNote/functions/Handlers/handleTagSortMessage';
-import { setBulletNoteConfig } from 'BulletNote/actions/config-actions';
+import { setBulletNoteConfig, setDueDateMode } from 'BulletNote/actions/config-actions';
 import { dueDateUniqueTag } from 'BulletNote/config';
 
 const DueDateButtonContainer = (props: DueDateButtonContainerProps) => {
@@ -34,12 +34,7 @@ const mapDispatchToProps: MapDispatchToProps<OwnProps, {
 }> = (dispatch) => {
   return ({
     setDueDateModeFn: () => {
-      const action = setBulletNoteConfig({
-        noteMode: 'tag-whole-page',
-        selectedFilterTags: [
-          dueDateUniqueTag,
-        ]
-      });
+      const action = setDueDateMode();
       dispatch(action);
     }
   });

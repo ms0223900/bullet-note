@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
      
   },
   contentPart: {
-    minWidth: '80%',
+    // minWidth: '80%',
     fontSize: '1em',
     lineHeight: 1.5,
     overflowWrap: 'anywhere',

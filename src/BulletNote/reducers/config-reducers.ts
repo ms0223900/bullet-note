@@ -2,7 +2,7 @@ import { BulletNoteState, initShowingDaysRange, initIsFilteringDone } from "Bull
 import ConfigActions from "BulletNote/actions/config-actions";
 import { BulletNoteActionTypes } from "BulletNote/actions";
 import ConfigLocalStorageHandler from "BulletNote/functions/Handlers/ConfigLocalStorageHandler";
-import { searchingTag } from "BulletNote/config";
+import { searchingTag, dueDateUniqueTag } from "BulletNote/config";
 
 const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState['bulletNoteConfig'] => {
   switch (action.type) {
@@ -44,6 +44,24 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
         isFilteringDone: true,
         showingDaysRange: initShowingDaysRange,
         noteMode: action.payload.noteMode,
+      });
+      ConfigLocalStorageHandler.setData(newConfig);
+      return newConfig;
+    }
+
+    case BulletNoteActionTypes.SET_DUE_DATE_MODE: {
+      if(state.bulletNoteConfig.selectedFilterTags.includes(dueDateUniqueTag)) {
+        return state.bulletNoteConfig;
+      }
+      
+      const newConfig: BulletNoteState['bulletNoteConfig'] = ({
+        ...state.bulletNoteConfig,
+        isFilteringDone: true,
+        selectedFilterTags: [
+          ...state.bulletNoteConfig.selectedFilterTags,
+          dueDateUniqueTag,
+        ],
+        noteMode: 'tag-whole-page',
       });
       ConfigLocalStorageHandler.setData(newConfig);
       return newConfig;

@@ -75,17 +75,26 @@ class WholeNoteBlockHandler {
 
       let tagList: TagItemForNoteBlockItem[] = [];
       let isEmptyAfterFiltered = false;
-      let tagNoteBlockObj: TagNoteBlockObj;
+      let tagNoteBlockObj: TagNoteBlockObj = {};
 
       if(isDueDateMessageList) {
-        tagList = [{
+        const tagWithShow = {
           tagName: dueDateUniqueTag,
           isShow: true,
-        }];
-        tagNoteBlockObj = this.getDueDateTagTagNoteBlockObj({
+        };
+        const dueDateTagNoteBlockObj = this.getDueDateTagTagNoteBlockObj({
           messageList,
           isShowOverDueMessages: options.isShowOverDueMessages,
         });
+
+        tagList = [
+          ...tagList,
+          tagWithShow,
+        ];
+        tagNoteBlockObj = {
+          ...tagNoteBlockObj,
+          ...dueDateTagNoteBlockObj
+        };
       }
       else if(isSearchingResult) {
         const searchingResultRes = this.getSearchResultTagNoteBlockObj(messageList)(options.searchText);
@@ -93,13 +102,20 @@ class WholeNoteBlockHandler {
         tagList = searchingResultRes.tagList;
         tagNoteBlockObj = searchingResultRes.tagNoteBlockObj;
       }
-      else {
-        const others = this.getNormalTagNoteBlockObj(messageList, selectedFilterTags);
+      // else {
+        
+      // }
+      const others = this.getNormalTagNoteBlockObj(messageList, selectedFilterTags);
 
-        tagNoteBlockObj = others.tagNoteBlockObj;
-        isEmptyAfterFiltered = others.isEmptyAfterFiltered;
-        tagList = others.tagList;
-      }
+      tagNoteBlockObj = {
+        ...tagNoteBlockObj,
+        ...others.tagNoteBlockObj,
+      };
+      isEmptyAfterFiltered = others.isEmptyAfterFiltered;
+      tagList = [
+        ...tagList,
+        ...others.tagList,
+      ];
 
       const res = {
         isEmptyAfterFiltered,
