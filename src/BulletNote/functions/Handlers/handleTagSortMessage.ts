@@ -2,6 +2,7 @@ import { MessageList, TagNoteBlockList, TagNoteBlockItem, MessageItem, TagNoteBl
 import DueDateHandler from "./DueDateHandler";
 import checkMessageItemIsDone from "../checkMessageItemIsDone";
 import { BulletNoteState, BulletNoteSetting } from "BulletNote/constants/context";
+import TextHighLightHandler from "./TextHighLightHandler";
 
 export interface FilterMessageListByDueDateUniqueTagParams {
   messageList: MessageList,

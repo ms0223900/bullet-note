@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, Box, makeStyles } from '@material-ui/core';
+import { BulletNoteConfig } from 'BulletNote/constants/context';
+import TextHighLightHandler from './TextHighLightHandler';
 
 const urlRegExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
 
@@ -33,9 +35,10 @@ export const ParsedLink = ({
       className={classes.link}
       href={content} 
       target={'_blank'}
-    >
-      {content}
-    </Link>
+      dangerouslySetInnerHTML={{
+        __html: content
+      }}
+    />
   );
 };
 
@@ -87,15 +90,21 @@ class MessageContentHandler {
     return res;
   }
 
-  static renderParsedContent(content: string) {
+  static renderParsedContent(content: string, options?: {
+    searchText?: BulletNoteConfig['searchingText']
+  }) {
     const parsedContent = this.parseContent(content);
-    return parsedContent.map((c, i) => {
+
+    const res = parsedContent.map((c, i) => {
+      const handledContent = options?.searchText ?
+        TextHighLightHandler.getHighlightContent(String(options.searchText))(c.content) : c.content;
+
       switch (c.type) {
         case 'url':
           return (
             <ParsedLink 
               index={i}
-              content={c.content}
+              content={handledContent}
             />
           );
         default:
@@ -104,12 +113,14 @@ class MessageContentHandler {
               key={i}
               component={'span'} 
               dangerouslySetInnerHTML={{
-                __html: c.content,
+                __html: handledContent,
               }} 
             />
           );
       }
     });
+
+    return res;
   }
 }
 

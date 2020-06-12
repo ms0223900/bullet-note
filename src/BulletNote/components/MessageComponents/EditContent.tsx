@@ -64,7 +64,9 @@ const EditContent = (props: EditContentProps) => {
       paddingBottom={0.5}
       // onBlur={onConfirmEdit}
     >
-      {MessageContentHandler.renderParsedContent(content)}
+      {MessageContentHandler.renderParsedContent(content, {
+        searchText: props.searchText,
+      })}
     </Box>
   );
 };
