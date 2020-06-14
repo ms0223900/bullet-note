@@ -17,7 +17,7 @@ export const makeStarNum = (message: MessageItem) => {
     res = starLevelNum ? starLevelNum + defaultMessageTypeSortSeq * -1 : 0;
   }
   else {
-    res = starLevelNum || 0;
+    res = defaultMessageTypeSortSeq + (starLevelNum || 0) || defaultMessageTypeSortSeq;
   }
 
   return res;
