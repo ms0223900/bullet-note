@@ -1,17 +1,18 @@
 import React, { useCallback } from 'react';
 import { Box } from '@material-ui/core';
-import { SearchPartContainerProps } from './types';
+import { SearchPartContainerProps, SearchPartContainerDispatchesFromCtx, SearchPartContainerStatesFromCtx } from './types';
 import SearchPart from 'BulletNote/components/SearchPart/SearchPart';
 import useChangeInput from 'lib/customHooks/useChangeInput';
-import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
+import { MapDispatchToProps, MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { setFilterTags, setSearchingText } from 'BulletNote/actions/config-actions';
 import { searchingTag, KEY_CODES } from 'BulletNote/config';
 import { connectCtx } from 'react-function-helpers';
-import { ContextStore } from 'BulletNote/constants/context';
+import { ContextStore, BulletNoteState } from 'BulletNote/constants/context';
 import useTriggerCallbackByKeyCodes from 'lib/customHooks/useTriggerCallbackByKeyCodes';
 
 const SearchPartContainer = (props: SearchPartContainerProps) => {
   const {
+    searchText,
     setSearchingTextToCtx,
     setSearchingTagToCtx,
   } = props;
@@ -21,18 +22,18 @@ const SearchPartContainer = (props: SearchPartContainerProps) => {
     handleChange,
     setVal,
   } = useChangeInput({
-    initValue: ''
+    initValue: searchText
   });
 
   const handleSearch = useCallback(() => {
     if(!value) {
       return;
     }
-    setSearchingTagToCtx();
+    // setSearchingTagToCtx();
     setTimeout(() => {
       setSearchingTextToCtx(value);
     }, 500);
-  }, [setSearchingTagToCtx, setSearchingTextToCtx, value]);
+  }, [setSearchingTextToCtx, value]);
 
   const handleClearSearch = useCallback(() => {
     const newVal = '';
@@ -58,7 +59,7 @@ const SearchPartContainer = (props: SearchPartContainerProps) => {
 
 interface OwnProps {}
 
-const mapDispatchToProps: MapDispatchToProps<OwnProps, SearchPartContainerProps> = (dispatch) => {
+const mapDispatchToProps: MapDispatchToProps<OwnProps, SearchPartContainerDispatchesFromCtx> = (dispatch) => {
   return ({
     setSearchingTextToCtx: (text) => {
       const action = setSearchingText(text);
@@ -73,6 +74,12 @@ const mapDispatchToProps: MapDispatchToProps<OwnProps, SearchPartContainerProps>
   });
 };
 
-const SearchPartContainerWithCtx = connectCtx(ContextStore)(undefined, mapDispatchToProps)(SearchPartContainer);
+const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, SearchPartContainerStatesFromCtx> = (state) => {
+  return ({
+    searchText: state.bulletNoteConfig.searchingText,
+  });
+};
+
+const SearchPartContainerWithCtx = connectCtx(ContextStore)(mapStateToProps, mapDispatchToProps)(SearchPartContainer);
 
 export default SearchPartContainerWithCtx;

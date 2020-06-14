@@ -68,16 +68,19 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
     }
 
     case BulletNoteActionTypes.SET_SEARCHING_TEXT: {
+      const newTags = [...new Set([
+        ...state.bulletNoteConfig.selectedFilterTags,
+        searchingTag,
+      ])];
+      
       const newConfig: BulletNoteState['bulletNoteConfig'] = ({
         ...state.bulletNoteConfig,
         isFilteringDone: true,
-        selectedFilterTags: [
-          searchingTag,
-        ],
+        selectedFilterTags: newTags,
         noteMode: 'tag-whole-page',
         searchingText: action.payload.searchingText,
       });
-      ConfigLocalStorageHandler.setData(newConfig);
+      // ConfigLocalStorageHandler.setData(newConfig);
       return newConfig;
     }
 

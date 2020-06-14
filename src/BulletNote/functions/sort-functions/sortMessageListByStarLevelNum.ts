@@ -7,9 +7,25 @@ interface seperatedMessageListByStar {
 
 const defaultMessageTypeSortSeq = -1000;
 
+export const makeStarNum = (message: MessageItem) => {
+  const {
+    starLevelNum,
+  } = message.message;
+  let res = defaultMessageTypeSortSeq;
+
+  if(message.type === MESSAGE_TYPE.TODO) {
+    res = starLevelNum ? starLevelNum + defaultMessageTypeSortSeq * -1 : 0;
+  }
+  else {
+    res = starLevelNum || 0;
+  }
+
+  return res;
+};
+
 export const sortMessageListByStarLevelNumSortFn = (sortRule: SortRule) => (prev: MessageItem, next: MessageItem) => {
-  const prevStarNum = prev.type !== MESSAGE_TYPE.DEFAULT ? (prev.message.starLevelNum || 0) : defaultMessageTypeSortSeq;
-  const nextStarNum = next.type !== MESSAGE_TYPE.DEFAULT ? (next.message.starLevelNum || 0) : defaultMessageTypeSortSeq;
+  const prevStarNum = makeStarNum(prev);
+  const nextStarNum = makeStarNum(next);
 
   if(prevStarNum > nextStarNum) {
     return sortRule === 'asc' ? -1 : 1;
