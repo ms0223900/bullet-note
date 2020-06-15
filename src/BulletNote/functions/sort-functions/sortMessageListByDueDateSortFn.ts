@@ -12,7 +12,7 @@ const sortMessageListByDueDateSortFn = (sortRule: SortRule) => (prev: MessageIte
   const prevDueDateTime = prevDueDate.getTime();
   const nextDueDateTime = nextDueDate.getTime();
 
-  console.log(prevDueDateTime, nextDueDateTime);
+  // console.log(prevDueDateTime, nextDueDateTime);
   if(prevDueDateTime > nextDueDateTime) {
     res = sortRule === 'asc' ? -1 : 1;
   }
