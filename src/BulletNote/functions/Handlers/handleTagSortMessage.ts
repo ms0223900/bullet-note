@@ -2,6 +2,7 @@ import { MessageList, TagNoteBlockList, TagNoteBlockItem, MessageItem, TagNoteBl
 import DueDateHandler from "./DueDateHandler";
 import checkMessageItemIsDone from "../checkMessageItemIsDone";
 import { BulletNoteState } from "BulletNote/constants/context";
+import SearchMatchHandler from "./SearchMatchHandler";
 
 class HandleTagSortMessage {
   static checkNewStrIsInStrList(strList: string[], newStr: string) {
@@ -109,6 +110,18 @@ class HandleTagSortMessage {
     return res;
   }
 
+  static checkMessageContentIsMatchedSearchText(content: string, searchText: string) {
+    const matchedRes = new SearchMatchHandler({
+      text: content,
+      searchText,
+    });
+    const res = matchedRes.getSearchAllMatched();
+    if(res) {
+      console.log(matchedRes.getSearchRes());
+    }
+    return res;
+  }
+
   static filterMessageListSearching(_messageList: MessageList) {
     return (searchText: BulletNoteState['bulletNoteConfig']['searchingText']) => {
       let res: MessageList = [];
@@ -117,7 +130,9 @@ class HandleTagSortMessage {
         res = [];
       }
       else {
-        res = _messageList.filter(m => m.message.content.includes(String(searchText)));
+        res = _messageList.filter(m => {
+          return this.checkMessageContentIsMatchedSearchText(m.message.content, String(searchText));
+        });
       }
 
       return res;
