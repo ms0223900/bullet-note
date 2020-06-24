@@ -1,11 +1,11 @@
-import { NavBarProps, DueDateItemProps } from "BulletNote/components/CommonComponents/types";
+import { NavBarProps, DueDateItemProps, NavBarStates, SettingPartStates } from "BulletNote/components/CommonComponents/types";
 import { StarLevelNum } from "BulletNote/types";
 import { ReactNodeArray, ReactNode } from "react";
 import { Callback } from "common-types";
 import { ButtonProps } from "@material-ui/core";
 
-export interface NavBarContainerProps extends Omit<NavBarProps, 'isDrawerOpen' | 'onToggleDrawer'> {
-  
+export interface NavBarContainerProps extends Omit<NavBarProps, keyof NavBarStates | keyof SettingPartStates> {
+    
 }
 
 export interface StarLevelContainerProps {

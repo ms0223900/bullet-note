@@ -10,11 +10,18 @@ const NavBarContainer = (props: NavBarContainerProps) => {
     handleToggle
   } = useToggle(false);
 
+  const {
+    toggle: isSettingOpen,
+    handleToggle: onToggleSetting,
+  } = useToggle(false);
+
   return (
     <NavBar
       {...props}
       isDrawerOpen={toggle}
       onToggleDrawer={handleToggle}
+      isSettingOpen={isSettingOpen}
+      onToggleSetting={onToggleSetting}
     />
   );
 };

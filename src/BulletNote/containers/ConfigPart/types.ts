@@ -29,6 +29,9 @@ export interface NoteModeSelectorProps {
 export interface NoteModeSelectorWithCtxProps {
 }
 
-export interface DueDateButtonContainerProps extends Omit<DueDateButtonProps, 'dueDateMessageListCount'> {
+export interface DueDateButtonFromCtxStates {
   messageList: MessageList
+  isShowOverDueMessages: BulletNoteState['bulletNoteSetting']['isShowOverDueMessages']
+}
+export interface DueDateButtonContainerProps extends Omit<DueDateButtonProps, 'dueDateMessageListCount'>, DueDateButtonFromCtxStates {
 }

@@ -40,6 +40,9 @@ export interface SetNoteModeAction {
   type: BulletNoteActionTypes.SET_NOTE_MODE,
   payload: SetNoteModePayload
 }
+export interface SetDueDateModeAction {
+  type: BulletNoteActionTypes.SET_DUE_DATE_MODE,
+}
 export interface SetSearchingTextAction {
   type: BulletNoteActionTypes.SET_SEARCHING_TEXT,
   payload: SetSearchingTextPayload
@@ -73,6 +76,10 @@ export const setNoteMode = (noteMode: SetNoteModePayload['noteMode']): SetNoteMo
   payload: { noteMode, }
 });
 
+export const setDueDateMode = (): SetDueDateModeAction => ({
+  type: BulletNoteActionTypes.SET_DUE_DATE_MODE,
+});
+
 export const setSearchingText = (searchingText: SetSearchingTextPayload['searchingText']): SetSearchingTextAction => ({
   type: BulletNoteActionTypes.SET_SEARCHING_TEXT,
   payload: { searchingText: searchingText || '', }
@@ -89,6 +96,7 @@ type ConfigActions =
   SetFilterTagsAction |
   ToggleIsFilteringDoneAction |
   SetNoteModeAction |
+  SetDueDateModeAction |
   SetSearchingTextAction |
   SetBulletNoteConfigAction
 

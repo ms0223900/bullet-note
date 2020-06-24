@@ -3,10 +3,17 @@ import { StarLevelNum, DueType } from "BulletNote/types";
 
 export type AddOrMinus = 'add' | 'minus'
 
-export interface NavBarProps {
-  isOffline: boolean
+export interface NavBarStates {
   isDrawerOpen: boolean
   onToggleDrawer: Callback
+}
+export interface SettingPartStates {
+  isSettingOpen: boolean
+  onToggleSetting: Callback
+}
+
+export interface NavBarProps extends NavBarStates, SettingPartStates {
+  isOffline: boolean
 }
 
 export interface UserNotFoundPageProps {

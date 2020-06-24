@@ -98,15 +98,9 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
           isDisplay={isShowMessages}
         >
           {seperatedMessageListByStar.starMessageList.length > 0 && (
-            <Box 
-              style={{
-              // borderRadius: 4,
-              // boxShadow: '0px 3px 10px #eee',
-                borderLeft: `4.5px solid ${otherColors.starPart}`,
-              }}
-            >
+            <>
               {seperatedMessageListByStar.starMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}
-            </Box>
+            </>
           )}
           <Box>
             {seperatedMessageListByStar.notStarMessageList.map((s: any, i) => renderSingleMessageItemFn(s.shouldDisplay)(s, i))}

@@ -8,6 +8,7 @@ import WholeNoteBlockHandler from 'BulletNote/functions/Handlers/WholeNoteBlockH
 
 const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
   const {
+    isShowOverDueMessages,
     searchingText,
     scrollUpdateStates,
     messageList,
@@ -33,6 +34,7 @@ const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
 
   const tagListData = WholeNoteBlockHandler.getNoteBlockItemTagList(messageList, tagList)({
     searchText: searchingText,
+    isShowOverDueMessages,
   });
 
   return (

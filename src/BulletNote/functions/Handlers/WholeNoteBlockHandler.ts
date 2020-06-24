@@ -1,5 +1,5 @@
 import { TagNoteBlockObj, MessageList } from "BulletNote/types";
-import HandleTagSortMessage from "./handleTagSortMessage";
+import HandleTagSortMessage, { FilterMessageListByDueDateUniqueTagParams } from "./handleTagSortMessage";
 import { dueDateUniqueTag, searchingTag } from "BulletNote/config";
 import { BulletNoteState } from "BulletNote/constants/context";
 
@@ -10,11 +10,12 @@ export interface TagItemForNoteBlockItem {
 
 export interface Options {
   searchText: BulletNoteState['bulletNoteConfig']['searchingText']
+  isShowOverDueMessages: boolean
 }
 
 class WholeNoteBlockHandler {
-  static getDueDateTagTagNoteBlockObj(messageList: MessageList) {
-    const filteredMessageList = HandleTagSortMessage.filterMessageListByDueDateUniqueTag(messageList);
+  static getDueDateTagTagNoteBlockObj(params: FilterMessageListByDueDateUniqueTagParams) {
+    const filteredMessageList = HandleTagSortMessage.filterMessageListByDueDateUniqueTag(params);
     const res = {
       [dueDateUniqueTag]: {
         tagTitle: dueDateUniqueTag,
@@ -74,14 +75,26 @@ class WholeNoteBlockHandler {
 
       let tagList: TagItemForNoteBlockItem[] = [];
       let isEmptyAfterFiltered = false;
-      let tagNoteBlockObj: TagNoteBlockObj;
+      let tagNoteBlockObj: TagNoteBlockObj = {};
 
       if(isDueDateMessageList) {
-        tagList = [{
+        const tagWithShow = {
           tagName: dueDateUniqueTag,
           isShow: true,
-        }];
-        tagNoteBlockObj = this.getDueDateTagTagNoteBlockObj(messageList);
+        };
+        const dueDateTagNoteBlockObj = this.getDueDateTagTagNoteBlockObj({
+          messageList,
+          isShowOverDueMessages: options.isShowOverDueMessages,
+        });
+
+        tagList = [
+          ...tagList,
+          tagWithShow,
+        ];
+        tagNoteBlockObj = {
+          ...tagNoteBlockObj,
+          ...dueDateTagNoteBlockObj
+        };
       }
       else if(isSearchingResult) {
         const searchingResultRes = this.getSearchResultTagNoteBlockObj(messageList)(options.searchText);
@@ -89,13 +102,20 @@ class WholeNoteBlockHandler {
         tagList = searchingResultRes.tagList;
         tagNoteBlockObj = searchingResultRes.tagNoteBlockObj;
       }
-      else {
-        const others = this.getNormalTagNoteBlockObj(messageList, selectedFilterTags);
+      // else {
+        
+      // }
+      const others = this.getNormalTagNoteBlockObj(messageList, selectedFilterTags);
 
-        tagNoteBlockObj = others.tagNoteBlockObj;
-        isEmptyAfterFiltered = others.isEmptyAfterFiltered;
-        tagList = others.tagList;
-      }
+      tagNoteBlockObj = {
+        ...tagNoteBlockObj,
+        ...others.tagNoteBlockObj,
+      };
+      isEmptyAfterFiltered = others.isEmptyAfterFiltered;
+      tagList = [
+        ...tagList,
+        ...others.tagList,
+      ];
 
       const res = {
         isEmptyAfterFiltered,

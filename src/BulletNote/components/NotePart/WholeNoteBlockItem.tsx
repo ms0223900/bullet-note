@@ -10,14 +10,24 @@ import sortMessageList from '../../functions/sort-functions/sortMessageList';
 import SortButtons from './SortButtons';
 import getDynamicMessageList from './functions/getDynamicMessageList';
 
-export const renderDateOrMessageItem = (isFilteringDone: boolean) => (wholeNoteBlockComoponent: WholeNoteBlockComponent, index: number) => {
+export interface RenderDataOrMessageItemOptions {
+  isFilteringDone: boolean
+  isShowDateTagDivier: boolean
+}
+
+export const renderDateOrMessageItem = (options: RenderDataOrMessageItemOptions) => (wholeNoteBlockComoponent: WholeNoteBlockComponent, index: number) => {
+  const {
+    isFilteringDone,
+    isShowDateTagDivier,
+  } = options;
+  
   if(wholeNoteBlockComoponent.type === 'message-item') {
     return (
       renderSingleMessageItemFn(true, isFilteringDone)(wholeNoteBlockComoponent.component, index)
     );
   } 
   
-  else if(wholeNoteBlockComoponent.type === 'date') {
+  else if(wholeNoteBlockComoponent.type === 'date' && isShowDateTagDivier) {
     return (
       <WholeNoteBlockDateItem 
         key={wholeNoteBlockComoponent.component.toString()} 
@@ -69,7 +79,7 @@ const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
                 {...props}
               />
               {dateOrMessageItemList
-                .map(renderDateOrMessageItem(isFilteringDone))
+                .map(renderDateOrMessageItem(props))
               }
             </ToggleDisplayWrapper>
           ) : (

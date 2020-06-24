@@ -2,7 +2,7 @@ import { BulletNoteState, initShowingDaysRange, initIsFilteringDone } from "Bull
 import ConfigActions from "BulletNote/actions/config-actions";
 import { BulletNoteActionTypes } from "BulletNote/actions";
 import ConfigLocalStorageHandler from "BulletNote/functions/Handlers/ConfigLocalStorageHandler";
-import { searchingTag } from "BulletNote/config";
+import { searchingTag, dueDateUniqueTag } from "BulletNote/config";
 
 const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState['bulletNoteConfig'] => {
   switch (action.type) {
@@ -49,17 +49,38 @@ const config = (state: BulletNoteState, action: ConfigActions): BulletNoteState[
       return newConfig;
     }
 
-    case BulletNoteActionTypes.SET_SEARCHING_TEXT: {
+    case BulletNoteActionTypes.SET_DUE_DATE_MODE: {
+      if(state.bulletNoteConfig.selectedFilterTags.includes(dueDateUniqueTag)) {
+        return state.bulletNoteConfig;
+      }
+      
       const newConfig: BulletNoteState['bulletNoteConfig'] = ({
         ...state.bulletNoteConfig,
         isFilteringDone: true,
         selectedFilterTags: [
-          searchingTag,
+          ...state.bulletNoteConfig.selectedFilterTags,
+          dueDateUniqueTag,
         ],
+        noteMode: 'tag-whole-page',
+      });
+      ConfigLocalStorageHandler.setData(newConfig);
+      return newConfig;
+    }
+
+    case BulletNoteActionTypes.SET_SEARCHING_TEXT: {
+      const newTags = [...new Set([
+        ...state.bulletNoteConfig.selectedFilterTags,
+        searchingTag,
+      ])];
+      
+      const newConfig: BulletNoteState['bulletNoteConfig'] = ({
+        ...state.bulletNoteConfig,
+        isFilteringDone: true,
+        selectedFilterTags: newTags,
         noteMode: 'tag-whole-page',
         searchingText: action.payload.searchingText,
       });
-      ConfigLocalStorageHandler.setData(newConfig);
+      // ConfigLocalStorageHandler.setData(newConfig);
       return newConfig;
     }
 

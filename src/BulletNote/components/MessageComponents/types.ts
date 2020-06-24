@@ -2,6 +2,7 @@ import { StarItemContainerProps, PinItemContainerProps } from "BulletNote/contai
 import { MessageItemButtonsProps, BasicMessageItemProps } from "../types";
 import { Callback } from "common-types";
 import { InputProps } from "../InputPart/types";
+import { BulletNoteConfig } from "BulletNote/constants/context";
 
 export interface EditStates {
   handleConfirmEdit: Callback
@@ -10,6 +11,7 @@ export interface EditStates {
 }
 
 export interface EditContentProps extends InputProps, EditStates {
+  searchText: BulletNoteConfig['searchingText']
   content: string
   onEditMessage?: Callback
 }

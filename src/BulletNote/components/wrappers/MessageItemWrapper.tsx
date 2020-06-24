@@ -4,11 +4,18 @@ import { MessageItemWrapperProps } from '../types';
 import BasicMessageItem from '../BasicMessageItem';
 import BasicMessageItemContainerWithCtx from 'BulletNote/containers/BasicMessageItemContainer';
 import checkMessageShouldStandBy from 'BulletNote/functions/message-functions/checkMessageShouldStandBy';
+import { otherColors } from 'BulletNote/theme/theme';
 
+export const getBorderLeftStyle = (props: MessageItemWrapperProps) => {
+  const isStarMessage = props.message.starLevelNum && props.message.starLevelNum > 0;
+  const res = isStarMessage ? `4.5px solid ${otherColors.starPart}` : 'none';
+  return res;
+};
 
 const useStyles = makeStyles<Theme, MessageItemWrapperProps>(theme => ({
   root: {
     // cursor: 'pointer',
+    borderLeft: getBorderLeftStyle,
     opacity: props => checkMessageShouldStandBy(props.message.starLevelNum) ? 0.25 : 1,
     paddingBottom: 0,
     alignItems: 'center',

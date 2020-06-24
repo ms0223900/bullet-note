@@ -1,28 +1,38 @@
 import React from 'react';
-import { Box, Typography, TextField, Grid } from '@material-ui/core';
-import BulletTagList from './BullteTagList';
+import { Grid, Box, makeStyles } from '@material-ui/core';
 import { BasicMessageItemProps } from './types';
 import MessageButtonsPart from './MessageComponents/MessageButtonsPart';
-import MessageContentPart from './MessageComponents/MessageContentPart';
 import MessageContentPartContainer from 'BulletNote/containers/MessageComponents/MessageContentPartContainer';
-import DelayRenderWrapper from './wrappers/DelayRenderWrapper';
+
+const useStyles = makeStyles(theme => ({
+  contentPart: {
+    width: '95%',
+  },
+  buttonsPart: {
+    width: '5%',
+    [theme.breakpoints.down('sm')]: {
+      width: '8%',
+    }
+  },
+}));
 
 const BasicMessageItem = (props: BasicMessageItemProps) => {
+  const classes = useStyles();
+
   return (
     <Box 
       display={'flex'} 
       width={'100%'}
+      alignItems={'center'}
     >
-      <Grid container>
-        <Grid item xs={11}>
-          <MessageContentPartContainer 
-            {...props} />
-        </Grid>
-        <Grid item xs={1}>
-          <MessageButtonsPart 
-            {...props} />
-        </Grid>
-      </Grid>
+      <Box className={classes.contentPart}>
+        <MessageContentPartContainer 
+          {...props} />
+      </Box>
+      <Box className={classes.buttonsPart}>
+        <MessageButtonsPart 
+          {...props} />
+      </Box>
     </Box>
   );
 };

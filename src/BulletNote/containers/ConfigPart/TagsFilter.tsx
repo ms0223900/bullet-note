@@ -64,7 +64,8 @@ const TagsFilter = (props: TagsFilterProps) => {
   useEffect(() => {
     // setTagsToCtx(selectedTags);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTags.length]);
+    setSelectedTags(initSelectedFilterTags);
+  }, [initSelectedFilterTags, initSelectedFilterTags.length]);
 
   const tagsKeys = Object.keys(dividedTags);
   const tagsOptions = dividedTags['normalTags'].map(t => ({

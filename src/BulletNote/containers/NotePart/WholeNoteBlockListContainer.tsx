@@ -6,6 +6,7 @@ import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { WholeNoteBlockListContainerProps, WholeNoteBlockListContainerWithCtxProps } from './types';
 import { connectCtx } from 'react-function-helpers';
 import useScrollToUpdate from 'lib/customHooks/useScrollToUpdate';
+import { WholeNoteBlockListCtxStates } from 'BulletNote/components/NotePart/types';
 
 const WholeNoteBlockListContainer = (props: WholeNoteBlockListContainerProps) => {
   const states = useScrollToUpdate({
@@ -22,11 +23,9 @@ const WholeNoteBlockListContainer = (props: WholeNoteBlockListContainerProps) =>
 
 interface OwnProps extends WholeNoteBlockListContainerWithCtxProps {}
 
-const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, {
-  tagList: WholeNoteBlockListContainerProps['tagList']
-  searchingText: WholeNoteBlockListContainerProps['searchingText']
-}> = (state) => {
+const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, WholeNoteBlockListCtxStates> = (state) => {
   return ({
+    isShowOverDueMessages: state.bulletNoteSetting.isShowOverDueMessages,
     searchingText: state.bulletNoteConfig.searchingText,
     tagList: state.bulletNoteConfig.selectedFilterTags,
   });

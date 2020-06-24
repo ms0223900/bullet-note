@@ -1,8 +1,14 @@
 import { MessageList, TagNoteBlockList, TagNoteBlockItem, MessageItem, TagNoteBlockObj } from "../../types";
 import DueDateHandler from "./DueDateHandler";
 import checkMessageItemIsDone from "../checkMessageItemIsDone";
-import { BulletNoteState } from "BulletNote/constants/context";
+import { BulletNoteState, BulletNoteSetting } from "BulletNote/constants/context";
+import TextHighLightHandler from "./TextHighLightHandler";
 import SearchMatchHandler from "./SearchMatchHandler";
+
+export interface FilterMessageListByDueDateUniqueTagParams {
+  messageList: MessageList,
+  isShowOverDueMessages: BulletNoteSetting['isShowOverDueMessages']
+}
 
 class HandleTagSortMessage {
   static checkNewStrIsInStrList(strList: string[], newStr: string) {
@@ -93,11 +99,15 @@ class HandleTagSortMessage {
     return res;
   }
 
-  static filterMessageListByDueDateUniqueTag(_messageList: MessageList) {
+  static filterMessageListByDueDateUniqueTag({
+    messageList,
+    isShowOverDueMessages
+  }: FilterMessageListByDueDateUniqueTagParams) {
     let res: MessageList = [];
 
-    _messageList.forEach((messageItem) => {
-      const dueDateIsInRange = DueDateHandler.checkMessageItemHaveDueDateAndIsInRange(messageItem.message.tagList);
+    messageList.forEach((messageItem) => {
+      const dueDateIsInRange = 
+        DueDateHandler.checkMessageItemHaveDueDateAndIsInRange(messageItem.message.tagList, isShowOverDueMessages);
       const messageIsNotDone = !checkMessageItemIsDone(messageItem);
       if(dueDateIsInRange && messageIsNotDone) {
         res = [

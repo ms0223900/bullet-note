@@ -100,9 +100,11 @@ const WholeNoteBlockItemContainer = (props: WholeNoteBlogItemContainerProps) => 
 };
 
 const mapStateToProps: MapStateToProps<BulletNoteState, WholeNoteBlogItemContainerWithCtxProps, {
+  isShowDateTagDivier: WholeNoteBlogItemContainerProps['isShowDateTagDivier']
   isFilteringDone: WholeNoteBlogItemContainerProps['isFilteringDone']
 }> = (state) => {
   return ({
+    isShowDateTagDivier: state.bulletNoteSetting.isShowDateTagDivier,
     isFilteringDone: state.bulletNoteConfig.isFilteringDone,
   });
 };

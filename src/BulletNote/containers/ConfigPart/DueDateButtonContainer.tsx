@@ -4,13 +4,13 @@ import { MapStateToProps, MapDispatchToProps } from 'react-function-helpers/lib/
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
 import { connectCtx } from 'react-function-helpers';
 import DueDateButton from 'BulletNote/components/ConfigPart/DueDateButton';
-import { DueDateButtonContainerProps } from './types';
+import { DueDateButtonContainerProps, DueDateButtonFromCtxStates } from './types';
 import HandleTagSortMessage from 'BulletNote/functions/Handlers/handleTagSortMessage';
-import { setBulletNoteConfig } from 'BulletNote/actions/config-actions';
+import { setBulletNoteConfig, setDueDateMode } from 'BulletNote/actions/config-actions';
 import { dueDateUniqueTag } from 'BulletNote/config';
 
 const DueDateButtonContainer = (props: DueDateButtonContainerProps) => {
-  const dueDateMessageListCount = HandleTagSortMessage.filterMessageListByDueDateUniqueTag(props.messageList).length;
+  const dueDateMessageListCount = HandleTagSortMessage.filterMessageListByDueDateUniqueTag(props).length;
 
   return (
     <DueDateButton 
@@ -22,10 +22,9 @@ const DueDateButtonContainer = (props: DueDateButtonContainerProps) => {
 
 interface OwnProps {}
 
-const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, {
-  messageList: DueDateButtonContainerProps['messageList']
-}> = (state) => {
+const mapStateToProps: MapStateToProps<BulletNoteState, OwnProps, DueDateButtonFromCtxStates> = (state) => {
   return ({
+    isShowOverDueMessages: state.bulletNoteSetting.isShowOverDueMessages,
     messageList: state.messageList,
   });
 };
@@ -35,12 +34,7 @@ const mapDispatchToProps: MapDispatchToProps<OwnProps, {
 }> = (dispatch) => {
   return ({
     setDueDateModeFn: () => {
-      const action = setBulletNoteConfig({
-        noteMode: 'tag-whole-page',
-        selectedFilterTags: [
-          dueDateUniqueTag,
-        ]
-      });
+      const action = setDueDateMode();
       dispatch(action);
     }
   });

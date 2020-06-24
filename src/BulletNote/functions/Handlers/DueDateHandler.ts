@@ -1,5 +1,7 @@
 import checkDateIsValid from "lib/checkDateIsValid";
-import { MessageItem } from "BulletNote/types";
+import { MessageItem, TagItem } from "BulletNote/types";
+import WeekDatesHandler from "../WeekDatesHandler";
+import TagHandlers from "./TagHandlers";
 
 export const dueDateJoinStr = '-';
 export const dueDateRegExp = new RegExp(`#due(${dueDateJoinStr}\\d{1,2})+`, 'g');
@@ -133,8 +135,8 @@ class DueDateHandler {
         secs
       } = dueDateRemainTimes;
       res = `
-      ${days}d : 
-      ${hours}h : 
+      ${days}d: 
+      ${hours}h: 
       ${mins}m
       `;
     }
@@ -146,17 +148,36 @@ class DueDateHandler {
     return res;
   }
 
-  static checkMessageItemHaveDueDateAndIsInRange(tagList: MessageItem['message']['tagList']) {
+  static checkMessageItemHaveDueDateAndIsInRange(
+    tagList: MessageItem['message']['tagList'],
+    isShowOverDueMessages: boolean,
+  ) {
     let res = false;
 
     const dueDate = this.getMessageItemDueDate(tagList);
     if(dueDate) {
       const remainTimes = this.calRemainTimes(dueDate);
-      if(remainTimes) {
+      if(remainTimes || isShowOverDueMessages) {
         res = true;
       }
     }
     
+    return res;
+  }
+
+  static makeThisWeekEndDueDateTag(): TagItem {
+    const today = new Date();
+    const sunday = WeekDatesHandler.getThisWeekSunday(today);
+    const saturday = WeekDatesHandler.getThisWeekSaturdayFromSunday(sunday);
+    saturday.setHours(23, 59);
+    
+    const saturdayLastStr = `due-${saturday.getMonth() + 1}-${saturday.getDate()}-${saturday.getHours()}-${saturday.getMinutes()}`;
+    const tagStr = TagHandlers.makeTagStr(saturdayLastStr);
+
+    const res: TagItem = {
+      id: tagStr,
+      name: tagStr,
+    };
     return res;
   }
 

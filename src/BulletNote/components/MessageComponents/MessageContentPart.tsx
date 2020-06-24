@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, Grid } from '@material-ui/core';
 import { MessageContentPartProps } from './types';
 import DueDateHandler, { dueDateRegExp } from 'BulletNote/functions/Handlers/DueDateHandler';
 import DueDateItemContainer from 'BulletNote/containers/CommonComponents/DueDateItemContainer';
@@ -18,7 +18,7 @@ export const regDateToString = (date: Date | string) => {
   return `${hour}:${min}`;
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
      
   },
@@ -26,6 +26,16 @@ const useStyles = makeStyles(() => ({
     fontSize: '1em',
     overflowWrap: 'anywhere',
     whiteSpace: 'pre-wrap',
+  },
+  tagPart: {
+    width: `${1/12 * 100}%`,
+    [theme.breakpoints.down('xs')]: {
+      width: 0,
+      overflow: 'hidden',
+    }
+  },
+  dueDatePart: {
+    width: `${1/12 * 100}%`,
   }
 }));
 
@@ -34,6 +44,7 @@ const MessageContentPart = (props: MessageContentPartProps) => {
     onChangeInput,
     message,
   } = props;
+  const classes = useStyles();
 
   const {
     content,
@@ -44,40 +55,38 @@ const MessageContentPart = (props: MessageContentPartProps) => {
   const tagListWithoutDueDate = DueDateHandler.getTagListWithoutDueDateTag(tagList);
   
   return (
-    <Box
-      display={'flex'} 
-      alignItems={'center'}
-    >
-      <EditContentContainer
-        {...props}
-        content={content}
-        onChange={onChangeInput}
-      />
-      {dueDate && (
-        <BulletTagList
-          tagList={tagListWithoutDueDate} 
+    <Grid container alignItems={'center'}>
+      <Grid item xs={11} sm={10}>
+        <EditContentContainer
+          {...props}
+          content={content}
+          onChange={onChangeInput}
         />
+      </Grid>
+      {dueDate && (
+        <>
+          <Grid item className={classes.tagPart}>
+            <BulletTagList
+              tagList={tagListWithoutDueDate} 
+            />
+          </Grid>
+          <Grid item className={classes.dueDatePart}>
+            <DueDateItemContainer 
+              date={dueDate}
+              dueType={'due-normal'}
+            />
+          </Grid>
+        </>
       )}
       <Box 
         paddingLeft={1}
       >
         {/* <Typography variant={'body1'} color={'textSecondary'}>
-          {regDateToString(createdAt)}
-        </Typography> */}
-        {dueDate && (
-          <> 
-            {/* <BulletTagList
-              tagList={tagList} 
-            /> */}
-            <DueDateItemContainer 
-              date={dueDate}
-              dueType={'due-normal'}
-            />
+            {regDateToString(createdAt)}
+          </Typography> */}
           
-          </>
-        )}
       </Box>
-    </Box>
+    </Grid>
   );
 };
 

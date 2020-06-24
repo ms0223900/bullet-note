@@ -15,17 +15,21 @@ const useDueDateTimer = (dueDate: Date, options?: {
   const initDueDateRemainStr = DueDateHandler.getDueDateRemainTimeStr(dueDate);
   const [remainTimesStr, setStr] = React.useState(initDueDateRemainStr);
 
-  const getRemainStr = useCallback(() => {
-    return DueDateHandler.getDueDateRemainTimeStr(dueDate);
+  const handleSetRemainStr = useCallback(() => {
+    const remainStr = DueDateHandler.getDueDateRemainTimeStr(dueDate);
+    setStr(remainStr);
   }, [dueDate]);
   
   React.useEffect(() => {
     const timer = setInterval(() => {
-      const str = getRemainStr();
-      setStr(str);
+      handleSetRemainStr();
     }, updateInterval);
     return () => clearInterval(timer);
-  }, [getRemainStr, updateInterval]);
+  }, [handleSetRemainStr, updateInterval]);
+
+  React.useEffect(() => {
+    handleSetRemainStr();
+  }, [dueDate, handleSetRemainStr]);
 
   return ({
     remainTimesStr,

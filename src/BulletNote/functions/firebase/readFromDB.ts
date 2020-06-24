@@ -11,7 +11,9 @@ const readFromDB = ({
       message: 'Please check user id again.'
     });
     return Promise.resolve(undefined);
-  } else {
+  } 
+
+  else {
     const path = firebasePath(userId);
     return database
       .ref(path)
