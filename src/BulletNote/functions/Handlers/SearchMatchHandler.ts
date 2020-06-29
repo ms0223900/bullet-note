@@ -63,6 +63,17 @@ class SearchMatchHandler {
     const res = new RegExp(searchText, flag);
     return res;
   }
+
+  makeSearchTextRegExp(options: {
+    searchText: string
+    searchMode: SearchMode
+    matchCase: boolean
+  }) {
+    const dividedSearchText = this.handleDivideSearchText(options.searchText, options.searchMode);
+    const joinedSearchText = dividedSearchText.join('|');
+    const res = this.getSearchTextRegExp(joinedSearchText, options.matchCase);
+    return res;
+  }
   
   matchSingleSearchText({
     text, singleSearchText, matchCase

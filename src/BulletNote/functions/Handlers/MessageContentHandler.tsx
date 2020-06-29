@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Box, makeStyles } from '@material-ui/core';
 import { BulletNoteConfig } from 'BulletNote/constants/context';
 import TextHighLightHandler from './TextHighLightHandler';
+import SearchMatchHandler from './SearchMatchHandler';
 
 const urlRegExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
 
@@ -94,10 +95,18 @@ class MessageContentHandler {
     searchText?: BulletNoteConfig['searchingText']
   }) {
     const parsedContent = this.parseContent(content);
+    const hightLightRegExp = options?.searchText ? new SearchMatchHandler({
+      text: '',
+      searchText: '',
+    }).makeSearchTextRegExp({
+      searchText: String(options.searchText),
+      searchMode: 'ch-blurry',
+      matchCase: false,
+    }) : '';
 
     const res = parsedContent.map((c, i) => {
       const handledContent = options?.searchText ?
-        TextHighLightHandler.getHighlightContent(String(options.searchText))(c.content) : c.content;
+        TextHighLightHandler.getHighlightContent(hightLightRegExp)(c.content) : c.content;
 
       switch (c.type) {
         case 'url':
