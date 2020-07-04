@@ -1,6 +1,6 @@
 import { Callback } from "common-types";
 import { KEY_CODES } from "BulletNote/config";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, KeyboardEvent } from "react";
 import KeyCodeCombiner from "BulletNote/functions/KeyCodeCombiner";
 
 export const getDefaultKeyCodes = () => {
@@ -23,24 +23,29 @@ function useTriggerCallbackByKeyCodes(callback: Callback, keyCodes=[defaultKeyCo
     callback: callback
   }));
 
-  const handleTriggerCallback = useCallback((e: KeyboardEvent) => {
+  const handleTriggerCallback = useCallback((e: KeyboardEvent<any>) => {
     const { keyCode } = e;
     keyCodeCompinerRef.current.triggerCallbackByKeyCode(keyCode, callback);
   }, [callback]);
 
-  const handleRemoveKKeycode = useCallback((e: KeyboardEvent) => {
+  const handleRemoveKKeycode = useCallback((e: KeyboardEvent<any>) => {
     const { keyCode } = e;
     keyCodeCompinerRef.current.removeKeyCode(keyCode);
   }, []);
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleTriggerCallback);
-    window.addEventListener('keyup', handleRemoveKKeycode);
-    return () => {
-      window.removeEventListener('keydown', handleTriggerCallback);
-      window.removeEventListener('keyup', handleRemoveKKeycode);
-    };
-  }, [handleRemoveKKeycode, handleTriggerCallback]);
+  // useEffect(() => {
+  //   window.addEventListener('keydown', handleTriggerCallback);
+  //   window.addEventListener('keyup', handleRemoveKKeycode);
+  //   return () => {
+  //     window.removeEventListener('keydown', handleTriggerCallback);
+  //     window.removeEventListener('keyup', handleRemoveKKeycode);
+  //   };
+  // }, [handleRemoveKKeycode, handleTriggerCallback]);
+
+  return ({
+    handleTriggerCallback,
+    handleRemoveKKeycode,
+  });
 }
 
 export default useTriggerCallbackByKeyCodes;

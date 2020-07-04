@@ -1,8 +1,10 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 import { Callback } from "common-types";
 
 export interface InputProps {
   value?: string
+  onKeyDown: (e: KeyboardEvent<HTMLTextAreaElement>) => any
+  onKeyUp: (e: KeyboardEvent<HTMLTextAreaElement>) => any
   onChange?: (e: ChangeEvent<HTMLInputElement>) => any
 }
 

@@ -22,7 +22,10 @@ export const useEditContent = (options: {
     }
   }, [isEditing, options]);
 
-  useTriggerCallbackByKeyCodes(handleConfirmEdit, [
+  const {
+    handleTriggerCallback,
+    handleRemoveKKeycode,
+  } = useTriggerCallbackByKeyCodes(handleConfirmEdit, [
     defaultKeyCodes,
     [KEY_CODES.ESC]
   ]);
@@ -31,6 +34,8 @@ export const useEditContent = (options: {
     handleConfirmEdit,
     isEditing,
     setEdit,
+    handleTriggerCallback,
+    handleRemoveKKeycode,
   });
 };
 
@@ -42,7 +47,9 @@ const EditContentContainer = (props: EditContentContainerProps) => {
   const {
     isEditing,
     setEdit,
-    handleConfirmEdit
+    handleConfirmEdit,
+    handleTriggerCallback,
+    handleRemoveKKeycode,
   } = useEditContent({
     onEditMessage,
   });
@@ -50,6 +57,8 @@ const EditContentContainer = (props: EditContentContainerProps) => {
   return (
     <EditContent 
       {...props}
+      onKeyDown={handleTriggerCallback}
+      onKeyUp={handleRemoveKKeycode}
       handleConfirmEdit={handleConfirmEdit}
       isEditing={isEditing}
       setEditFn={setEdit}

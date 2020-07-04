@@ -52,7 +52,10 @@ const InputPartContainer = (props: InputPartContainerProps) => {
     triggerKeyCode: KEY_CODES.SPACE,
   });
 
-  useTriggerCallbackByKeyCodes(handleSendMessage);
+  const {
+    handleTriggerCallback,
+    handleRemoveKKeycode,
+  } = useTriggerCallbackByKeyCodes(handleSendMessage);
   const {
     normalTags
   } = divideTagStrList(tags);
@@ -62,6 +65,8 @@ const InputPartContainer = (props: InputPartContainerProps) => {
       tags={normalTags}
       value={value}
       tagValue={values.tagValue}
+      onKeyDown={handleTriggerCallback}
+      onKeyUp={handleRemoveKKeycode}
       onChange={handleChange}
       onChangeSelect={handleSelect('tagValue')}
       onSendMessage={handleSendMessage}

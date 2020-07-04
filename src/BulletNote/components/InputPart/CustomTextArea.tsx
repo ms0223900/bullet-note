@@ -42,6 +42,8 @@ const CustomTextArea = (props: InputProps) => {
       autoFocus={true}
       value={value}
       onChangeCapture={onChange as any}
+      onKeyDown={props.onKeyDown}
+      onKeyUp={props.onKeyUp}
     />
   );
 };

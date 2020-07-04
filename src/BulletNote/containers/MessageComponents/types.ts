@@ -4,6 +4,6 @@ import { EditContentProps, EditStates } from "BulletNote/components/MessageCompo
 export interface MessageContentPartContainerProps extends Omit<BasicMessageItemProps, 'isEditing' | 'onConfirmEdit' | 'setEditFn'> {
 }
 
-export interface EditContentContainerProps extends Omit<EditContentProps, keyof EditStates> {
+export interface EditContentContainerProps extends Omit<EditContentProps, keyof EditStates | 'onKeyDown' | 'onKeyUp'> {
   
 }

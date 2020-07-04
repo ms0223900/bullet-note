@@ -66,6 +66,7 @@ class KeyCodeCombiner {
   }
 
   triggerCallbackByKeyCode(keyCode: number, callback?: Callback) {
+    // console.log(keyCode);
     if(callback) {
       this.callback = callback;
     }
