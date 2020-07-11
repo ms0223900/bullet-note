@@ -17,7 +17,17 @@ export const getDefaultKeyCodes = () => {
 
 export const defaultKeyCodes = getDefaultKeyCodes();
 
-function useTriggerCallbackByKeyCodes(callback: Callback, keyCodes=[defaultKeyCodes]) {
+export interface UseTriggerCallbackByKeyCodesOptions {
+  callback: Callback
+  keyCodes?: KEY_CODES[][]
+  isAutoDetectKeyCode?: boolean
+}
+
+function useTriggerCallbackByKeyCodes({
+  callback, keyCodes=[defaultKeyCodes], isAutoDetectKeyCode
+}: UseTriggerCallbackByKeyCodesOptions) {
+  
+
   const keyCodeCompinerRef = useRef(new KeyCodeCombiner({
     keyCodes,
     callback: callback
@@ -33,14 +43,16 @@ function useTriggerCallbackByKeyCodes(callback: Callback, keyCodes=[defaultKeyCo
     keyCodeCompinerRef.current.removeKeyCode(keyCode);
   }, []);
 
-  // useEffect(() => {
-  //   window.addEventListener('keydown', handleTriggerCallback);
-  //   window.addEventListener('keyup', handleRemoveKKeycode);
-  //   return () => {
-  //     window.removeEventListener('keydown', handleTriggerCallback);
-  //     window.removeEventListener('keyup', handleRemoveKKeycode);
-  //   };
-  // }, [handleRemoveKKeycode, handleTriggerCallback]);
+  useEffect(() => {
+    if(isAutoDetectKeyCode) {
+      window.addEventListener('keydown', handleTriggerCallback as any);
+      window.addEventListener('keyup', handleRemoveKKeycode as any);
+      return () => {
+        window.removeEventListener('keydown', handleTriggerCallback as any);
+        window.removeEventListener('keyup', handleRemoveKKeycode as any);
+      };
+    }
+  }, [handleRemoveKKeycode, handleTriggerCallback, isAutoDetectKeyCode]);
 
   return ({
     handleTriggerCallback,

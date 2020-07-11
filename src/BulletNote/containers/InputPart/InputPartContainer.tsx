@@ -55,7 +55,9 @@ const InputPartContainer = (props: InputPartContainerProps) => {
   const {
     handleTriggerCallback,
     handleRemoveKKeycode,
-  } = useTriggerCallbackByKeyCodes(handleSendMessage);
+  } = useTriggerCallbackByKeyCodes({
+    callback: handleSendMessage
+  });
   const {
     normalTags
   } = divideTagStrList(tags);

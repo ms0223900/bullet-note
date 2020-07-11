@@ -41,9 +41,13 @@ const SearchPartContainer = (props: SearchPartContainerProps) => {
     setSearchingTextToCtx(newVal);
   }, [setSearchingTextToCtx, setVal]);
 
-  useTriggerCallbackByKeyCodes(handleSearch, [
-    [KEY_CODES.ENTER]
-  ]);
+  useTriggerCallbackByKeyCodes({
+    callback: handleSearch,
+    keyCodes:  [
+      [KEY_CODES.ENTER]
+    ],
+    isAutoDetectKeyCode: true,
+  });
 
   return (
     <SearchPart 

@@ -25,10 +25,13 @@ export const useEditContent = (options: {
   const {
     handleTriggerCallback,
     handleRemoveKKeycode,
-  } = useTriggerCallbackByKeyCodes(handleConfirmEdit, [
-    defaultKeyCodes,
-    [KEY_CODES.ESC]
-  ]);
+  } = useTriggerCallbackByKeyCodes({
+    callback: handleConfirmEdit,
+    keyCodes: [
+      defaultKeyCodes,
+      [KEY_CODES.ESC]
+    ]
+  });
 
   return ({
     handleConfirmEdit,
