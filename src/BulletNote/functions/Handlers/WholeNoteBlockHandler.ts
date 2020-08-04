@@ -99,9 +99,6 @@ class WholeNoteBlockHandler {
       if(haveSearchingResult) {
         const searchingResultRes = this.getSearchResultTagNoteBlockObj(messageList)(options.searchText);
         
-        tagList = searchingResultRes.tagList;
-        tagNoteBlockObj = searchingResultRes.tagNoteBlockObj;
-
         tagList = [
           ...tagList,
           ...searchingResultRes.tagList,
