@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, memo } from 'react';
 import { Box } from '@material-ui/core';
 import ToggleButton from 'BulletNote/containers/CommonComponents/ToggleButton';
 import { ToggleButtonProps } from 'BulletNote/containers/CommonComponents/types';
@@ -109,4 +109,4 @@ const SortButtons = (props: SortButtonsProps) => {
   );
 };
 
-export default SortButtons;
+export default memo(SortButtons);

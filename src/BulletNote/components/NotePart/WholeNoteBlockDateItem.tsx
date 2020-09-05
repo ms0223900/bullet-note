@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Typography, makeStyles } from '@material-ui/core';
 import { WholeNoteBlockDateItemProps } from './types';
 import { getDateTitleStr } from '../DateTitle';
@@ -40,4 +40,4 @@ const WholeNoteBlockDateItem = (props:WholeNoteBlockDateItemProps) => {
   );
 };
 
-export default WholeNoteBlockDateItem;
+export default memo(WholeNoteBlockDateItem);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, Paper, Button, Typography } from '@material-ui/core';
 import TagTitle from './TagTitle';
 import { WholeNoteBlogItemProps } from './types';
@@ -57,7 +57,9 @@ const WholeNoteBlockItem = (props: WholeNoteBlogItemProps) => {
     isShowMessages,
   } = props;
   
-  const dateOrMessageItemList = getDateOrMessageItemFromDateMessageList(messageList)(isFilteringDone);
+  const dateOrMessageItemList = useMemo(() => (
+    getDateOrMessageItemFromDateMessageList(messageList)(isFilteringDone)
+  ), [isFilteringDone, messageList]);
 
   return (
     <Box

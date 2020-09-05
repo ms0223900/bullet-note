@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { Box, makeStyles, Divider, Hidden, Button } from '@material-ui/core';
 import { EditContentProps } from './types';
 import CustomTextArea from '../InputPart/CustomTextArea';
@@ -30,16 +30,29 @@ const useStyles = makeStyles(theme => ({
 
 const EditContent = (props: EditContentProps) => {
   const {
-    handleConfirmEdit,
     isEditing,
-    setEditFn,
     content,
+    searchText,
+    setEditFn,
+    handleConfirmEdit,
   } = props;
+
   const classes = useStyles();
   const {
     toggle: isExpanded,
     handleToggle,
   } = useToggle(false);
+
+  const parsedContent = useMemo(() => {
+    if(!isEditing) {
+      return (
+        MessageContentHandler.renderParsedContent(content, {
+          searchText: searchText,
+        })
+      );
+    }
+    return '';
+  }, [content, isEditing, searchText]);
 
   if(isEditing) {
     return (
@@ -73,11 +86,9 @@ const EditContent = (props: EditContentProps) => {
       onDoubleClick={() => setEditFn(true)}
       // onBlur={onConfirmEdit}
     >
-      {MessageContentHandler.renderParsedContent(content, {
-        searchText: props.searchText,
-      })}
+      {parsedContent}
     </Box>
   );
 };
 
-export default EditContent;
+export default memo(EditContent);

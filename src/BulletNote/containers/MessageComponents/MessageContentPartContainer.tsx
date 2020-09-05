@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import MessageContentPart from 'BulletNote/components/MessageComponents/MessageContentPart';
 import { MessageContentPartContainerProps } from './types';
 
@@ -10,4 +10,4 @@ const MessageContentPartContainer = (props: MessageContentPartContainerProps) =>
   );
 };
 
-export default MessageContentPartContainer;
+export default memo(MessageContentPartContainer);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, makeStyles, Theme } from '@material-ui/core';
 import { MessageItemWrapperProps } from '../types';
 import BasicMessageItem from '../BasicMessageItem';
@@ -49,4 +49,4 @@ const MessageItemWrapper = (props: MessageItemWrapperProps) => {
   );
 };
 
-export default MessageItemWrapper;  
+export default memo(MessageItemWrapper);  

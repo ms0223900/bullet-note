@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, makeStyles, Grid } from '@material-ui/core';
 import { MessageContentPartProps } from './types';
 import DueDateHandler, { dueDateRegExp } from 'BulletNote/functions/Handlers/DueDateHandler';
@@ -90,4 +90,4 @@ const MessageContentPart = (props: MessageContentPartProps) => {
   );
 };
 
-export default MessageContentPart;
+export default memo(MessageContentPart);

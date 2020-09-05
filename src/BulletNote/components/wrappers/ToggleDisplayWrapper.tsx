@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box } from '@material-ui/core';
 import { ToggleDisplayWrapperProps } from './types';
 
@@ -15,4 +15,4 @@ const ToggleDisplayWrapper = (props: ToggleDisplayWrapperProps) => {
   );
 };
 
-export default ToggleDisplayWrapper;
+export default memo(ToggleDisplayWrapper);

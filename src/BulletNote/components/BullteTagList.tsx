@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box } from '@material-ui/core';
 import { BulletTagListProps } from '../types';
 import BulletTagItem from './BulletTagItem';
@@ -17,4 +17,4 @@ const BulletTagList = (props: BulletTagListProps) => {
   );
 };
 
-export default BulletTagList;
+export default memo(BulletTagList);

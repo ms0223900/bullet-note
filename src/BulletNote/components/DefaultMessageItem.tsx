@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box } from '@material-ui/core';
 import { DefaultMessageItemProps } from './types';
 import MessageItemWrapperContainerWithCtx from 'BulletNote/containers/wrappers/MessageItemWrapperContainer';
@@ -18,4 +18,4 @@ const DefaultMessageItem = (props: DefaultMessageItemProps) => {
   );
 };
 
-export default DefaultMessageItem;
+export default memo(DefaultMessageItem);

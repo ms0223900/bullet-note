@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Box, Typography, RootRef } from '@material-ui/core';
 import { WholeNoteBlockListProps } from './types';
 import WholeNoteBlockItemContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlockItemContainer';
@@ -24,6 +24,12 @@ const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
 
   const classes = useNotePartStyles();
 
+  const tagListData = useMemo(() => WholeNoteBlockHandler.getNoteBlockItemTagList(messageList, tagList)({
+    searchText: searchingText,
+    isShowOverDueMessages,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [isShowOverDueMessages, JSON.stringify(messageList), searchingText, JSON.stringify(tagList)]);
+
   if(tagList.length === 0) {
     return (
       <Typography>
@@ -31,11 +37,6 @@ const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
       </Typography>
     );
   }
-
-  const tagListData = WholeNoteBlockHandler.getNoteBlockItemTagList(messageList, tagList)({
-    searchText: searchingText,
-    isShowOverDueMessages,
-  });
 
   return (
     <RootRef

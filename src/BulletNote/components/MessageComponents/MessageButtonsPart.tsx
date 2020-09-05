@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, makeStyles, Paper } from '@material-ui/core';
 import StarItemContainer from 'BulletNote/containers/NotePart/StarItemContainer';
 import PinItemContainer from 'BulletNote/containers/NotePart/PinItemContainer';
@@ -63,7 +63,7 @@ const starDisplayItem = (starLevelNum?: number) => {
   return null;
 };
 
-export const ButtonsPaperPart = (props: MessageButtonsPartProps) => {
+export const ButtonsPaperPart = memo((props: MessageButtonsPartProps) => {
   const classes = useStyles();
   const {
     starLevelNum,
@@ -93,7 +93,7 @@ export const ButtonsPaperPart = (props: MessageButtonsPartProps) => {
       </Paper>
     </Box>
   );
-};
+});
 
 const MessageButtonsPart = (props: MessageButtonsPartProps) => {
   const classes = useStyles();
@@ -143,4 +143,4 @@ const MessageButtonsPart = (props: MessageButtonsPartProps) => {
   );
 };
 
-export default MessageButtonsPart;
+export default memo(MessageButtonsPart);
