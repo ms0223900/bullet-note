@@ -70,14 +70,14 @@ class WholeNoteBlockHandler {
   static getNoteBlockItemTagList(messageList: MessageList, selectedFilterTags: string[]) {
     return (options: Options) => {
       
-      const isDueDateMessageList = selectedFilterTags.includes(dueDateUniqueTag);
-      const isSearchingResult = selectedFilterTags.includes(searchingTag);
+      const haveDueDateMessageList = selectedFilterTags.includes(dueDateUniqueTag);
+      const haveSearchingResult = selectedFilterTags.includes(searchingTag);
 
       let tagList: TagItemForNoteBlockItem[] = [];
       let isEmptyAfterFiltered = false;
       let tagNoteBlockObj: TagNoteBlockObj = {};
 
-      if(isDueDateMessageList) {
+      if(haveDueDateMessageList) {
         const tagWithShow = {
           tagName: dueDateUniqueTag,
           isShow: true,
@@ -96,11 +96,12 @@ class WholeNoteBlockHandler {
           ...dueDateTagNoteBlockObj
         };
       }
-      if(isSearchingResult) {
+      if(haveSearchingResult) {
         const searchingResultRes = this.getSearchResultTagNoteBlockObj(messageList)(options.searchText);
         
         tagList = [
-          ...tagList, ...searchingResultRes.tagList
+          ...tagList,
+          ...searchingResultRes.tagList,
         ];
         tagNoteBlockObj = {
           ...tagNoteBlockObj,

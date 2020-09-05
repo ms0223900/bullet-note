@@ -19,7 +19,11 @@ const InputPart = (props: InputPartProps) => {
   const classes = useStyles();
 
   return (
-    <Box display={'flex'} paddingTop={1}>
+    <Box 
+      display={'flex'} 
+      paddingTop={1}
+      alignItems={'flex-end'}
+    >
       <Box
         position={'relative'}
         width={'100%'}
