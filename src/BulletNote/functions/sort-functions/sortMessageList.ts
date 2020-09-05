@@ -9,7 +9,8 @@ export interface SortOptions {
 }
 
 const sortMessageList = (options: SortOptions) => (messageList: MessageList) => {
-  let res = messageList;
+  let res = [...messageList];
+  
   switch (options.sortType) {
     case 'star-num':
       res = sortMessageListByStarLevelNum(messageList)(options.sortRule);

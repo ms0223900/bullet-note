@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box } from '@material-ui/core';
 import WholeNoteBlockItem from 'BulletNote/components/NotePart/WholeNoteBlockItem';
 import { WholeNoteBlogItemContainerProps, WholeNoteBlogItemContainerWithCtxProps } from './types';
@@ -13,7 +13,7 @@ import { MessageList, MESSAGE_TYPE, StartEndIndex } from 'BulletNote/types';
 import { SortButtonsProps } from 'BulletNote/components/NotePart/types';
 
 export const getMinMaxIndex = (originIndexes: StartEndIndex, newIndexes: StartEndIndex | undefined) => {
-  let res: StartEndIndex = originIndexes;
+  let res: StartEndIndex = [...originIndexes] as StartEndIndex;
 
   if(!originIndexes || !newIndexes) {
     return originIndexes;
@@ -38,24 +38,35 @@ export function useDynamicRenderList({
   const renderIndexRef = React.useRef(startEndIndex);
   
   renderIndexRef.current = getMinMaxIndex(renderIndexRef.current as any, startEndIndex);
-  const dynamicMessageList = getDynamicMessageList()({
+  const messageListKeys = messageList.map(m => m.message.id);
+
+
+  const dynamicMessageList = useMemo(() => getDynamicMessageList()({
     messageList, 
-    // startEndIndex: renderIndex, 
-    startEndIndex: renderIndexRef.current, 
+    startEndIndex: renderIndex, 
+    // startEndIndex: renderIndexRef.current, 
     // startEndIndex: startEndIndex, 
     isFilteringDone
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [isFilteringDone, messageListKeys, renderIndex]);
+  // const dynamicMessageList = getDynamicMessageList()({
+  //   messageList, 
+  //   startEndIndex: renderIndex, 
+  //   // startEndIndex: renderIndexRef.current, 
+  //   // startEndIndex: startEndIndex, 
+  //   isFilteringDone
+  // });
 
   React.useEffect(() => {
     // if(startEndIndex && startEndIndex[0] === 0 && startEndIndex[1] === Infinity) 
     setIndex(s => getMinMaxIndex(s, startEndIndex));
   }, [startEndIndex]);
   
-  console.log(
-    startEndIndex, 
-    renderIndexRef.current, 
-    renderIndex
-  );
+  // console.log(
+  //   startEndIndex, 
+  //   renderIndexRef.current, 
+  //   renderIndex
+  // );
   
   return ({
     messageList: dynamicMessageList

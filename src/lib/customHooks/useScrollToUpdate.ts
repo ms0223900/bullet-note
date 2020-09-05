@@ -104,7 +104,8 @@ export const getStartEndIndexFromDOM = (innerEl: HTMLElement, outerEl: HTMLEleme
     startEndIndex = [0, listCount * 1.5];
   }
   else if(bottom <= defaultMessageItemHeight) {
-    startEndIndex = [endIndex - listCount * 3, Infinity];
+    
+    startEndIndex = [endIndex - listCount * 3, endIndex + listCount * 3];
   }
   else {
     startEndIndex = [
