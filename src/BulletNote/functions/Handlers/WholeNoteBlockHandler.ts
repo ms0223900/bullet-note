@@ -96,11 +96,16 @@ class WholeNoteBlockHandler {
           ...dueDateTagNoteBlockObj
         };
       }
-      else if(isSearchingResult) {
+      if(isSearchingResult) {
         const searchingResultRes = this.getSearchResultTagNoteBlockObj(messageList)(options.searchText);
         
-        tagList = searchingResultRes.tagList;
-        tagNoteBlockObj = searchingResultRes.tagNoteBlockObj;
+        tagList = [
+          ...tagList, ...searchingResultRes.tagList
+        ];
+        tagNoteBlockObj = {
+          ...tagNoteBlockObj,
+          ...searchingResultRes.tagNoteBlockObj
+        };
       }
       // else {
         
