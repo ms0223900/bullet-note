@@ -38,7 +38,9 @@ export function useDynamicRenderList({
   const renderIndexRef = React.useRef(startEndIndex);
   
   renderIndexRef.current = getMinMaxIndex(renderIndexRef.current as any, startEndIndex);
-  const messageListKeys = messageList.map(m => m.message.id).join(',');
+
+  const dynamicMessageListMemoKey = 
+    messageList.map(m => m.message.id).join(',') + (renderIndex).join(',');
 
   const dynamicMessageList = useMemo(() => getDynamicMessageList()({
     messageList, 
@@ -47,7 +49,7 @@ export function useDynamicRenderList({
     // startEndIndex: startEndIndex, 
     isFilteringDone
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [isFilteringDone, messageListKeys, renderIndex]);
+  }), [isFilteringDone, dynamicMessageListMemoKey]);
   // const dynamicMessageList = getDynamicMessageList()({
   //   messageList, 
   //   startEndIndex: renderIndex, 
