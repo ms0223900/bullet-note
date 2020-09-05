@@ -38,8 +38,7 @@ export function useDynamicRenderList({
   const renderIndexRef = React.useRef(startEndIndex);
   
   renderIndexRef.current = getMinMaxIndex(renderIndexRef.current as any, startEndIndex);
-  const messageListKeys = messageList.map(m => m.message.id);
-
+  const messageListKeys = messageList.map(m => m.message.id).join(',');
 
   const dynamicMessageList = useMemo(() => getDynamicMessageList()({
     messageList, 
@@ -91,7 +90,10 @@ const WholeNoteBlockItemContainer = (props: WholeNoteBlogItemContainerProps) => 
     sortByStarNumsFn: sortTypeRulesStates.handleSortByStarNums,
   };
   
-  const sortedMessageList = sortMessageList(sortTypeRulesStates.sortTypeRule)(messageList);
+  const sortedMessageList = useMemo(() => (
+    sortMessageList(sortTypeRulesStates.sortTypeRule)(messageList)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ), [JSON.stringify(messageList), JSON.stringify(sortTypeRulesStates.sortTypeRule)]);
 
   const {
     messageList: dynamicMessageList,
