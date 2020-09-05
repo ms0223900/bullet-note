@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Typography, RootRef } from '@material-ui/core';
 import { WholeNoteBlockListProps } from './types';
 import WholeNoteBlockItemContainerWithCtx from 'BulletNote/containers/NotePart/WholeNoteBlockItemContainer';
@@ -70,4 +70,4 @@ const WholeNoteBlockList = (props: WholeNoteBlockListProps) => {
   );
 };
 
-export default WholeNoteBlockList;
+export default memo(WholeNoteBlockList);

@@ -1,5 +1,5 @@
 import { Callback } from "common-types";
-import { KEY_CODES } from "BulletNote/config";
+import { KEYS } from "BulletNote/config";
 import { useCallback, useEffect, useRef, KeyboardEvent } from "react";
 import KeyCodeCombiner from "BulletNote/functions/KeyCodeCombiner";
 
@@ -10,37 +10,37 @@ export const getDefaultKeyCodes = () => {
 
   console.log(osPlatform);
   if(isMacOS) {
-    return [KEY_CODES.CMD, KEY_CODES.ENTER];
+    return [KEYS.CMD, KEYS.ENTER];
   }
-  return [KEY_CODES.CTRL, KEY_CODES.ENTER];
+  return [KEYS.CTRL, KEYS.ENTER];
 };
 
 export const defaultKeyCodes = getDefaultKeyCodes();
 
 export interface UseTriggerCallbackByKeyCodesOptions {
   callback: Callback
-  keyCodes?: KEY_CODES[][]
+  keys?: KEYS[][]
   isAutoDetectKeyCode?: boolean
 }
 
 function useTriggerCallbackByKeyCodes({
-  callback, keyCodes=[defaultKeyCodes], isAutoDetectKeyCode
+  callback, keys=[defaultKeyCodes], isAutoDetectKeyCode
 }: UseTriggerCallbackByKeyCodesOptions) {
   
 
   const keyCodeCompinerRef = useRef(new KeyCodeCombiner({
-    keyCodes,
+    keyCodes: keys,
     callback: callback
   }));
 
   const handleTriggerCallback = useCallback((e: KeyboardEvent<any>) => {
-    const { keyCode } = e;
-    keyCodeCompinerRef.current.triggerCallbackByKeyCode(keyCode, callback);
+    const { key } = e;
+    keyCodeCompinerRef.current.triggerCallbackByKeyCode(key, callback);
   }, [callback]);
 
   const handleRemoveKKeycode = useCallback((e: KeyboardEvent<any>) => {
-    const { keyCode } = e;
-    keyCodeCompinerRef.current.removeKeyCode(keyCode);
+    const { key } = e;
+    keyCodeCompinerRef.current.removeKeyCode(key);
   }, []);
 
   useEffect(() => {

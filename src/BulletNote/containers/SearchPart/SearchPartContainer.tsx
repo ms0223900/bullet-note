@@ -5,7 +5,7 @@ import SearchPart from 'BulletNote/components/SearchPart/SearchPart';
 import useChangeInput from 'lib/customHooks/useChangeInput';
 import { MapDispatchToProps, MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { setFilterTags, setSearchingText } from 'BulletNote/actions/config-actions';
-import { searchingTag, KEY_CODES } from 'BulletNote/config';
+import { searchingTag, KEY_CODES, KEYS } from 'BulletNote/config';
 import { connectCtx } from 'react-function-helpers';
 import { ContextStore, BulletNoteState } from 'BulletNote/constants/context';
 import useTriggerCallbackByKeyCodes from 'lib/customHooks/useTriggerCallbackByKeyCodes';
@@ -43,8 +43,8 @@ const SearchPartContainer = (props: SearchPartContainerProps) => {
 
   useTriggerCallbackByKeyCodes({
     callback: handleSearch,
-    keyCodes:  [
-      [KEY_CODES.ENTER]
+    keys:  [
+      [KEYS.ENTER]
     ],
     isAutoDetectKeyCode: true,
   });

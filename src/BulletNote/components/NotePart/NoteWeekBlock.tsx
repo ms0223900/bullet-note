@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import splitMessageListWithDataByWeek from 'BulletNote/functions/splitMessageListWithDateByWeek';
 import HandleMessageList from 'BulletNote/functions/Handlers/handleMessageListToMessageWithDateList';
 import { NoteWeekBlockProps } from 'BulletNote/types';
@@ -59,4 +59,4 @@ const NoteWeekBlock = (props: NoteWeekBlockProps) => {
   );
 };
 
-export default NoteWeekBlock;
+export default memo(NoteWeekBlock);

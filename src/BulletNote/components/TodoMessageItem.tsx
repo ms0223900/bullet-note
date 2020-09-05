@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Checkbox } from '@material-ui/core';
 import { ToDoMessageItemProps } from './types';
 import MessageItemWrapperContainerWithCtx from '../containers/wrappers/MessageItemWrapperContainer';
@@ -25,4 +25,4 @@ const TodoMessageItem = (props: ToDoMessageItemProps) => {
   );
 };
 
-export default TodoMessageItem;
+export default memo(TodoMessageItem);

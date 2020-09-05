@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React, { RefObject, memo } from 'react';
 import { Box } from '@material-ui/core';
 import NotePart from '../../components/NotePart/NotePart';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
@@ -48,4 +48,4 @@ const mapDispatchToProps: MapDispatchToProps<OwnProps, Omit<NotePartProps, 'mess
 
 const NotePartContainerWithCtx = connectCtx(ContextStore)(mapStateToProps, mapDispatchToProps)(NotePartContainer);
 
-export default NotePartContainerWithCtx;
+export default memo(NotePartContainerWithCtx);

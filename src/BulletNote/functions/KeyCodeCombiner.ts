@@ -1,13 +1,15 @@
 import { Callback } from "common-types";
 
+type SingleKeyCode = number | string // support e.key
+
 export interface KeyCodeCombinerInit {
-  keyCodes: number[][]
+  keyCodes: SingleKeyCode[][]
   callback?: Callback
 }
 
 class KeyCodeCombiner {
-  protected keyCodes: number[][]
-  private keyCodesNow: number[][]
+  protected keyCodes: SingleKeyCode[][]
+  private keyCodesNow: SingleKeyCode[][]
   private callback: Callback | undefined
 
   constructor(init: KeyCodeCombinerInit) {
@@ -38,7 +40,7 @@ class KeyCodeCombiner {
     return res;
   }
 
-  private setKeyCode(index: number, keyCode: number) {
+  private setKeyCode(index: number, keyCode: SingleKeyCode) {
     const isNotInKeyCodes = !this.keyCodes[index].includes(keyCode);
     if(isNotInKeyCodes) {
       return;
@@ -57,7 +59,7 @@ class KeyCodeCombiner {
     this.keyCodesNow = this.keyCodes.map(() => []);
   }
 
-  removeKeyCode(keyCode: number) {
+  removeKeyCode(keyCode: SingleKeyCode) {
     const index = this.keyCodesNow.findIndex(k => k.includes(keyCode));
     if(index !== -1) {
       const res = this.keyCodesNow[index].filter(k => k !== keyCode);
@@ -65,7 +67,7 @@ class KeyCodeCombiner {
     }
   }
 
-  triggerCallbackByKeyCode(keyCode: number, callback?: Callback) {
+  triggerCallbackByKeyCode(keyCode: number | string, callback?: Callback) {
     console.log(keyCode);
     if(callback) {
       this.callback = callback;

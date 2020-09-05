@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 import EditContent from 'BulletNote/components/MessageComponents/EditContent';
 import { EditContentContainerProps } from './types';
 import useTriggerCallbackByKeyCodes, { defaultKeyCodes } from 'lib/customHooks/useTriggerCallbackByKeyCodes';
-import { KEY_CODES } from 'BulletNote/config';
+import { KEY_CODES, KEYS } from 'BulletNote/config';
 import { Callback } from 'common-types';
 import { MapStateToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { BulletNoteState, ContextStore } from 'BulletNote/constants/context';
@@ -27,9 +27,9 @@ export const useEditContent = (options: {
     handleRemoveKKeycode,
   } = useTriggerCallbackByKeyCodes({
     callback: handleConfirmEdit,
-    keyCodes: [
+    keys: [
       defaultKeyCodes,
-      [KEY_CODES.ESC]
+      [KEYS.ESC]
     ]
   });
 

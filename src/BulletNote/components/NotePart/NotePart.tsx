@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, makeStyles, RootRef } from '@material-ui/core';
 import { NotePartProps } from '../types';
 import PinMessageListContainer from 'BulletNote/containers/NotePart/PinMessageListContainer';
@@ -57,4 +57,4 @@ const NotePart = (props: NotePartProps) => {
   );
 };
 
-export default NotePart;
+export default memo(NotePart);

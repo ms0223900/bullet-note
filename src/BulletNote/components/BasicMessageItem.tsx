@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Grid, Box, makeStyles } from '@material-ui/core';
 import { BasicMessageItemProps } from './types';
 import MessageButtonsPart from './MessageComponents/MessageButtonsPart';
@@ -37,4 +37,4 @@ const BasicMessageItem = (props: BasicMessageItemProps) => {
   );
 };
 
-export default BasicMessageItem;
+export default memo(BasicMessageItem);

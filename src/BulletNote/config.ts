@@ -16,11 +16,21 @@ export const syncTimeout = 5; //seconds
 
 export const defaultMessageItemHeight = 60;
 
-export enum KEY_CODES {
+export enum KEY_CODES { // keycode is deprecated in javascript
   CTRL = 17,
   ENTER = 13,
   TAB = 9,
   SPACE = 32,
   ESC = 27,
   CMD = 91,
+}
+
+export enum KEYS {
+  CTRL = 'Control',
+  ENTER = 'Enter',
+  TAB = 'Tab',
+  ALT = 'Alt',
+  SPACE = ' ',
+  ESC = 'Escape',
+  CMD = 91, // --todo--
 }
