@@ -9,19 +9,19 @@ export interface SortOptions {
 }
 
 const sortMessageList = (options: SortOptions) => (messageList: MessageList) => {
-  let res = [...messageList];
+  let res = JSON.parse(JSON.stringify(messageList)) as MessageList;
   
   switch (options.sortType) {
     case 'star-num':
-      res = sortMessageListByStarLevelNum(messageList)(options.sortRule);
+      res = sortMessageListByStarLevelNum(res)(options.sortRule);
       break;
     case 'due-date':
-      res = messageList.sort(
+      res.sort(
         sortMessageListByDueDateSortFn(options.sortRule)
       );
       break;
     default:
-      res = messageList.sort(
+      res.sort(
         HandleParseMessage.sortMessageListByDateFn(options.sortRule)
       );
       break;
