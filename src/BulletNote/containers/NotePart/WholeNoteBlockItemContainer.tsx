@@ -49,7 +49,7 @@ export function useDynamicRenderList({
     // startEndIndex: startEndIndex, 
     isFilteringDone
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [isFilteringDone, dynamicMessageListMemoKey]);
+  }), [JSON.stringify(messageList), isFilteringDone, dynamicMessageListMemoKey]);
   // const dynamicMessageList = getDynamicMessageList()({
   //   messageList, 
   //   startEndIndex: renderIndex, 
